@@ -1,6 +1,6 @@
 import sjcl from "shcl";
 
-function hash(data) {
+export function hash(data) {
   if (data instanceof String) {
     data = data.split("").map(x => x.charCodeAt(0));
   }
