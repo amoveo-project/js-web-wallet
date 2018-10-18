@@ -1,10 +1,14 @@
 import React, {Component} from 'react'
-import Transport from '@ledgerhq/hw-transport-u2f'
-import Veo from 'amoveojs-ledger'
 
 import VeoNode from './node/index'
 
+import config from './config'
+
 import './App.css'
+
+const defaultConfig = {
+  nodeUrl: 'http://amoveo.exan.tech:8080',
+}
 
 class App extends Component {
   constructor(props) {
@@ -13,29 +17,14 @@ class App extends Component {
   }
 
   componentDidMount = async () => {
-    this.node = new VeoNode('https://amoveo.local')
+    this.node = new VeoNode(config.nodeUrl || defaultConfig.nodeUrl)
 
     this.node.events.on('header', header => {
       this.setState({height: header[1]})
     })
   }
 
-  loadPubkey = async () => {
-    this.setState({error: null})
-
-    try {
-      const transport = await Transport.create()
-      const veo = new Veo(transport)
-      const {publicKey} = await veo.getAddress(
-        "0'/0/0",
-        this.refs.confirm.checked,
-      )
-      this.setState({publicKey})
-    } catch (error) {
-      console.error(error)
-      this.setState({error})
-    }
-  }
+  loadPubkey = async () => {}
 
   render() {
     const {publicKey, error, height} = this.state
@@ -48,12 +37,6 @@ class App extends Component {
               <input type="checkbox" ref="confirm" />
               Confirm pubkey?
             </label>
-            <br />
-            <input
-              type="button"
-              value="Load pubkey"
-              onClick={this.loadPubkey}
-            />
           </p>
           {error ? (
             <code>{error.toString()}</code>
