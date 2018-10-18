@@ -3,9 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ledgerhq/hw-transport-u2f": "^4.24.0",
+    "eventemitter3": "^3.1.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-scripts": "2.0.4"
+    "react-scripts": "2.0.4",
+    "big.js": "5.2.1",
+    "sjcl": "1.0.7",
+    "byte-data": "16.0.3",
+    "elliptic": "6.4.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,24 +1,60 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Transport from '@ledgerhq/hw-transport-u2f';
+import Veo from 'amoveojs-ledger';
+
+import VeoNode from './node/index';
+
 import './App.css';
 
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {publicKey: "", error: null, height: 28001};
+  }
+
+  componentDidMount = async() => {
+    this.node = new VeoNode("https://amoveo.local");
+
+    this.node.events.on("header", (header) => {
+      this.setState({ height: header[1] });
+    });
+  }
+
+  loadPubkey = async() => {
+    this.setState({ error: null });
+
+    try {
+      const transport = await Transport.create();
+      const veo = new Veo(transport);
+      const { publicKey } = await veo.getAddress("0'/0/0", this.refs.confirm.checked);
+      this.setState({ publicKey });
+
+    } catch (error) {
+      console.error(error);
+      this.setState({ error });
+    };
+  }
+
   render() {
+    const { publicKey, error, height } = this.state;
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <p>Height: { height }</p>
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            <label>
+              <input type="checkbox" ref="confirm"/>
+              Confirm pubkey?
+            </label>
+            <br/>
+            <input type="button" value="Load pubkey" onClick={this.loadPubkey}/>
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          {error ? (
+            <code>{ error.toString() }</code>
+          ) : (
+            <code>Pubkey: { publicKey }</code>
+          )}
         </header>
       </div>
     );
