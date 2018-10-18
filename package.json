@@ -4,20 +4,23 @@
   "private": true,
   "dependencies": {
     "@ledgerhq/hw-transport-u2f": "^4.24.0",
+    "big.js": "5.2.1",
+    "byte-data": "16.0.3",
+    "elliptic": "6.4.1",
     "eventemitter3": "^3.1.0",
+    "husky": "1.1.2",
+    "lint-staged": "7.3.0",
+    "prettier": "1.14.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "2.0.4",
-    "big.js": "5.2.1",
-    "sjcl": "1.0.7",
-    "byte-data": "16.0.3",
-    "elliptic": "6.4.1"
+    "sjcl": "1.0.7"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start": "react-scripts start",
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -27,5 +30,16 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --write",
+      "git add"
+    ]
+  } 
 }
