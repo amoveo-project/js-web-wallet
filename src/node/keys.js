@@ -3,13 +3,18 @@ import elliptic from 'elliptic';
 import { array_to_string, fromHex } from './format';
 
 class Keys {
-  constructor() {
+  constructor(props) {
+    this.options = {
+      genKeyPairParams: {},
+      ...props,
+    };
+
     this.ec = new elliptic.ec('secp256k1');
-    this.keys = this.ec.genKeyPair();
+    this.keys = this.ec.genKeyPair(this.options.genKeyPairParams);
   }
 
   make() {
-    return this.ec.genKeyPair();
+    return this.ec.genKeyPair(this.options.genKeyPairParams);
   }
 
   pub() {
@@ -56,10 +61,5 @@ class Keys {
     }) */
   }
 }
-
-const keys = new Keys();
-
-console.log('keys', keys);
-console.log('keys.ec', keys.ec);
 
 export default Keys;
