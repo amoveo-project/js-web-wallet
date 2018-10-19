@@ -44,3 +44,25 @@ test('should return keys on getKeys()', () => {
 
   expect(keys).toEqual(expectedKeys);
 });
+
+test('should load private key', () => {
+  const keyPair = new Keys({
+    genKeyPairParams: {
+      entropy: 'Random entropy to generate random key pair',
+    },
+  });
+
+  keyPair.setPrivateKey(
+    '8e4efe70850df89230a965e687d11d413f8884e87c67fc7ff275e29c4d3f3f01',
+  );
+
+  const keys = keyPair.getKeys();
+
+  const expectedKeys = {
+    private: '8e4efe70850df89230a965e687d11d413f8884e87c67fc7ff275e29c4d3f3f01',
+    public:
+      '04ef33a7578b2764ab9059ef3d6ab515e789252f7286918c2ae830dddc2ec514fb03ee0f775c992cc704b741ce31a860319fe6fa496c0e188537d9fc24555e7282',
+  };
+
+  expect(keys).toEqual(expectedKeys);
+});

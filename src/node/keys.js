@@ -82,6 +82,10 @@ class Keys {
       public: this.keys.getPublic('hex'),
     };
   }
+
+  setPrivateKey(key) {
+    this.keys = this.ec.keyFromPrivate(key, 'hex');
+  }
 }
 
 export default Keys;
