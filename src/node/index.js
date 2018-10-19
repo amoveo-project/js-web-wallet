@@ -15,4 +15,8 @@ export default class VeoNode {
     this.headers = new Headers(this.rpc, this.events);
     this.headers.syncHeaders();
   }
+
+  getTopHeader() {
+    return this.headers.getTopHeader(false);
+  }
 }

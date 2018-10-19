@@ -127,6 +127,7 @@ export default class Headers {
     this.headers = {};
 
     this.height = 28001;
+    this.top_difficulty = 0;
 
     const top_header = [
       'header',
@@ -305,6 +306,14 @@ export default class Headers {
       .concat(integer_to_array(period, 2));
   }
 
+  getTopHeader(isSerialized) {
+    if (!isSerialized) {
+      return this.top_header;
+    } else {
+      return this.serializeHeader(this.top_header);
+    }
+  }
+
   readHeader(header_hash) {
     if (this.headers[header_hash] !== undefined) {
       return this.headers[header_hash][0];
@@ -315,6 +324,13 @@ export default class Headers {
 
   writeHeader(header, ewah) {
     const header_hash = hash(this.serializeHeader(header));
+
+    const acc_difficulty = header[9];
+    if (acc_difficulty > this.top_difficulty) {
+      this.top_difficulty = acc_difficulty;
+      this.top_header = header;
+    }
+
     this.headers[header_hash] = [header, ewah];
   }
 
