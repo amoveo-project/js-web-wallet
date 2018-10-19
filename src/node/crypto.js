@@ -1,4 +1,5 @@
-import sjcl from 'shcl'
+// import sjcl from "./vendor/sjcl";
+const sjcl = require('./vendor/sjcl')
 
 export function hash(data) {
   if (data instanceof String) {
