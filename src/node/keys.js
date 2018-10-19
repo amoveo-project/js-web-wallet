@@ -75,6 +75,13 @@ class Keys {
 
     this.regenerate();
   }
+
+  getKeys() {
+    return {
+      private: this.keys.getPrivate('hex'),
+      public: this.keys.getPublic('hex'),
+    };
+  }
 }
 
 export default Keys;
