@@ -1,5 +1,6 @@
 import elliptic from 'elliptic';
 
+import { hash } from './crypto';
 import { array_to_string, fromHex } from './format';
 
 class Keys {
@@ -14,7 +15,9 @@ class Keys {
   }
 
   make() {
-    return this.ec.genKeyPair(this.options.genKeyPairParams);
+    this.keys = this.ec.genKeyPair(this.options.genKeyPairParams);
+
+    return this.keys;
   }
 
   pub() {
@@ -59,6 +62,18 @@ class Keys {
     /* merkle.request_proof('accounts', trieKey, function(x) {
       cb(x[1])
     }) */
+  }
+
+  regenerate() {
+    this.make();
+
+    return this;
+  }
+
+  setEntropy(entropy) {
+    this.options.genKeyPairParams.entropy = hash(entropy);
+
+    this.regenerate();
   }
 }
 
