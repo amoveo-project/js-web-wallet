@@ -28,7 +28,7 @@ class Keys {
 
   sign(tx) {
     if (tx[0] == 'signed') {
-      const sig = btoa(array_to_string(this.sign(tx[1], keys)));
+      const sig = btoa(array_to_string(this.sign(tx[1], this.keys)));
 
       const pub = this.pub();
 
@@ -42,7 +42,7 @@ class Keys {
 
       return tx;
     } else {
-      var sig = btoa(array_to_string(this.sign(tx, keys)));
+      var sig = btoa(array_to_string(this.sign(tx, this.keys)));
 
       return ['signed', tx, sig, [-6]];
     }
