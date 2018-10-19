@@ -1,33 +1,33 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react';
 
-import VeoNode from './node/index'
+import VeoNode from './node/index';
 
-import config from './config'
+import config from './config';
 
-import './App.css'
+import './App.css';
 
 const defaultConfig = {
   nodeUrl: 'http://amoveo.exan.tech:8080',
-}
+};
 
 class App extends Component {
   constructor(props) {
-    super(props)
-    this.state = {publicKey: '', error: null, height: 28001}
+    super(props);
+    this.state = { publicKey: '', error: null, height: 28001 };
   }
 
   componentDidMount = async () => {
-    this.node = new VeoNode(config.nodeUrl || defaultConfig.nodeUrl)
+    this.node = new VeoNode(config.nodeUrl || defaultConfig.nodeUrl);
 
     this.node.events.on('header', header => {
-      this.setState({height: header[1]})
-    })
-  }
+      this.setState({ height: header[1] });
+    });
+  };
 
-  loadPubkey = async () => {}
+  loadPubkey = async () => {};
 
   render() {
-    const {publicKey, error, height} = this.state
+    const { publicKey, error, height } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -45,8 +45,8 @@ class App extends Component {
           )}
         </header>
       </div>
-    )
+    );
   }
 }
 
-export default App
+export default App;
