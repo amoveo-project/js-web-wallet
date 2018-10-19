@@ -1,5 +1,8 @@
-// import sjcl from "./vendor/sjcl";
-const sjcl = require('./vendor/sjcl');
+import { default as plainSjcl } from 'sjcl';
+
+import { getWithCodecBytes } from './codecBytes';
+
+const sjcl = getWithCodecBytes(plainSjcl);
 
 export function hash(data) {
   if (data instanceof String) {

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ledgerhq/hw-transport-u2f": "^4.24.0",
+    "big-integer": "1.6.36",
     "big.js": "5.2.1",
     "byte-data": "16.0.3",
     "elliptic": "6.4.1",
@@ -14,7 +15,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "2.0.4",
-    "big-integer": "1.6.36"
+    "sjcl": "1.0.7"
   },
   "scripts": {
     "build": "react-scripts build",
