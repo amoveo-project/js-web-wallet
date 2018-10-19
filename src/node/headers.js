@@ -12,7 +12,7 @@ function hash2integer(hash, offset) {
   function hash2integer2(h, i, n) {
     var x = h[i];
 
-    if (x == 0) {
+    if (x === 0) {
       return hash2integer2(h, i + 1, n + 256 * 8);
     } else {
       return n + hash2integer3(x, h[i + 1]);
@@ -34,7 +34,7 @@ function hash2integer(hash, offset) {
   function hash2integer4(binary, i, n) {
     var x = binary[i];
 
-    if (x == '0') {
+    if (x === '0') {
       return hash2integer4(binary, i + 1, n + 256);
     } else {
       var b2 = binary.slice(i + offset, i + 8 + offset);
@@ -50,7 +50,7 @@ function hash2integer(hash, offset) {
     for (var i = 0; i < bin.length; i++) {
       var y = bin[i];
 
-      if (y == '0') {
+      if (y === '0') {
         x = x * 2;
       } else {
         x = 1 + x * 2;
@@ -75,11 +75,11 @@ function log2(x) {
 
 function exponent(a, b) {
   //a is type bigint. b is an int.
-  if (b == 0) {
+  if (b === 0) {
     return Big.one;
-  } else if (b == 1) {
+  } else if (b === 1) {
     return a;
-  } else if (b % 2 == 0) {
+  } else if (b % 2 === 0) {
     return exponent(a.times(a), Math.floor(b / 2));
   } else {
     return a.times(exponent(a, b - 1));
@@ -145,14 +145,14 @@ export default class Headers {
   }
 
   syncHeaders = async () => {
-    const headers = await this.rpc.getHeaders(this.height + 1, 5001);
+    const headers = await this.rpc.getHeaders(this.height + 1, 2501);
 
     if (!headers.length) {
       setTimeout(this.syncHeaders, 60000);
     } else {
       this.height = headers[headers.length - 1][1];
 
-      headers.map(header => {
+      headers.forEach(header => {
         try {
           this.absorbHeader(header);
           this.events.emit('header', header);
@@ -169,7 +169,7 @@ export default class Headers {
     const header = this.readHeader(prev_header_hash);
     if (header === undefined) {
       console.log('Received an orphan header: ' + prev_header_hash);
-      return 'unknown parent';
+      throw Error('unknown parent');
     } else {
       const diff = header[6];
       const RF = params.retarget_frequency;
@@ -195,19 +195,68 @@ export default class Headers {
     }
   }
 
+  calcEWAH(header, prev_header, prev_ewah0) {
+    const prev_ewah = Big.max(1, prev_ewah0);
+    const DT = header[5] - prev_header[5];
+    const Hashrate0 = Big.max(
+      Big.one,
+      Big(params.hashrate_converter)
+        .times(sci2int(prev_header[6]))
+        .divide(DT),
+    );
+    const N = 20;
+    const Converter = prev_ewah.times(1024000);
+    const EWAH2 = Converter.times(N - 1).divide(prev_ewah);
+    const EWAH0 = Converter.divide(Hashrate0).add(EWAH2);
+    const ewah = Number(Converter.times(N).divide(EWAH0));
+
+    return ewah;
+  }
+
+  newTarget(header, ewah0) {
+    const ewah = Big.max(ewah0, 1);
+    const diff = header[6];
+    const hashes = sci2int(diff);
+    const estimate = Number(
+      Big.max(1, hashes.times(params.hashrate_converter).divide(ewah)),
+    );
+
+    const P = header[10];
+    const UL = Math.floor((P * 6) / 4);
+    const LL = Math.floor((P * 3) / 4);
+    let ND = diff;
+
+    if (estimate > UL) {
+      ND = this.PoWRecalculate(diff, UL, estimate);
+    } else if (estimate < LL) {
+      ND = this.PoWRecalculate(diff, LL, estimate);
+    }
+
+    return Math.max(ND, params.initial_difficulty);
+  }
+
+  PoWRecalculate(diff0, threshold, estimate) {
+    const old = sci2int(diff0);
+    const n = old.times(threshold).divide(estimate);
+    const d = int2sci(n);
+
+    return Math.max(1, d);
+  }
+
   checkPoW(header) {
     const height = header[1];
     if (height < 2) return { valid: true, ewah: 1000000 };
     else {
       const previous_hash = string_to_array(atob(header[2]));
-      const { diff0, ewah } = this.difficultyShouldBe(header, previous_hash);
+      const [diff0, ewah] = this.difficultyShouldBe(header, previous_hash);
       const diff = header[6];
       if (diff === diff0) {
         const nonce = atob(header[8]);
 
-        header[8] = btoa(array_to_string(integer_to_array(0, 32)));
+        const data_header = header.slice(0);
+        data_header[8] = btoa(array_to_string(integer_to_array(0, 32)));
 
-        const serialized = this.serializeHeader(header);
+        const serialized = this.serializeHeader(data_header);
         const header_hash = hash(hash(serialized));
 
         let I;
@@ -266,7 +315,6 @@ export default class Headers {
 
   writeHeader(header, ewah) {
     const header_hash = hash(this.serializeHeader(header));
-
     this.headers[header_hash] = [header, ewah];
   }
 
@@ -282,12 +330,11 @@ export default class Headers {
     const { valid, ewah } = this.checkPoW(header);
     if (valid) {
       const height = header[1];
-      const header_hash = hash(this.serializeHeader(header));
 
-      if (height == 0) {
+      if (height === 0) {
         header[9] = 0;
       } else {
-        const prev_hash = this.string_to_array(atob(header[2]));
+        const prev_hash = string_to_array(atob(header[2]));
         const prev_header = this.readHeader(prev_hash);
         const prev_accum_diff = prev_header[9];
         const diff = header[6];
@@ -295,7 +342,7 @@ export default class Headers {
         header[9] = prev_accum_diff + accum_diff - 1;
       }
 
-      this.writeHeader(header);
+      this.writeHeader(header, ewah);
     } else {
       throw Error('Bad header: ' + JSON.stringify(header));
     }
