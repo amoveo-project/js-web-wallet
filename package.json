@@ -7,6 +7,7 @@
     "big-integer": "1.6.36",
     "big.js": "5.2.1",
     "byte-data": "16.0.3",
+    "dexie": "^2.0.4",
     "elliptic": "6.4.1",
     "eventemitter3": "3.1.0",
     "husky": "1.1.2",

@@ -1,4 +1,5 @@
 import Big from 'big-integer';
+import Dexie from 'dexie';
 
 import { hash } from './crypto.js';
 import { forks, params } from './config.js';
@@ -126,24 +127,43 @@ export default class Headers {
     this.events = events;
     this.headers = {};
 
-    this.height = 28001;
     this.top_difficulty = 0;
-
-    const top_header = [
-      'header',
-      28001,
-      'f3PfnlxML/UPF9T5ixy1+Q539NyOVfFG07x4pf3zw6Q=',
-      '4A7MYFe5u7OG22QGUvIFguzZWYWndkZARGdImbhbEjM=',
-      'huIlyyrALPoafVluEL/ZYtZ8BXHUJEPxcXCLid5CSnU=',
-      141617794,
-      14053,
-      3,
-      'AAAAAAAAAAAA6ZeG6UQ+dPE+8iEbHoY92if6pIMAAlI=',
-      193346798808507350000,
-      5982,
-    ];
-    this.writeHeader(top_header, 1865656952131054);
   }
+
+  init = async () => {
+    const db = new Dexie('veodb');
+    db.version(1).stores({ headers: 'header_hash,acc_difficulty' });
+    this.db = db;
+
+    const top_header = await db.headers
+      .orderBy('acc_difficulty')
+      .reverse()
+      .limit(1)
+      .first();
+
+    if (top_header !== undefined) {
+      this.top_header = top_header.header;
+    } else {
+      this.top_header = [
+        'header',
+        28001,
+        'f3PfnlxML/UPF9T5ixy1+Q539NyOVfFG07x4pf3zw6Q=',
+        '4A7MYFe5u7OG22QGUvIFguzZWYWndkZARGdImbhbEjM=',
+        'huIlyyrALPoafVluEL/ZYtZ8BXHUJEPxcXCLid5CSnU=',
+        141617794,
+        14053,
+        3,
+        'AAAAAAAAAAAA6ZeG6UQ+dPE+8iEbHoY92if6pIMAAlI=',
+        193346798808507350000,
+        5982,
+      ];
+
+      await this.writeHeader(this.top_header, 1865656952131054);
+    }
+
+    this.height = this.top_header[1];
+    this.events.emit('header', this.top_header);
+  };
 
   syncHeaders = async () => {
     const headers = await this.rpc.getHeaders(this.height + 1, 2501);
@@ -153,21 +173,22 @@ export default class Headers {
     } else {
       this.height = headers[headers.length - 1][1];
 
-      headers.forEach(header => {
+      for (let idx = 0; idx < headers.length; idx++) {
         try {
-          this.absorbHeader(header);
-          this.events.emit('header', header);
+          await this.absorbHeader(headers[idx]);
+          this.events.emit('header', headers[idx]);
         } catch (e) {
           console.error(e);
         }
-      });
+      }
 
       setTimeout(this.syncHeaders, 3000);
     }
   };
 
-  difficultyShouldBe(next_header, prev_header_hash) {
-    const header = this.readHeader(prev_header_hash);
+  difficultyShouldBe = async (next_header, prev_header_hash) => {
+    const header = await this.readHeader(prev_header_hash);
+
     if (header === undefined) {
       console.log('Received an orphan header: ' + prev_header_hash);
       throw Error('unknown parent');
@@ -183,7 +204,7 @@ export default class Headers {
         x = height % RF;
       }
 
-      const prev_ewah = this.readEWAH(prev_header_hash);
+      const prev_ewah = await this.readEWAH(prev_header_hash);
       const ewah = this.calcEWAH(next_header, header, prev_ewah);
 
       if (height > forks.seven) {
@@ -194,7 +215,7 @@ export default class Headers {
         return [diff, ewah];
       }
     }
-  }
+  };
 
   calcEWAH(header, prev_header, prev_ewah0) {
     const prev_ewah = Big.max(1, prev_ewah0);
@@ -244,12 +265,16 @@ export default class Headers {
     return Math.max(1, d);
   }
 
-  checkPoW(header) {
+  checkPoW = async header => {
     const height = header[1];
     if (height < 2) return { valid: true, ewah: 1000000 };
     else {
       const previous_hash = string_to_array(atob(header[2]));
-      const [diff0, ewah] = this.difficultyShouldBe(header, previous_hash);
+      const [diff0, ewah] = await this.difficultyShouldBe(
+        header,
+        previous_hash,
+      );
+
       const diff = header[6];
       if (diff === diff0) {
         const nonce = atob(header[8]);
@@ -281,7 +306,7 @@ export default class Headers {
         return { valid: false, ewah: 0 };
       }
     }
-  }
+  };
 
   serializeHeader(x) {
     var height = x[1]; //4 bytes
@@ -294,8 +319,7 @@ export default class Headers {
     var nonce = atob(x[8]); // 32 bytes
     var period = x[10];
 
-    var y = string_to_array(prev_hash);
-    return y
+    return string_to_array(prev_hash)
       .concat(integer_to_array(height, 4))
       .concat(integer_to_array(time, 5))
       .concat(integer_to_array(version, 2))
@@ -306,7 +330,7 @@ export default class Headers {
       .concat(integer_to_array(period, 2));
   }
 
-  getTopHeader(isSerialized) {
+  getTopHeader(isSerialized = false) {
     if (!isSerialized) {
       return this.top_header;
     } else {
@@ -314,15 +338,13 @@ export default class Headers {
     }
   }
 
-  readHeader(header_hash) {
-    if (this.headers[header_hash] !== undefined) {
-      return this.headers[header_hash][0];
-    } else {
-      return undefined;
-    }
-  }
+  readHeader = async header_hash => {
+    const record = await this.db.headers.get(header_hash);
+    if (record !== undefined) return record.header;
+    else return undefined;
+  };
 
-  writeHeader(header, ewah) {
+  writeHeader = async (header, ewah) => {
     const header_hash = hash(this.serializeHeader(header));
 
     const acc_difficulty = header[9];
@@ -331,19 +353,17 @@ export default class Headers {
       this.top_header = header;
     }
 
-    this.headers[header_hash] = [header, ewah];
-  }
+    this.db.headers.put({ header_hash, acc_difficulty, header, ewah });
+  };
 
-  readEWAH(header_hash) {
-    if (this.headers[header_hash] !== undefined) {
-      return this.headers[header_hash][1];
-    } else {
-      return undefined;
-    }
-  }
+  readEWAH = async header_hash => {
+    const record = await this.db.headers.get(header_hash);
+    if (record !== undefined) return record.ewah;
+    else return undefined;
+  };
 
-  absorbHeader(header) {
-    const { valid, ewah } = this.checkPoW(header);
+  absorbHeader = async header => {
+    const { valid, ewah } = await this.checkPoW(header);
     if (valid) {
       const height = header[1];
 
@@ -351,16 +371,16 @@ export default class Headers {
         header[9] = 0;
       } else {
         const prev_hash = string_to_array(atob(header[2]));
-        const prev_header = this.readHeader(prev_hash);
+        const prev_header = await this.readHeader(prev_hash);
         const prev_accum_diff = prev_header[9];
         const diff = header[6];
         const accum_diff = sci2int(diff);
         header[9] = prev_accum_diff + accum_diff - 1;
       }
 
-      this.writeHeader(header, ewah);
+      await this.writeHeader(header, ewah);
     } else {
       throw Error('Bad header: ' + JSON.stringify(header));
     }
-  }
+  };
 }

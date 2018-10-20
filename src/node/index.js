@@ -13,7 +13,7 @@ export default class VeoNode {
     this.events = new NodeEmitter();
 
     this.headers = new Headers(this.rpc, this.events);
-    this.headers.syncHeaders();
+    this.headers.init().then(this.headers.syncHeaders);
   }
 
   getTopHeader() {
