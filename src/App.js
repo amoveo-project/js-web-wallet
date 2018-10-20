@@ -39,21 +39,12 @@ class App extends Component {
         <header className="App-header">
           <p>Height: {height}</p>
           <p>
-            <label>
-              <input type="checkbox" ref="confirm" />
-              Confirm pubkey?
-            </label>
+            <input
+              type="button"
+              onClick={this.showTopHeader}
+              value="Show top header"
+            />
           </p>
-          {error ? (
-            <code>{error.toString()}</code>
-          ) : (
-            <code>Pubkey: {publicKey}</code>
-          )}
-          <input
-            type="button"
-            onClick={this.showTopHeader}
-            value="Show top header"
-          />
           {top ? (
             <pre
               style={{
