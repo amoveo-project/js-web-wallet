@@ -1,4 +1,4 @@
-export function getWithCodecBytes(plainSjcl) {
+export function extendWithCodecBytes(plainSjcl) {
   const sjcl = { ...plainSjcl };
 
   /** @fileOverview Bit array codec implementations.

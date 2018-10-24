@@ -1,8 +1,8 @@
 import { default as plainSjcl } from 'sjcl';
 
-import { getWithCodecBytes } from './codecBytes';
+import { extendWithCodecBytes } from './codecBytes';
 
-const sjcl = getWithCodecBytes(plainSjcl);
+const sjcl = extendWithCodecBytes(plainSjcl);
 
 export function hash(data) {
   if (data instanceof String) {

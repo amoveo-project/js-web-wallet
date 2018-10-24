@@ -1,25 +1,20 @@
 import elliptic from 'elliptic';
 
-import { hash } from './crypto';
-import { array_to_string, fromHex } from './format';
+import { hash } from './utils/crypto';
+import { array_to_string, fromHex } from './utils/format';
 
 class Keys {
   constructor(entropy) {
-    this._ec = new elliptic.ec('secp256k1');
-
+    this._ellipticCurve = new elliptic.ec('secp256k1');
     this._keyPair = this._getNewKeyPair(entropy);
   }
 
   _getNewKeyPair(entropy = null) {
     const isCustomEntropy = Boolean(entropy);
 
-    const params = isCustomEntropy
-      ? {
-          entropy: hash(entropy),
-        }
-      : {};
+    const params = isCustomEntropy ? { entropy: hash(entropy) } : {};
 
-    return this._ec.genKeyPair(params);
+    return this._ellipticCurve.genKeyPair(params);
   }
 
   generateKeyPair(entropy) {
@@ -27,7 +22,7 @@ class Keys {
   }
 
   setPrivateKey(privateKey) {
-    this._keyPair = this._ec.keyFromPrivate(privateKey, 'hex');
+    this._keyPair = this._ellipticCurve.keyFromPrivate(privateKey, 'hex');
   }
 
   getKeyPair() {

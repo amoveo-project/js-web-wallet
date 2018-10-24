@@ -1,14 +1,14 @@
 import Big from 'big-integer';
 import Dexie from 'dexie';
 
-import { hash } from './crypto.js';
-import { forks, params } from './config.js';
+import { hash } from './utils/crypto';
+import { forks, params } from './config';
 import {
   string_to_array,
   array_to_string,
   integer_to_array,
-} from './format.js';
-import { sci2int, int2sci, hash2integer } from './headerUtils';
+} from './utils/format.js';
+import { sci2int, int2sci, hash2integer } from './utils/headers';
 
 export default class Headers {
   constructor(rpc, events) {
