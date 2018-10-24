@@ -5,7 +5,7 @@ import Keys from './node/keys';
 
 import config from './config';
 
-import { downloadFile } from './helpers/browser';
+import { downloadFile } from './utils/browser';
 
 import './App.css';
 
