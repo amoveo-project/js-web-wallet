@@ -4,87 +4,65 @@ import { hash } from './crypto';
 import { array_to_string, fromHex } from './format';
 
 class Keys {
-  constructor(props) {
-    this.options = {
-      genKeyPairParams: {},
-      ...props,
+  constructor(entropy) {
+    this._ec = new elliptic.ec('secp256k1');
+
+    this._keyPair = this._getNewKeyPair(entropy);
+  }
+
+  _getNewKeyPair(entropy = null) {
+    const isCustomEntropy = Boolean(entropy);
+
+    const params = isCustomEntropy
+      ? {
+          entropy: hash(entropy),
+        }
+      : {};
+
+    return this._ec.genKeyPair(params);
+  }
+
+  generateKeyPair(entropy) {
+    this._keyPair = this._getNewKeyPair(entropy);
+  }
+
+  setPrivateKey(privateKey) {
+    this._keyPair = this._ec.keyFromPrivate(privateKey, 'hex');
+  }
+
+  getKeyPair() {
+    return {
+      private: this._keyPair.getPrivate('hex'),
+      public: this._keyPair.getPublic('hex'),
     };
-
-    this.ec = new elliptic.ec('secp256k1');
-    this.keys = this.ec.genKeyPair(this.options.genKeyPairParams);
   }
 
-  make() {
-    this.keys = this.ec.genKeyPair(this.options.genKeyPairParams);
+  getPublicKey() {
+    const publicKey = this._keyPair.getPublic('hex');
 
-    return this.keys;
+    return btoa(fromHex(publicKey));
   }
 
-  pub() {
-    const pubPoint = this.keys.getPublic('hex');
+  sign(transaction) {
+    if (transaction[0] === 'signed') {
+      const signature = btoa(array_to_string(this.sign(transaction[1])));
 
-    return btoa(fromHex(pubPoint));
-  }
+      const publicKey = this.getPublicKey();
 
-  sign(tx) {
-    if (tx[0] == 'signed') {
-      const sig = btoa(array_to_string(this.sign(tx[1], this.keys)));
-
-      const pub = this.pub();
-
-      if (pub == tx[1][1]) {
-        tx[2] = sig;
-      } else if (pub == tx[1][2]) {
-        tx[3] = sig;
+      if (publicKey === transaction[1][1]) {
+        transaction[2] = signature;
+      } else if (publicKey === transaction[1][2]) {
+        transaction[3] = signature;
       } else {
-        throw 'sign error';
+        throw new Error('sign error');
       }
 
-      return tx;
+      return transaction;
     } else {
-      var sig = btoa(array_to_string(this.sign(tx, this.keys)));
+      const signature = btoa(array_to_string(this.sign(transaction)));
 
-      return ['signed', tx, sig, [-6]];
+      return ['signed', transaction, signature, [-6]];
     }
-  }
-
-  encrypt(val, to) {
-    // return encryption_object.send(val, to, keys)
-  }
-
-  decrypt(val) {
-    // return encryption_object.get(val, keys)
-  }
-
-  check_balance(cb) {
-    var trieKey = this.pub();
-
-    /* merkle.request_proof('accounts', trieKey, function(x) {
-      cb(x[1])
-    }) */
-  }
-
-  regenerate() {
-    this.make();
-
-    return this;
-  }
-
-  setEntropy(entropy) {
-    this.options.genKeyPairParams.entropy = hash(entropy);
-
-    this.regenerate();
-  }
-
-  getKeys() {
-    return {
-      private: this.keys.getPrivate('hex'),
-      public: this.keys.getPublic('hex'),
-    };
-  }
-
-  setPrivateKey(key) {
-    this.keys = this.ec.keyFromPrivate(key, 'hex');
   }
 }
 

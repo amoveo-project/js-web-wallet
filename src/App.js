@@ -41,9 +41,14 @@ class App extends Component {
   loadPubkey = async () => {};
 
   generateKeys() {
-    this.keys.make();
-    const pair = this.keys.getKeys();
-    this.setState({ privateKey: pair['private'], publicKey: this.keys.pub() });
+    this.keys.generateKeyPair();
+
+    const keyPair = this.keys.getKeyPair();
+
+    const privateKey = keyPair.private;
+    const publicKey = this.keys.getPublicKey();
+
+    this.setState(state => ({ privateKey, publicKey }));
   }
 
   loadPrivateKey(evt) {
@@ -55,10 +60,13 @@ class App extends Component {
     const reader = new FileReader();
     reader.onloadend = evt => {
       if (evt.target.readyState == FileReader.DONE) {
-        const data = evt.target.result;
+        const privateKey = evt.target.result;
 
-        self.keys.setPrivateKey(data);
-        self.setState({ privateKey: data, publicKey: self.keys.pub() });
+        self.keys.setPrivateKey(privateKey);
+        self.setState(state => ({
+          privateKey,
+          publicKey: self.keys.getPublicKey(),
+        }));
       }
     };
 
@@ -66,28 +74,30 @@ class App extends Component {
     evt.target.value = null;
   }
 
-  storePrivateKey() {
-    function download(data, filename, type) {
-      var file = new Blob([data], { type: type });
-      if (window.navigator.msSaveOrOpenBlob)
-        // IE10+
-        window.navigator.msSaveOrOpenBlob(file, filename);
-      else {
-        // Others
-        var a = document.createElement('a'),
-          url = URL.createObjectURL(file);
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(function() {
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        }, 0);
-      }
+  download(data, filename, type) {
+    var file = new Blob([data], { type: type });
+    if (window.navigator.msSaveOrOpenBlob)
+      // IE10+
+      window.navigator.msSaveOrOpenBlob(file, filename);
+    else {
+      // Others
+      var a = document.createElement('a'),
+        url = URL.createObjectURL(file);
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function() {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 0);
     }
+  }
 
-    download(this.state.privateKey, this.state.publicKey, 'text/plain');
+  storePrivateKey() {
+    const { privateKey, publicKey } = this.state;
+
+    this.download(privateKey, publicKey, 'text/plain');
   }
 
   showTopHeader() {
