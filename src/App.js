@@ -102,7 +102,7 @@ class App extends React.Component {
             />
           </p>
 
-          {top ? (
+          {top && (
             <pre
               style={{
                 width: '600px',
@@ -112,8 +112,6 @@ class App extends React.Component {
             >
               {top}
             </pre>
-          ) : (
-            ''
           )}
 
           <br />
@@ -133,7 +131,7 @@ class App extends React.Component {
             </label>
           </p>
 
-          {publicKey ? (
+          {publicKey && (
             <div>
               <pre
                 style={{
@@ -150,8 +148,6 @@ class App extends React.Component {
                 onClick={this.storePrivateKey}
               />
             </div>
-          ) : (
-            ''
           )}
         </header>
       </div>
