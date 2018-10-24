@@ -4,11 +4,11 @@ import Dexie from 'dexie';
 import { hash } from './utils/crypto';
 import { forks, params } from './config';
 import {
-  string_to_array,
-  array_to_string,
-  integer_to_array,
+  arrayToString,
+  integerToArray,
+  stringToArray,
 } from './utils/format.js';
-import { sci2int, int2sci, hash2integer } from './utils/headers';
+import { hashToInteger, intToSci, sciToInt } from './utils/headers';
 
 export default class Headers {
   constructor(rpc, events) {
@@ -112,7 +112,7 @@ export default class Headers {
     const Hashrate0 = Big.max(
       Big.one,
       Big(params.hashrate_converter)
-        .times(sci2int(prev_header[6]))
+        .times(sciToInt(prev_header[6]))
         .divide(DT),
     );
     const N = 20;
@@ -127,7 +127,7 @@ export default class Headers {
   newTarget(header, ewah0) {
     const ewah = Big.max(ewah0, 1);
     const diff = header[6];
-    const hashes = sci2int(diff);
+    const hashes = sciToInt(diff);
     const estimate = Number(
       Big.max(1, hashes.times(params.hashrate_converter).divide(ewah)),
     );
@@ -147,9 +147,9 @@ export default class Headers {
   }
 
   PoWRecalculate(diff0, threshold, estimate) {
-    const old = sci2int(diff0);
+    const old = sciToInt(diff0);
     const n = old.times(threshold).divide(estimate);
-    const d = int2sci(n);
+    const d = intToSci(n);
 
     return Math.max(1, d);
   }
@@ -158,7 +158,7 @@ export default class Headers {
     const height = header[1];
     if (height < 2) return { valid: true, ewah: 1000000 };
     else {
-      const previous_hash = string_to_array(atob(header[2]));
+      const previous_hash = stringToArray(atob(header[2]));
       const [diff0, ewah] = await this.difficultyShouldBe(
         header,
         previous_hash,
@@ -169,7 +169,7 @@ export default class Headers {
         const nonce = atob(header[8]);
 
         const data_header = header.slice(0);
-        data_header[8] = btoa(array_to_string(integer_to_array(0, 32)));
+        data_header[8] = btoa(arrayToString(integerToArray(0, 32)));
 
         const serialized = this.serializeHeader(data_header);
         const header_hash = hash(hash(serialized));
@@ -177,16 +177,13 @@ export default class Headers {
         let I;
         if (height >= forks.two) {
           const nonce2 = nonce.slice(-23);
-          I = hash2integer(
-            hash(header_hash.concat(string_to_array(nonce2))),
-            1,
-          );
+          I = hashToInteger(hash(header_hash.concat(stringToArray(nonce2))), 1);
         } else {
           // const data = pack("32cB32c", header_hash diff, nonce)
           const data = header_hash
-            .concat(integer_to_array(diff, 2))
-            .concat(string_to_array(nonce));
-          I = hash2integer(hash(data), 0);
+            .concat(integerToArray(diff, 2))
+            .concat(stringToArray(nonce));
+          I = hashToInteger(hash(data), 0);
         }
 
         return { valid: I > diff, ewah };
@@ -208,15 +205,15 @@ export default class Headers {
     var nonce = atob(x[8]); // 32 bytes
     var period = x[10];
 
-    return string_to_array(prev_hash)
-      .concat(integer_to_array(height, 4))
-      .concat(integer_to_array(time, 5))
-      .concat(integer_to_array(version, 2))
-      .concat(string_to_array(trees_hash))
-      .concat(string_to_array(txs_proof_hash))
-      .concat(integer_to_array(difficulty, 2))
-      .concat(string_to_array(nonce))
-      .concat(integer_to_array(period, 2));
+    return stringToArray(prev_hash)
+      .concat(integerToArray(height, 4))
+      .concat(integerToArray(time, 5))
+      .concat(integerToArray(version, 2))
+      .concat(stringToArray(trees_hash))
+      .concat(stringToArray(txs_proof_hash))
+      .concat(integerToArray(difficulty, 2))
+      .concat(stringToArray(nonce))
+      .concat(integerToArray(period, 2));
   }
 
   getTopHeader(isSerialized = false) {
@@ -259,11 +256,11 @@ export default class Headers {
       if (height === 0) {
         header[9] = 0;
       } else {
-        const prev_hash = string_to_array(atob(header[2]));
+        const prev_hash = stringToArray(atob(header[2]));
         const prev_header = await this.readHeader(prev_hash);
         const prev_accum_diff = prev_header[9];
         const diff = header[6];
-        const accum_diff = sci2int(diff);
+        const accum_diff = sciToInt(diff);
         header[9] = prev_accum_diff + accum_diff - 1;
       }
 

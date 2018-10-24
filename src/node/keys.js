@@ -1,7 +1,7 @@
 import elliptic from 'elliptic';
 
 import { hash } from './utils/crypto';
-import { array_to_string, fromHex } from './utils/format';
+import { arrayToString, hexToString } from './utils/format';
 
 class Keys {
   constructor(entropy) {
@@ -35,12 +35,12 @@ class Keys {
   getPublicKey() {
     const publicKey = this._keyPair.getPublic('hex');
 
-    return btoa(fromHex(publicKey));
+    return btoa(hexToString(publicKey));
   }
 
   sign(transaction) {
     if (transaction[0] === 'signed') {
-      const signature = btoa(array_to_string(this.sign(transaction[1])));
+      const signature = btoa(arrayToString(this.sign(transaction[1])));
 
       const publicKey = this.getPublicKey();
 
@@ -54,7 +54,7 @@ class Keys {
 
       return transaction;
     } else {
-      const signature = btoa(array_to_string(this.sign(transaction)));
+      const signature = btoa(arrayToString(this.sign(transaction)));
 
       return ['signed', transaction, signature, [-6]];
     }
