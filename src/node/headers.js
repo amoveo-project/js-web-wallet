@@ -19,7 +19,7 @@ export default class Headers {
     this.top_difficulty = 0;
   }
 
-  init = async () => {
+  init = async (offset = 0) => {
     const db = new Dexie('veodb');
     db.version(1).stores({ headers: 'header_hash,acc_difficulty' });
     this.db = db;
@@ -28,7 +28,12 @@ export default class Headers {
       .orderBy('acc_difficulty')
       .reverse()
       .limit(1)
+      .offset(offset)
       .first();
+
+    // TODO: there are cases when top header is broken somehow
+    // then we need to offset headers by one until we find the header
+    // with child we know from full node headers
 
     if (top_header !== undefined) {
       this.top_header = top_header.header;
@@ -79,7 +84,10 @@ export default class Headers {
     const header = await this.readHeader(prev_header_hash);
 
     if (header === undefined) {
-      console.log('Received an orphan header: ' + prev_header_hash);
+      console.log(
+        'Received an orphan header: ' + prev_header_hash,
+        next_header,
+      );
       throw Error('unknown parent');
     } else {
       const diff = header[6];
