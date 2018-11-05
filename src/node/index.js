@@ -24,7 +24,7 @@ export default class VeoNode {
 
     this.keys = options.keys || new Keys();
 
-    this.wallet = new Wallet(this.tree, this.headers);
+    this.wallet = new Wallet(this.rpc, this.tree, this.headers, this.keys);
   }
 
   getTopHeader() {
@@ -36,7 +36,10 @@ export default class VeoNode {
   }
 
   getBalance() {
-    const key = this.keys.getPublicKey();
-    return this.wallet.getBalance(key).then(response => response[1] / units);
+    return this.wallet.getBalance().then(response => response[1] / units);
+  }
+
+  sendMoney(receiver, amount, minerFee = undefined) {
+    return this.wallet.sendMoney(receiver, amount, minerFee);
   }
 }

@@ -11,3 +11,5 @@ export const params = {
 };
 
 export const units = 1e8;
+
+export const defaultMinerFee = 1000;

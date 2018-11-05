@@ -104,6 +104,21 @@ class App extends React.Component {
       });
   };
 
+  testTx = async () => {
+    const txid1 = await this.node.sendMoney(
+      'BOK3aoRrpJiPzATO8HVnQmwmf8S9eUheF//dcWJ58l0FE9yqrF+7RDrJOy9TJX9eWIQFwzBUZSr0JxTVfqFCVj8=',
+      120000,
+    );
+
+    console.log(txid1);
+
+    // const txid2 = await this.node.sendMoney(
+    //   "BMa7Jqz6r85dLZ+qYvLl+q9mknsxVkYy4itjPYLvomyKzeCIMR1k3+RPx9o4iQsAsGI4zO5OFZMPHdd7emOkPEs=",
+    //   120000);
+
+    // console.log(txid2);
+  };
+
   showTopHeader = () => {
     const topHeader = this.node.getTopHeader();
 
@@ -184,6 +199,13 @@ class App extends React.Component {
             type="button"
             onClick={this.testMerkle}
             value="Test Merkle (console)"
+          />
+        </div>
+        <div>
+          <input
+            type="button"
+            onClick={this.testTx}
+            value="Test Tx (console)"
           />
         </div>
       </div>

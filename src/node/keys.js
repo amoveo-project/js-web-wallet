@@ -43,7 +43,9 @@ class Keys {
     const isAlreadySigned = transaction[0] === 'signed';
 
     if (isAlreadySigned) {
-      const signature = btoa(arrayToString(sign(transaction[1])));
+      const signature = btoa(
+        arrayToString(sign(transaction[1], this._keyPair)),
+      );
       const publicKey = this.getPublicKey();
 
       if (publicKey === transaction[1][1]) {
@@ -56,7 +58,7 @@ class Keys {
 
       return transaction;
     } else {
-      const signature = btoa(arrayToString(sign(transaction)));
+      const signature = btoa(arrayToString(sign(transaction, this._keyPair)));
 
       return ['signed', transaction, signature, [-6]];
     }
