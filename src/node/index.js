@@ -9,7 +9,7 @@ import Keys from './keys';
 class NodeEmitter extends EventEmitter {}
 
 export default class VeoNode {
-  constructor(url) {
+  constructor(url, options = {}) {
     this.state = {};
 
     this.rpc = new RPC(url);
@@ -20,7 +20,7 @@ export default class VeoNode {
 
     this.tree = new MerkleProofs(this.rpc, this.headers);
 
-    this.keys = new Keys();
+    this.keys = options.keys || new Keys();
 
     this.wallet = new Wallet(this.tree, this.headers);
   }
