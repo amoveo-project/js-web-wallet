@@ -27,16 +27,17 @@ export default class Headers {
     const top_header = await db.headers
       .orderBy('acc_difficulty')
       .reverse()
-      .limit(1)
+      .limit(2)
       .offset(offset)
-      .first();
+      //.first();
+      .toArray();
 
     // TODO: there are cases when top header is broken somehow
     // then we need to offset headers by one until we find the header
     // with child we know from full node headers
 
     if (top_header !== undefined) {
-      this.top_header = top_header.header;
+      this.top_header = top_header[0].header;
     } else {
       this.top_header = [
         'header',

@@ -78,6 +78,18 @@ class App extends React.Component {
     downloadFile(privateKey, publicKey, 'text/plain');
   };
 
+  testMerkle = () => {
+    this.node.getProof('governance', 14).then(proof => {
+      console.log('test result is: ', proof);
+    });
+
+    this.node
+      .getProof('oracles', 'koWAM1ANpoPGmd+o3AFVABVyc7EeEHanf8qqmxOLeE4=')
+      .then(proof => {
+        console.log('test result is: ', proof);
+      });
+  };
+
   showTopHeader = () => {
     const topHeader = this.node.getTopHeader();
 
@@ -113,43 +125,49 @@ class App extends React.Component {
               {top}
             </pre>
           )}
+        </header>
 
-          <br />
+        <p>
+          <input
+            type="button"
+            onClick={this.generateKeys}
+            value="Generate keypair"
+          />
+        </p>
 
-          <p>
+        <p>
+          <label>
+            Load key from file:&nbsp;
+            <input id="load" type="file" onChange={this.loadPrivateKey} />
+          </label>
+        </p>
+
+        {publicKey && (
+          <div>
+            <pre
+              style={{
+                width: '600px',
+                whiteSpace: 'pre-wrap',
+                wordWrap: 'break-word',
+              }}
+            >
+              {publicKey}: {privateKey}
+            </pre>
             <input
               type="button"
-              onClick={this.generateKeys}
-              value="Generate keypair"
+              value="Store private key"
+              onClick={this.storePrivateKey}
             />
-          </p>
+          </div>
+        )}
 
-          <p>
-            <label>
-              Load key from file:&nbsp;
-              <input id="load" type="file" onChange={this.loadPrivateKey} />
-            </label>
-          </p>
-
-          {publicKey && (
-            <div>
-              <pre
-                style={{
-                  width: '600px',
-                  whiteSpace: 'pre-wrap',
-                  wordWrap: 'break-word',
-                }}
-              >
-                {publicKey}: {privateKey}
-              </pre>
-              <input
-                type="button"
-                value="Store private key"
-                onClick={this.storePrivateKey}
-              />
-            </div>
-          )}
-        </header>
+        <div>
+          <input
+            type="button"
+            onClick={this.testMerkle}
+            value="Test Merkle (console)"
+          />
+        </div>
       </div>
     );
   }

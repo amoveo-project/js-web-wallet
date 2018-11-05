@@ -20,7 +20,7 @@ export default class RPC {
     });
 
     const data = await response.json();
-    return data; //[1].slice(1);
+    return data[1];
   };
 }
 
