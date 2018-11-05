@@ -1,7 +1,7 @@
 import React from 'react';
 
 import VeoNode from './node/index';
-import Keys from './node/keys';
+// import Keys from './node/keys';
 
 import config from './config';
 
@@ -20,6 +20,7 @@ class App extends React.Component {
     error: null,
     height: 28001,
     top: null,
+    balance: null,
   };
 
   componentDidMount() {
@@ -29,18 +30,18 @@ class App extends React.Component {
       this.setState(state => ({ height: header[1] }));
     });
 
-    this.keys = new Keys();
+    // this.keys = new Keys();
   }
 
   loadPubkey = async () => {};
 
   generateKeys = () => {
-    this.keys.generateKeyPair();
+    this.node.keys.generateKeyPair();
 
-    const keyPair = this.keys.getKeyPair();
+    const keyPair = this.node.keys.getKeyPair();
 
     const privateKey = keyPair.private;
-    const publicKey = this.keys.getPublicKey();
+    const publicKey = this.node.keys.getPublicKey();
 
     this.setState(state => ({ privateKey, publicKey }));
   };
@@ -58,12 +59,16 @@ class App extends React.Component {
       if (event.target.readyState === FileReader.DONE) {
         const privateKey = event.target.result;
 
-        this.keys.setPrivateKey(privateKey);
+        this.node.keys.setPrivateKey(privateKey);
 
         this.setState(state => ({
           privateKey,
-          publicKey: this.keys.getPublicKey(),
+          publicKey: this.node.keys.getPublicKey(),
         }));
+
+        this.node.getBalance().then(balance => {
+          this.setState({ balance: balance[1] });
+        });
       }
     };
 
@@ -99,7 +104,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { publicKey, privateKey, error, height, top } = this.state;
+    const { balance, publicKey, privateKey, error, height, top } = this.state;
 
     return (
       <div className="App">
@@ -146,6 +151,8 @@ class App extends React.Component {
           <div>
             <pre
               style={{
+                display: 'inline-block',
+                margin: '0 auto',
                 width: '600px',
                 whiteSpace: 'pre-wrap',
                 wordWrap: 'break-word',
@@ -153,6 +160,7 @@ class App extends React.Component {
             >
               {publicKey}: {privateKey}
             </pre>
+            <p>Balance: {balance}</p>
             <input
               type="button"
               value="Store private key"
@@ -161,6 +169,7 @@ class App extends React.Component {
           </div>
         )}
 
+        <hr />
         <div>
           <input
             type="button"

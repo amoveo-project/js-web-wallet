@@ -3,6 +3,8 @@ import EventEmitter from 'eventemitter3';
 
 import Headers from './headers';
 import MerkleProofs from './merkle';
+import Wallet from './wallet';
+import Keys from './keys';
 
 class NodeEmitter extends EventEmitter {}
 
@@ -17,6 +19,10 @@ export default class VeoNode {
     this.headers.init().then(this.headers.syncHeaders);
 
     this.tree = new MerkleProofs(this.rpc, this.headers);
+
+    this.keys = new Keys();
+
+    this.wallet = new Wallet(this.tree, this.headers);
   }
 
   getTopHeader() {
@@ -25,5 +31,10 @@ export default class VeoNode {
 
   getProof(tree, id) {
     return this.tree.request_proof(tree, id);
+  }
+
+  getBalance() {
+    const key = this.keys.getPublicKey();
+    return this.wallet.getBalance(key);
   }
 }

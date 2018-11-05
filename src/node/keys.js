@@ -5,9 +5,9 @@ import { arrayToString, hexToString } from './utils/format';
 import { sign } from './utils/signing';
 
 class Keys {
-  constructor(entropy) {
+  constructor(entropy = '') {
     this._ellipticCurve = new elliptic.ec('secp256k1');
-    this._keyPair = this._getNewKeyPair(entropy);
+    // this._keyPair = this._getNewKeyPair(entropy);
   }
 
   _getNewKeyPair(entropy = null) {
