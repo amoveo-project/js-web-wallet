@@ -6,6 +6,8 @@ import MerkleProofs from './merkle';
 import Wallet from './wallet';
 import Keys from './keys';
 
+import { units } from './config';
+
 class NodeEmitter extends EventEmitter {}
 
 export default class VeoNode {
@@ -35,6 +37,6 @@ export default class VeoNode {
 
   getBalance() {
     const key = this.keys.getPublicKey();
-    return this.wallet.getBalance(key);
+    return this.wallet.getBalance(key).then(response => response[1] / units);
   }
 }

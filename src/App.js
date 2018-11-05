@@ -44,6 +44,15 @@ class App extends React.Component {
     const publicKey = this.node.keys.getPublicKey();
 
     this.setState(state => ({ privateKey, publicKey }));
+
+    this.node
+      .getBalance()
+      .then(balance => {
+        this.setState({ balance });
+      })
+      .catch(err => {
+        this.setState({ balance: 0 });
+      });
   };
 
   loadPrivateKey = event => {
@@ -67,7 +76,7 @@ class App extends React.Component {
         }));
 
         this.node.getBalance().then(balance => {
-          this.setState({ balance: balance[1] });
+          this.setState({ balance });
         });
       }
     };
@@ -160,7 +169,7 @@ class App extends React.Component {
             >
               {publicKey}: {privateKey}
             </pre>
-            <p>Balance: {balance}</p>
+            <p>Balance: {balance} VEO</p>
             <input
               type="button"
               value="Store private key"

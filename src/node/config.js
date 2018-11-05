@@ -9,3 +9,5 @@ export const params = {
   initial_difficulty: 8844,
   hashrate_converter: 1024,
 };
+
+export const units = 1e8;
