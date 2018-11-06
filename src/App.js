@@ -1,7 +1,5 @@
 import React from 'react';
-
-import VeoNode from './node/index';
-// import Keys from './node/keys';
+import VeoNode from 'amoveo-js-light-node';
 
 import config from './config';
 
