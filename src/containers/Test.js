@@ -2,26 +2,30 @@ import React from 'react';
 import VeoNode from 'amoveo-js-light-node';
 import styled from 'styled-components';
 
-import config from './config';
+import { downloadFile } from '../utils/browser';
 
-import { downloadFile } from './utils/browser';
-
-import './App.css';
+import config from '../config';
 
 const defaultConfig = {
   nodeUrl: 'http://amoveo.exan.tech:8080',
 };
 
-const Button = styled.button`
-  background: transparent;
-  border-radius: 3px;
-  border: 1px solid palevioletred;
-  color: palevioletred;
-  margin: 0 1em;
-  padding: 0.25em 1em;
+const TestWrapper = styled.div`
+  text-align: center;
 `;
 
-class App extends React.Component {
+const TestHeader = styled.div`
+  background-color: #282c34;
+  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+`;
+
+class Test extends React.Component {
   state = {
     publicKey: null,
     privateKey: null,
@@ -139,8 +143,8 @@ class App extends React.Component {
     const { balance, publicKey, privateKey, error, height, top } = this.state;
 
     return (
-      <div className="App">
-        <header className="App-header">
+      <TestWrapper>
+        <TestHeader>
           <p>Height: {height}</p>
 
           <p>
@@ -162,7 +166,7 @@ class App extends React.Component {
               {top}
             </pre>
           )}
-        </header>
+        </TestHeader>
 
         <p>
           <input
@@ -203,18 +207,22 @@ class App extends React.Component {
 
         <hr />
         <div>
-          <Button type="button" onClick={this.testMerkle}>
-            Test Merkle (console)
-          </Button>
+          <input
+            type="button"
+            onClick={this.testMerkle}
+            value="Test Merkle (console)"
+          />
         </div>
         <div>
-          <Button type="button" onClick={this.testTx}>
-            Test Tx (console)
-          </Button>
+          <input
+            type="button"
+            onClick={this.testTx}
+            value="Test Tx (console)"
+          />
         </div>
-      </div>
+      </TestWrapper>
     );
   }
 }
 
-export default App;
+export default Test;
