@@ -4,3 +4,9 @@
 .DS_Store
 *~*
 /build
+
+# these cause more harm than good
+# when working with contributors
+package-lock.json
+yarn.lock
+flow-coverage/
