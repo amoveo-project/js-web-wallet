@@ -1,5 +1,6 @@
 import React from 'react';
 import VeoNode from 'amoveo-js-light-node';
+import styled from 'styled-components';
 
 import config from './config';
 
@@ -10,6 +11,15 @@ import './App.css';
 const defaultConfig = {
   nodeUrl: 'http://amoveo.exan.tech:8080',
 };
+
+const Button = styled.button`
+  background: transparent;
+  border-radius: 3px;
+  border: 1px solid palevioletred;
+  color: palevioletred;
+  margin: 0 1em;
+  padding: 0.25em 1em;
+`;
 
 class App extends React.Component {
   state = {
@@ -193,18 +203,14 @@ class App extends React.Component {
 
         <hr />
         <div>
-          <input
-            type="button"
-            onClick={this.testMerkle}
-            value="Test Merkle (console)"
-          />
+          <Button type="button" onClick={this.testMerkle}>
+            Test Merkle (console)
+          </Button>
         </div>
         <div>
-          <input
-            type="button"
-            onClick={this.testTx}
-            value="Test Tx (console)"
-          />
+          <Button type="button" onClick={this.testTx}>
+            Test Tx (console)
+          </Button>
         </div>
       </div>
     );
