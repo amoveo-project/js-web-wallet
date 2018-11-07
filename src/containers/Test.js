@@ -87,9 +87,15 @@ class Test extends React.Component {
           publicKey: this.node.keys.getPublicKey(),
         }));
 
-        this.node.getBalance().then(balance => {
-          this.setState({ balance });
-        });
+        this.node
+          .getBalance()
+          .then(balance => {
+            this.setState({ balance });
+          })
+          .catch(err => {
+            console.log("can't get balance: " + err);
+            this.setState({ balance: 0 });
+          });
       }
     };
 
