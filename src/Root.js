@@ -8,13 +8,14 @@ import Test from './containers/Test';
 import NotFound from './components/NotFound';
 
 const Root = () => (
-  <App>
-    <Router>
+  <Router>
+    <Test path="/test" />
+
+    <App default>
       <Home path="/" />
-      <Test path="/test" />
       <NotFound default />
-    </Router>
-  </App>
+    </App>
+  </Router>
 );
 
 export default Root;
