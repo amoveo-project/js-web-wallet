@@ -12,7 +12,6 @@ import App from './App'; */
 // serviceWorker.unregister();
 
 import 'whatwg-fetch';
-import './index.css';
 
 import React from 'react';
 import { render } from 'react-dom';
