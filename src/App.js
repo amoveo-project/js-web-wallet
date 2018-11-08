@@ -1,20 +1,20 @@
 import React from 'react';
 import { Router } from '@reach/router';
 
-import App from './containers/App';
-import Home from './containers/Home';
-import Test from './containers/Test';
+import Template from 'shared/components/Template';
 
-import NotFound from './components/NotFound';
+import Home from './screens/Home';
+import Test from './screens/Test';
+import NotFound from './screens/NotFound';
 
 const Root = () => (
   <Router className="routerwrap">
     <Test path="/test" />
 
-    <App default>
+    <Template default>
       <Home path="/" />
       <NotFound default />
-    </App>
+    </Template>
   </Router>
 );
 

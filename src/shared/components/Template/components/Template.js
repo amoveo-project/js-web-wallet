@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 
-import { ReactComponent as LogoIcon } from '../assets/icons/logo.svg';
-import { ReactComponent as LogoCircleSvg } from '../assets/icons/logo-circle.svg';
+import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
+import { ReactComponent as LogoCircleSvg } from 'shared/assets/logo-circle.svg';
 
 const theme = {
   color: {

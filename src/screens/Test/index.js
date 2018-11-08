@@ -2,13 +2,7 @@ import React from 'react';
 import VeoNode from 'amoveo-js-light-node';
 import styled from 'styled-components';
 
-import { downloadFile } from '../utils/browser';
-
-import config from '../config';
-
-const defaultConfig = {
-  nodeUrl: 'http://amoveo.exan.tech:8080',
-};
+import { downloadFile } from 'shared/utils/browser';
 
 const TestWrapper = styled.div`
   text-align: center;
@@ -36,7 +30,10 @@ class Test extends React.Component {
   };
 
   componentDidMount() {
-    this.node = new VeoNode(config.nodeUrl || defaultConfig.nodeUrl);
+    const veoNodeUrl =
+      process.env.REACT_APP_VEO_NODE_URL || 'http://amoveo.exan.tech:8080';
+
+    this.node = new VeoNode(veoNodeUrl);
 
     this.node.events.on('header', header => {
       this.setState(state => ({ height: header[1] }));
