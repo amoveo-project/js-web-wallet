@@ -31,12 +31,17 @@ class Test extends React.Component {
     privateKey: null,
     error: null,
     height: 28001,
+    nodeHeight: null,
     top: null,
     balance: null,
   };
 
   componentDidMount() {
     this.node = new VeoNode(config.nodeUrl || defaultConfig.nodeUrl);
+
+    this.node
+      .getNodeHeight()
+      .then(height => this.setState({ nodeHeight: height }));
 
     this.node.events.on('header', header => {
       this.setState(state => ({ height: header[1] }));
@@ -146,12 +151,21 @@ class Test extends React.Component {
   };
 
   render() {
-    const { balance, publicKey, privateKey, error, height, top } = this.state;
+    const {
+      balance,
+      publicKey,
+      privateKey,
+      nodeHeight,
+      height,
+      top,
+    } = this.state;
 
     return (
       <TestWrapper>
         <TestHeader>
-          <p>Height: {height}</p>
+          <p>
+            Height: {height} / {nodeHeight}
+          </p>
 
           <p>
             <input
