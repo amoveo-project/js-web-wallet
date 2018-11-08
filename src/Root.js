@@ -8,7 +8,7 @@ import Test from './containers/Test';
 import NotFound from './components/NotFound';
 
 const Root = () => (
-  <Router>
+  <Router className="routerwrap">
     <Test path="/test" />
 
     <App default>
