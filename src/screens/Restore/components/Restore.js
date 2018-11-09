@@ -69,10 +69,7 @@ const Restore = () => {
     <Fragment>
       <MainWrap>
         <Half>
-          <Title>
-            Your <br />
-            passphrase
-          </Title>
+          <Title>Restore</Title>
           <PassPhrase>
             dapper gopher push lofty asylum tequila locker awakened custom
             popular idled serving tequila

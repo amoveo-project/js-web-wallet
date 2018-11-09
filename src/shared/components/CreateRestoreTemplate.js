@@ -5,13 +5,18 @@ import styled from 'styled-components';
 import Theme from 'theme';
 
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
-import { ReactComponent as LogoCircleSvg } from 'shared/assets/logo-circle.svg';
+import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
 
 const Header = styled.div`
   width: 100%;
   padding: 60px 0 0 0;
   position: relative;
   z-index: 2;
+  margin: 0 0 80px 0;
+`;
+const MainWrap = styled.div`
+  width: 100%;
+  flex: 1;
 `;
 const Container = styled.div`
   width: 100%;
@@ -27,6 +32,16 @@ const Logo = styled(LogoIcon)`
   & g {
   }
 `;
+const IconNext = styled(SvgNext)`
+  width: 60px;
+  height: 60px;
+  background: ${props => Theme.color.yellow};
+  padding: 20px;
+  border-radius: 30px;
+  display: inline-block;
+  margin: 0 0 0 20px;
+  vertical-align: top;
+`;
 
 const Body = styled.div`
   background: transparent;
@@ -34,37 +49,53 @@ const Body = styled.div`
   position: relative;
   z-index: 2;
 `;
-
-const Footer = styled.div`
+const HeaderLink = styled(Link)`
+  color: #5d8ab8;
+`;
+const Footer = styled.footer`
   width: 100%;
-  padding: 48px 0;
   font-size: 20px;
   position: relative;
   z-index: 2;
 `;
-
-const HeaderLink = styled(Link)`
-  color: #5d8ab8;
+const FooterWrap = styled.div`
+  background: #fff;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px 10px 0 0;
 `;
 const FooterLink = styled(Link)`
-  color: ${props => Theme.color.yellow};
   font-weight: 500;
+  line-height: 60px;
+  color: ${props => Theme.color.blue};
+  display: inline-block;
 `;
 
 const App = ({ children }) => {
   return (
     <Fragment>
-      <Header>
-        <Container>
-          <Logo />
-        </Container>
-      </Header>
-      <Body>
-        <Container>{children}</Container>
-      </Body>
+      <MainWrap>
+        <Header>
+          <Container>
+            <Link to="/">
+              <Logo />
+            </Link>
+          </Container>
+        </Header>
+        <Body>
+          <Container>{children}</Container>
+        </Body>
+      </MainWrap>
       <Footer>
         <Container>
-          <FooterLink to="/support">Support</FooterLink>
+          <FooterWrap>
+            <FooterLink to="/support">Support</FooterLink>
+            <FooterLink to="/support">
+              <span>Create wallet</span>
+              <IconNext />
+            </FooterLink>
+          </FooterWrap>
         </Container>
       </Footer>
     </Fragment>
