@@ -67,7 +67,7 @@ const FooterLink = styled(Link)`
   font-weight: 500;
 `;
 
-const App = ({ children }) => {
+const HomeTemplate = ({ children }) => {
   return (
     <Fragment>
       <Header>
@@ -90,4 +90,4 @@ const App = ({ children }) => {
   );
 };
 
-export default App;
+export default HomeTemplate;

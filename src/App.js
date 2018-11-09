@@ -3,7 +3,7 @@ import { Router } from '@reach/router';
 
 import GlobalStyles from './globalStyles';
 
-import Template from 'shared/components/Template';
+import HomeTemplate from 'shared/components/HomeTemplate';
 import CreateRestoreTemplate from 'shared/components/CreateRestoreTemplate';
 
 import Home from './screens/Home';
@@ -17,17 +17,21 @@ const App = () => (
     <GlobalStyles />
 
     <Router className="routerwrap">
+      <HomeTemplate path="/">
+        <Home path="/" />
+      </HomeTemplate>
+
+      <CreateRestoreTemplate path="/create">
+        <Create path="/" />
+      </CreateRestoreTemplate>
+
+      <CreateRestoreTemplate path="/restore">
+        <Restore path="/" />
+      </CreateRestoreTemplate>
+
       <Test path="/test" />
 
-      <Template default>
-        <Home path="/" />
-        <NotFound default />
-      </Template>
-
-      <CreateRestoreTemplate default>
-        <Create path="/create" />
-        <Restore path="/restore" />
-      </CreateRestoreTemplate>
+      <NotFound default />
     </Router>
   </React.Fragment>
 );
