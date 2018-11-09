@@ -2,14 +2,10 @@ import React, { Fragment } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 
+import Theme from 'theme';
+
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
 import { ReactComponent as LogoCircleSvg } from 'shared/assets/logo-circle.svg';
-
-const theme = {
-  color: {
-    yellow: '#fff200',
-  },
-};
 
 const Header = styled.div`
   width: 100%;
@@ -73,7 +69,7 @@ const HeaderLink = styled(Link)`
   color: #5d8ab8;
 `;
 const FooterLink = styled(Link)`
-  color: ${props => theme.color.yellow};
+  color: ${props => Theme.color.yellow};
 `;
 
 const App = ({ children }) => {
