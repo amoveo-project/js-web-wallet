@@ -15,7 +15,9 @@ const PassPhrase = styled.p`
   font-weight: normal;
   font-size: 20px;
   font-family: OCRAExtended;
+  font-family: 'OCRAExtended', 'Michroma', sans-serif;
   line-height: 1.5;
+  font-weight: normal;
 `;
 const DownloadTitle = styled.p`
   font-weight: 500;
@@ -51,6 +53,12 @@ const Download = styled.button`
   font-size: 20px;
   background: none;
   cursor: pointer;
+  transition: all 0.4s;
+
+  &:hover {
+    background: ${props => Theme.color.yellow};
+    color: ${props => Theme.color.blue};
+  }
 
   svg {
     fill: currentColor;

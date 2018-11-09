@@ -53,6 +53,32 @@ const Logo = styled(LogoIcon)`
   & g {
   }
 `;
+const GoBack = styled(Link)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 80px;
+  background: rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  z-index: 9;
+
+  &:hover {
+    svg {
+      transform: translate(-70%, -50%) rotate(180deg);
+    }
+  }
+`;
+const IconBack = styled(SvgNext)`
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  fill: #fff;
+  transition: transform 0.4s;
+  transform: translate(-50%, -50%) rotate(180deg);
+`;
 const IconNext = styled(SvgNext)`
   width: 60px;
   height: 60px;
@@ -120,6 +146,9 @@ const App = ({ children }) => {
             </FooterWrap>
           </Container>
         </Footer>
+        <GoBack to="/">
+          <IconBack />
+        </GoBack>
       </Main>
     </Fragment>
   );
