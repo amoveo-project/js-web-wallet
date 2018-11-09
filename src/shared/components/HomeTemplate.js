@@ -7,6 +7,15 @@ import Theme from 'theme';
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
 import { ReactComponent as LogoCircleSvg } from 'shared/assets/logo-circle.svg';
 
+const Main = styled.div`
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: ${props => Theme.color.blue};
+  color: #fff;
+`;
 const Header = styled.div`
   width: 100%;
   padding: 60px 0 0 0;
@@ -70,22 +79,24 @@ const FooterLink = styled(Link)`
 const HomeTemplate = ({ children }) => {
   return (
     <Fragment>
-      <Header>
-        <Container>
-          <Logo />
-        </Container>
-      </Header>
-      <Body>
-        <Container>{children}</Container>
-      </Body>
-      <Footer>
-        <Container>
-          <FooterLink to="/support">Support</FooterLink>
-        </Container>
-      </Footer>
-      <LogoCircleWrap>
-        <LogoCircle />
-      </LogoCircleWrap>
+      <Main>
+        <Header>
+          <Container>
+            <Logo />
+          </Container>
+        </Header>
+        <Body>
+          <Container>{children}</Container>
+        </Body>
+        <Footer>
+          <Container>
+            <FooterLink to="/support">Support</FooterLink>
+          </Container>
+        </Footer>
+        <LogoCircleWrap>
+          <LogoCircle />
+        </LogoCircleWrap>
+      </Main>
     </Fragment>
   );
 };

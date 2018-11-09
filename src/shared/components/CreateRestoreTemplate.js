@@ -7,6 +7,27 @@ import Theme from 'theme';
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
 import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
 
+const Main = styled.div`
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: ${props => Theme.color.blue};
+  color: #fff;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 50%;
+    background: rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+  }
+`;
 const Header = styled.div`
   width: 100%;
   padding: 60px 0 0 0;
@@ -75,29 +96,31 @@ const FooterLink = styled(Link)`
 const App = ({ children }) => {
   return (
     <Fragment>
-      <MainWrap>
-        <Header>
+      <Main>
+        <MainWrap>
+          <Header>
+            <Container>
+              <Link to="/">
+                <Logo />
+              </Link>
+            </Container>
+          </Header>
+          <Body>
+            <Container>{children}</Container>
+          </Body>
+        </MainWrap>
+        <Footer>
           <Container>
-            <Link to="/">
-              <Logo />
-            </Link>
+            <FooterWrap>
+              <FooterLink to="/support">Support</FooterLink>
+              <FooterLink to="/support">
+                <span>Create wallet</span>
+                <IconNext />
+              </FooterLink>
+            </FooterWrap>
           </Container>
-        </Header>
-        <Body>
-          <Container>{children}</Container>
-        </Body>
-      </MainWrap>
-      <Footer>
-        <Container>
-          <FooterWrap>
-            <FooterLink to="/support">Support</FooterLink>
-            <FooterLink to="/support">
-              <span>Create wallet</span>
-              <IconNext />
-            </FooterLink>
-          </FooterWrap>
-        </Container>
-      </Footer>
+        </Footer>
+      </Main>
     </Fragment>
   );
 };

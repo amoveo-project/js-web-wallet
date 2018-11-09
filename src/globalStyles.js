@@ -7,14 +7,13 @@ const GlobalStyles = createGlobalStyle`
 
   html,
   body {
-    background: #161a2e;
     height: 100%;
     margin: 0;
     padding: 0;
   }
 
   body {
-    color: #fff;
+    display: flex;
     font-family: 'Ubuntu', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -27,18 +26,14 @@ const GlobalStyles = createGlobalStyle`
 
   #root {
     display: flex;
+    width: 100%;
   }
   #root,
   .routerwrap {
     min-height: 100%;
   }
   .routerwrap {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: space-between;
-    align-items: flex-start;
-    position: relative;
+    flex: 1;
   }
 `;
 
