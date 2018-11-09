@@ -14,6 +14,7 @@ const GlobalStyles = createGlobalStyle`
 
   body {
     display: flex;
+    color: #fff;
     font-family: 'Ubuntu', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

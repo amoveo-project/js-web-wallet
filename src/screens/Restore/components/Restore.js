@@ -7,26 +7,35 @@ import Theme from 'theme';
 import { ReactComponent as SvgDownload } from 'shared/assets/icon-download.svg';
 
 const Title = styled.h1`
-  font-weight: 500;
-  font-size: 60px;
+  font-size: 40px;
   margin: 0 0 40px 0;
+
+  span {
+    color: ${props => Theme.color.yellow};
+  }
 `;
-const PassPhrase = styled.p`
+const PassPhraseLabel = styled.label`
+  display: inline-block;
+  font-size: 16px;
+  opacity: 0.5;
+  margin: 0 0 20px 0;
+`;
+const PassPhraseArea = styled.textarea`
+  font-family: 'OCRAExtended', 'Michroma', sans-serif;
   font-weight: normal;
   font-size: 20px;
-  font-family: OCRAExtended;
   line-height: 1.5;
-`;
-const DownloadTitle = styled.p`
-  font-weight: 500;
-  font-size: 60px;
-  margin: 0 0 40px 0;
-  color: ${props => Theme.color.yellow};
-`;
-const DownloadText = styled.p`
-  font-size: 20px;
-  margin: 0 0 40px 0;
-  font-weight: 300;
+  width: 100%;
+  background: #11142b;
+  border: none;
+  color: #fff;
+  padding: 130px 50px;
+  text-align: center;
+
+  &::placeholder {
+    color: #fff;
+    opacity: 0.3;
+  }
 `;
 const MainWrap = styled.div`
   width: 100%;
@@ -36,54 +45,21 @@ const MainWrap = styled.div`
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-`;
-const Half = styled.div`
-  width: 100%;
-  max-width: 500px;
-  padding: 0 30px 0 0;
-`;
-const Download = styled.button`
-  border: 2px solid ${props => Theme.color.yellow};
-  color: ${props => Theme.color.yellow};
-  padding: 20px;
-  line-height: 20px;
-  border-radius: 10px;
-  font-size: 20px;
-  background: none;
-  cursor: pointer;
-
-  svg {
-    fill: currentColor;
-    width: 20px;
-    height: 20px;
-    float: left;
-    margin: 0 20px 0 0;
-  }
-  span {
-    font-weight: 500;
-  }
+  flex-wrap: warp;
+  background: red;
 `;
 
 const Restore = () => {
   return (
     <Fragment>
-      <MainWrap>
-        <Half>
-          <Title>Restore</Title>
-          <PassPhrase>
-            dapper gopher push lofty asylum tequila locker awakened custom
-            popular idled serving tequila
-          </PassPhrase>
-        </Half>
-        <Half>
-          <DownloadTitle>Download your passphrase file</DownloadTitle>
-          <DownloadText>This is very important!</DownloadText>
-          <Download>
-            <SvgDownload />
-            <span>Download</span> (.txt 25 KB)
-          </Download>
-        </Half>
-      </MainWrap>
+      <Title>
+        Restore with <span>passphrase</span> or <span>private key</span>
+      </Title>
+      <PassPhraseLabel htmlFor="">Your passphrase</PassPhraseLabel>
+      <PassPhraseArea
+        id="passphrase"
+        placeholder="Enter or paste your passphrase"
+      />
     </Fragment>
   );
 };
