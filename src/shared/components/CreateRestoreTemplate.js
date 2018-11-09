@@ -19,29 +19,13 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 0 15px;
 `;
-const LogoCircleWrap = styled.div`
-  flex: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 780px;
-  overflow: hidden;
-  pointer-events: none;
-`;
+
 const Logo = styled(LogoIcon)`
   width: 195px;
   height: 60px;
 
   & g {
   }
-`;
-const LogoCircle = styled(LogoCircleSvg)`
-  width: 960px;
-  height: 960px;
-  margin-top: -480px;
-  position: absolute;
-  top: 50%;
 `;
 
 const Body = styled.div`
@@ -83,9 +67,6 @@ const App = ({ children }) => {
           <FooterLink to="/support">Support</FooterLink>
         </Container>
       </Footer>
-      <LogoCircleWrap>
-        <LogoCircle />
-      </LogoCircleWrap>
     </Fragment>
   );
 };
