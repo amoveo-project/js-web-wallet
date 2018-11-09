@@ -13,7 +13,7 @@ const Title = styled.h1`
   margin: 0 0 40px 0;
   max-width: 500px;
 `;
-const Subtitle = styled.h1`
+const Subtitle = styled.p`
   font-weight: 300;
   font-size: 20px;
   opacity: 0.5;
@@ -92,7 +92,7 @@ const Home = () => {
           <IconWallet />
           <span>Create</span> wallet
         </Button>
-        <Button to="/create">
+        <Button to="/restore">
           <SvgRestore2 />
           <span>Restore</span> wallet
         </Button>
