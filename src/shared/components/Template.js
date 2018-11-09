@@ -70,6 +70,7 @@ const HeaderLink = styled(Link)`
 `;
 const FooterLink = styled(Link)`
   color: ${props => Theme.color.yellow};
+  font-weight: 500;
 `;
 
 const App = ({ children }) => {
