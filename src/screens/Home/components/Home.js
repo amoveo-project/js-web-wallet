@@ -2,8 +2,6 @@ import React, { Fragment } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 
-import Theme from 'theme';
-
 import { ReactComponent as SvgWallet } from 'shared/assets/icon-wallet.svg';
 import { ReactComponent as SvgRestore } from 'shared/assets/icon-restore.svg';
 
@@ -44,7 +42,7 @@ const Button = styled(Link)`
     height: 60px;
     border-radius: 0 30px 30px 0;
     margin-top: -30px;
-    background: ${props => Theme.color.blue};
+    background: ${props => props.theme.color.blue};
     transition: all 0.4s;
   }
 
@@ -73,7 +71,7 @@ const Button = styled(Link)`
 `;
 
 const IconWallet = styled(SvgWallet)`
-  fill: ${props => Theme.color.yellow};
+  fill: ${props => props.theme.color.yellow};
 `;
 const SvgRestore2 = styled(SvgRestore)`
   fill: #fff;

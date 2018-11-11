@@ -2,8 +2,6 @@ import React, { Fragment } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 
-import Theme from 'theme';
-
 import { ReactComponent as SvgDownload } from 'shared/assets/icon-download.svg';
 
 const Title = styled.h1`
@@ -22,7 +20,7 @@ const DownloadTitle = styled.p`
   font-weight: 500;
   font-size: 60px;
   margin: 0 0 40px 0;
-  color: ${props => Theme.color.yellow};
+  color: ${props => props.theme.color.yellow};
 `;
 const DownloadText = styled.p`
   font-size: 20px;
@@ -44,8 +42,8 @@ const Half = styled.div`
   padding: 0 30px 0 0;
 `;
 const Download = styled.button`
-  border: 2px solid ${props => Theme.color.yellow};
-  color: ${props => Theme.color.yellow};
+  border: 2px solid ${props => props.theme.color.yellow};
+  color: ${props => props.theme.color.yellow};
   padding: 20px;
   line-height: 20px;
   border-radius: 10px;
@@ -55,8 +53,8 @@ const Download = styled.button`
   transition: all 0.4s;
 
   &:hover {
-    background: ${props => Theme.color.yellow};
-    color: ${props => Theme.color.blue};
+    background: ${props => props.theme.color.yellow};
+    color: ${props => props.theme.color.blue};
   }
 
   svg {

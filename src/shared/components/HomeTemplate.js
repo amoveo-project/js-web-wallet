@@ -2,8 +2,6 @@ import React, { Fragment } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 
-import Theme from 'theme';
-
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
 import { ReactComponent as LogoCircleSvg } from 'shared/assets/logo-circle.svg';
 
@@ -13,7 +11,7 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: ${props => Theme.color.blue};
+  background: ${props => props.theme.color.blue};
   color: #fff;
 `;
 const Header = styled.div`
@@ -72,7 +70,7 @@ const HeaderLink = styled(Link)`
   color: #5d8ab8;
 `;
 const FooterLink = styled(Link)`
-  color: ${props => Theme.color.yellow};
+  color: ${props => props.theme.color.yellow};
   font-weight: 500;
 `;
 

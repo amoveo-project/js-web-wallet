@@ -2,8 +2,6 @@ import React, { Fragment } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 
-import Theme from 'theme';
-
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
 import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
 
@@ -13,7 +11,7 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: ${props => Theme.color.blue};
+  background-color: ${props => props.theme.color.blue};
   color: #fff;
   position: relative;
 
@@ -82,7 +80,7 @@ const IconBack = styled(SvgNext)`
 const IconNext = styled(SvgNext)`
   width: 60px;
   height: 60px;
-  background: ${props => Theme.color.yellow};
+  background: ${props => props.theme.color.yellow};
   padding: 20px;
   border-radius: 30px;
   display: inline-block;
@@ -115,7 +113,7 @@ const FooterWrap = styled.div`
 const FooterLink = styled(Link)`
   font-weight: 500;
   line-height: 60px;
-  color: ${props => Theme.color.blue};
+  color: ${props => props.theme.color.blue};
   display: inline-block;
 `;
 

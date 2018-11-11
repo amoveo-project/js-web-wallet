@@ -2,8 +2,6 @@ import React, { Fragment } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 
-import Theme from 'theme';
-
 import { ReactComponent as SvgDownload } from 'shared/assets/icon-download.svg';
 
 const Title = styled.h1`
@@ -11,7 +9,7 @@ const Title = styled.h1`
   margin: 0 0 40px 0;
 
   span {
-    color: ${props => Theme.color.yellow};
+    color: ${props => props.theme.color.yellow};
   }
 `;
 const PassPhraseLabel = styled.label`
