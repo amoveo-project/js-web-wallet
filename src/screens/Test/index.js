@@ -19,6 +19,29 @@ const TestHeader = styled.div`
   color: white;
 `;
 
+const TopHeaderInfo = styled.pre`
+  width: 600px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+`;
+
+const KeyFile = styled.p`
+  color: black;
+`;
+
+const KeysInfo = styled.pre`
+  display: inline-block;
+  margin: 0 auto;
+  width: 600px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: black;
+`;
+
+const BalanceInfo = styled.p`
+  color: black;
+`;
+
 class Test extends React.Component {
   state = {
     publicKey: null,
@@ -152,17 +175,7 @@ class Test extends React.Component {
             />
           </p>
 
-          {top && (
-            <pre
-              style={{
-                width: '600px',
-                whiteSpace: 'pre-wrap',
-                wordWrap: 'break-word',
-              }}
-            >
-              {top}
-            </pre>
-          )}
+          {top && <TopHeaderInfo>{top}</TopHeaderInfo>}
         </TestHeader>
 
         <p>
@@ -173,27 +186,19 @@ class Test extends React.Component {
           />
         </p>
 
-        <p>
+        <KeyFile>
           <label>
             Load key from file:&nbsp;
             <input id="load" type="file" onChange={this.loadPrivateKey} />
           </label>
-        </p>
+        </KeyFile>
 
         {publicKey && (
           <div>
-            <pre
-              style={{
-                display: 'inline-block',
-                margin: '0 auto',
-                width: '600px',
-                whiteSpace: 'pre-wrap',
-                wordWrap: 'break-word',
-              }}
-            >
+            <KeysInfo>
               {publicKey}: {privateKey}
-            </pre>
-            <p>Balance: {balance} VEO</p>
+            </KeysInfo>
+            <BalanceInfo>Balance: {balance} VEO</BalanceInfo>
             <input
               type="button"
               value="Store private key"
