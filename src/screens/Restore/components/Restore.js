@@ -1,8 +1,5 @@
 import React, { Fragment } from 'react';
-import { Link } from '@reach/router';
 import styled from 'styled-components';
-
-import { ReactComponent as SvgDownload } from 'shared/assets/icon-download.svg';
 
 const Title = styled.h1`
   font-size: 40px;
@@ -10,6 +7,11 @@ const Title = styled.h1`
 
   span {
     color: ${props => props.theme.color.yellow};
+    cursor: pointer;
+  }
+  .active {
+    text-decoration: underline;
+    cursor: default;
   }
 `;
 const PassPhraseLabel = styled.label`
@@ -22,18 +24,42 @@ const PassPhraseArea = styled.textarea`
   font-family: 'OCRAExtended', 'Michroma', sans-serif;
   font-weight: normal;
   font-size: 20px;
-  line-height: 1.5;
+  line-height: 30px;
   width: 100%;
+  min-height: 240px;
   background: rgba(0, 0, 0, 0.15);
   border: none;
+  border-radius: 10px;
   color: #fff;
-  padding: 130px 50px;
+  padding: 50px;
   text-align: center;
+  resize: none;
 
   &::placeholder {
     color: #fff;
     opacity: 0.3;
   }
+`;
+const PrivateKey = styled.input`
+  font-family: 'OCRAExtended', 'Michroma', sans-serif;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 20px;
+  width: 100%;
+  background: none;
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 20px 20px 20px 0;
+  text-align: left;
+
+  &::placeholder {
+    color: #fff;
+    opacity: 0.3;
+  }
+`;
+const PrivateKeyLabel = styled(PassPhraseLabel)`
+  margin: 0;
 `;
 const MainWrap = styled.div`
   width: 100%;
@@ -51,12 +77,22 @@ const Restore = () => {
   return (
     <Fragment>
       <Title>
-        Restore with <span>passphrase</span> or <span>private key</span>
+        Restore with <span className="active">passphrase</span> or{' '}
+        <span>private key</span>
       </Title>
-      <PassPhraseLabel htmlFor="">Your passphrase</PassPhraseLabel>
+      <PassPhraseLabel htmlFor="passphrase">Your passphrase</PassPhraseLabel>
       <PassPhraseArea
+        autoFocus
         id="passphrase"
         placeholder="Enter or paste your passphrase"
+        rows="1"
+      />
+      <PrivateKeyLabel htmlFor="privatekey">
+        Private key (64 symbols)
+      </PrivateKeyLabel>
+      <PrivateKey
+        id="privatekey"
+        placeholder="Enter or paste your private key"
       />
     </Fragment>
   );
