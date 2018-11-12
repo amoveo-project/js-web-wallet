@@ -24,7 +24,7 @@ const PassPhraseArea = styled.textarea`
   font-size: 20px;
   line-height: 1.5;
   width: 100%;
-  background: #11142b;
+  background: rgba(0, 0, 0, 0.15);
   border: none;
   color: #fff;
   padding: 130px 50px;

@@ -30,16 +30,29 @@ const DownloadText = styled.p`
 const MainWrap = styled.div`
   width: 100%;
   flex: 1;
-  position: relative;
+  position: static;
   z-index: 2;
   display: flex;
   align-items: stretch;
   justify-content: space-between;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 50%;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 0;
+    pointer-events: none;
+  }
 `;
 const Half = styled.div`
   width: 100%;
   max-width: 500px;
   padding: 0 30px 0 0;
+  z-index: 2;
 `;
 const Download = styled.button`
   border: 2px solid ${props => props.theme.color.yellow};

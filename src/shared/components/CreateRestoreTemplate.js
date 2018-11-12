@@ -14,17 +14,6 @@ const Main = styled.div`
   background-color: ${props => props.theme.color.blue};
   color: #fff;
   position: relative;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 50%;
-    background: rgba(0, 0, 0, 0.15);
-    pointer-events: none;
-  }
 `;
 const Header = styled.div`
   width: 100%;
@@ -91,7 +80,7 @@ const IconNext = styled(SvgNext)`
 const Body = styled.div`
   background: transparent;
   width: 100%;
-  position: relative;
+  position: static;
   z-index: 2;
 `;
 const HeaderLink = styled(Link)`
