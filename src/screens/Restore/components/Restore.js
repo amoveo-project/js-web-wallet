@@ -21,7 +21,7 @@ const PassPhraseLabel = styled.label`
   margin: 0 0 20px 0;
 `;
 const PassPhraseArea = styled.textarea`
-  font-family: 'OCRAExtended', 'Michroma', sans-serif;
+  font-family: 'OCRAExtended', sans-serif;
   font-weight: normal;
   font-size: 20px;
   line-height: 30px;
@@ -41,7 +41,7 @@ const PassPhraseArea = styled.textarea`
   }
 `;
 const PrivateKey = styled.input`
-  font-family: 'OCRAExtended', 'Michroma', sans-serif;
+  font-family: 'OCRAExtended', sans-serif;
   font-weight: normal;
   font-size: 20px;
   line-height: 20px;

@@ -12,7 +12,7 @@ const Title = styled.h1`
 const PassPhrase = styled.p`
   font-weight: normal;
   font-size: 20px;
-  font-family: 'OCRAExtended', 'Michroma', sans-serif;
+  font-family: 'OCRAExtended', sans-serif;
   line-height: 1.5;
   font-weight: normal;
 `;
