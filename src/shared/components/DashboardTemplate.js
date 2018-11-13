@@ -3,10 +3,11 @@ import { Link } from '@reach/router';
 import styled from 'styled-components';
 
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
-import { ReactComponent as SvgSend } from 'shared/assets/send.svg';
-import { ReactComponent as SvgReceive } from 'shared/assets/receive.svg';
-import { ReactComponent as SvgGear } from 'shared/assets/gear.svg';
-import { ReactComponent as SvgClipboard } from 'shared/assets/clipboard.svg';
+import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
+import { ReactComponent as SvgReceive } from 'shared/assets/icon-receive.svg';
+import { ReactComponent as SvgGear } from 'shared/assets/icon-gear.svg';
+import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg';
+import { ReactComponent as SvgNext } from 'shared/assets/icon-arrow.svg';
 import Button from 'shared/components/Button.js';
 
 const Main = styled.div`
@@ -67,6 +68,7 @@ const Balance = styled.div`
 
   span {
     font-size: 20px;
+    vertical-align: baseline;
   }
 `;
 const LogoLink = styled(Link)`
@@ -117,7 +119,7 @@ const MenuItem = styled(Link)`
 `;
 const Body = styled.div`
   width: 100%;
-  padding: 30px 0 0 0;
+  padding: 30px 0 60px 0;
 `;
 const Wallet = styled.div`
   flex: 1;
@@ -142,17 +144,6 @@ const TransactionsLabel = styled.h3`
   font-size: 16px;
   font-weight: 300;
   opacity: 0.5;
-`;
-const Transactions = styled.section`
-  padding: 40px 20px;
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-`;
-const TransactionsPlaceholder = styled.p`
-  opacity: 0.5;
-  font-weight: 500;
-  text-align: center;
-  margin: 0;
 `;
 const HeaderLink = styled(Link)`
   color: #5d8ab8;
@@ -307,6 +298,96 @@ const LogOut = styled(Link)`
     opacity: 1;
   }
 `;
+const Transactions = styled.section``;
+const TransactionsPlaceholder = styled.p`
+  font-weight: 500;
+  text-align: center;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.15);
+  color: rgba(255, 255, 255, 0.5);
+  padding: 40px 20px;
+  border-radius: 10px;
+`;
+const TransactionsRow = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+
+  padding: 10px;
+
+  &:nth-child(2n) {
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  &.tr__header {
+    font-weight: 500;
+  }
+  &.tr__navigation {
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+`;
+const TransactionsCol = styled.div`
+  width: 100%;
+  line-height: 20px;
+  font-size: 16px;
+
+  &.tr__value,
+  &.tr__date {
+    max-width: 160px;
+  }
+  &.tr__mixin {
+    max-width: 70px;
+  }
+  &.tr__id {
+    flex: 1;
+    padding-left: 30px;
+    position: relative;
+  }
+  svg {
+    width: 20px;
+    height: 20px;
+    padding: 4px;
+    margin: 0 10px 0 0;
+    display: inline-block;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+`;
+const TransactionsId = styled.div`
+  word-break: break-all;
+`;
+const TransactionsNext = styled.div`
+  color: ${props => props.theme.color.yellow};
+  line-height: 16px;
+  font-weight: 500;
+  cursor: pointer;
+
+  svg {
+    margin: 0 10px 0 0;
+  }
+`;
+const TransactionsCounter = styled.div`
+  opacity: 0.5;
+  font-weight: 500;
+`;
+const TransactionsPrev = styled(TransactionsNext)`
+  svg {
+    margin: 0 0 0 10px;
+  }
+`;
+const IconBack = styled(SvgNext)`
+  width: 8px;
+  height: 18px;
+  transition: transform 0.4s;
+  fill: currentColor;
+`;
+const IconNext = styled(IconBack)`
+  transform: rotate(180deg);
+`;
 
 const DashboardTemplate = ({ children }) => {
   return (
@@ -357,7 +438,8 @@ const DashboardTemplate = ({ children }) => {
               <div>
                 <YourBalanceText>Your balance</YourBalanceText>
                 <Balance>
-                  0<span>.00</span> VEO
+                  20
+                  <span>.00879345</span> VEO
                 </Balance>
               </div>
             </FlexContainer>
@@ -384,10 +466,77 @@ const DashboardTemplate = ({ children }) => {
             </FlexContainer>
             <Container>
               <TransactionsLabel>Transactions</TransactionsLabel>
-              <Transactions>
+              <Transactions className="transition">
                 <TransactionsPlaceholder>
                   Your transactions will be displayed here
                 </TransactionsPlaceholder>
+              </Transactions>
+              <TransactionsLabel>Transactions</TransactionsLabel>
+              <Transactions className="transition">
+                <TransactionsRow className="tr__header">
+                  <TransactionsCol className="tr__value">
+                    Value (VEO)
+                  </TransactionsCol>
+                  <TransactionsCol className="tr__date">Date</TransactionsCol>
+                  <TransactionsCol className="tr__mixin">Mixin</TransactionsCol>
+                  <TransactionsCol className="tr__id">
+                    <TransactionsId>Transaction ID</TransactionsId>
+                  </TransactionsCol>
+                </TransactionsRow>
+                <TransactionsRow>
+                  <TransactionsCol className="tr__value">
+                    20.00879345
+                  </TransactionsCol>
+                  <TransactionsCol className="tr__date">
+                    26.10.2018 12:24
+                  </TransactionsCol>
+                  <TransactionsCol className="tr__mixin">6</TransactionsCol>
+                  <TransactionsCol className="tr__id">
+                    <IconSend />
+                    <TransactionsId>
+                      49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5L
+                    </TransactionsId>
+                  </TransactionsCol>
+                </TransactionsRow>
+                <TransactionsRow>
+                  <TransactionsCol className="tr__value">
+                    20.00879345
+                  </TransactionsCol>
+                  <TransactionsCol className="tr__date">
+                    26.10.2018 12:24
+                  </TransactionsCol>
+                  <TransactionsCol className="tr__mixin">6</TransactionsCol>
+                  <TransactionsCol className="tr__id">
+                    <IconSend />
+                    <TransactionsId>
+                      49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LG49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LG49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LG49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LG
+                    </TransactionsId>
+                  </TransactionsCol>
+                </TransactionsRow>
+                <TransactionsRow>
+                  <TransactionsCol className="tr__value">
+                    20.00879345
+                  </TransactionsCol>
+                  <TransactionsCol className="tr__date">
+                    26.10.2018 12:24
+                  </TransactionsCol>
+                  <TransactionsCol className="tr__mixin">6</TransactionsCol>
+                  <TransactionsCol className="tr__id">
+                    <IconReceive />
+                    <TransactionsId>
+                      49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx
+                    </TransactionsId>
+                  </TransactionsCol>
+                </TransactionsRow>
+                <TransactionsRow className="tr__navigation">
+                  <TransactionsNext>
+                    <IconBack /> Previous 10
+                  </TransactionsNext>
+                  <TransactionsCounter>2 / 10</TransactionsCounter>
+                  <TransactionsPrev>
+                    Next 10 <IconNext />
+                  </TransactionsPrev>
+                </TransactionsRow>
               </Transactions>
             </Container>
           </Body>
