@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { ReactComponent as SvgWallet } from 'shared/assets/icon-wallet.svg';
 import { ReactComponent as SvgRestore } from 'shared/assets/icon-restore.svg';
+import Button from 'shared/components/Button.js';
 
 const Title = styled.h1`
   font-weight: 500;
@@ -20,54 +21,8 @@ const Subtitle = styled.p`
 const Buttons = styled.div`
   margin: 40px 0 0 0;
 `;
-const Button = styled(Link)`
-  display: inline-block;
-  margin: 0 30px 0 0;
-  padding: 30px 30px 30px 90px;
-  line-height: 60px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-size: 20px;
-  color: #161a2e;
-  background: #fff;
-  position: relative;
-  transition: all 0.4s;
-
-  &:after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 60px;
-    height: 60px;
-    border-radius: 0 30px 30px 0;
-    margin-top: -30px;
-    background: ${props => props.theme.color.blue};
-    transition: all 0.4s;
-  }
-
-  &:first-child {
-    background: #fff200;
-  }
-
-  & span {
-    font-weight: 500;
-  }
-  svg {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    z-index: 2;
-    top: 50%;
-    left: 15px;
-    margin-top: -10px;
-  }
-
-  &:hover {
-    &:after {
-      width: 55px;
-    }
-  }
+const CreateButton = styled(Button)`
+  background: ${props => props.theme.color.yellow};
 `;
 
 const IconWallet = styled(SvgWallet)`
@@ -75,7 +30,6 @@ const IconWallet = styled(SvgWallet)`
 `;
 const SvgRestore2 = styled(SvgRestore)`
   fill: #fff;
-  width: 23px;
 `;
 
 const Home = () => {
@@ -86,10 +40,10 @@ const Home = () => {
         Send and receive Viewo (VEO) safely and securely, anywhere and any time.
       </Subtitle>
       <Buttons>
-        <Button to="/create">
+        <CreateButton to="/create">
           <IconWallet />
           <span>Create</span> wallet
-        </Button>
+        </CreateButton>
         <Button to="/restore">
           <SvgRestore2 />
           <span>Restore</span> wallet

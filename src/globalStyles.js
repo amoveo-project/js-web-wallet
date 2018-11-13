@@ -14,6 +14,7 @@ const GlobalStyles = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+    vertical-align: top;
   }
 
   html,

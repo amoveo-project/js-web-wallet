@@ -98,6 +98,7 @@ const FooterWrap = styled.div`
   display: flex;
   justify-content: space-between;
   border-radius: 10px 10px 0 0;
+  margin: 40px 0 0 0;
 `;
 const FooterLink = styled(Link)`
   font-weight: 500;

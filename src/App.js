@@ -7,6 +7,7 @@ import theme from './theme';
 
 import CreateRestoreTemplate from 'shared/components/CreateRestoreTemplate';
 import HomeTemplate from 'shared/components/HomeTemplate';
+import DashboardTemplate from 'shared/components/DashboardTemplate';
 
 import Create from './screens/Create';
 import Dashboard from './screens/Dashboard';
@@ -36,7 +37,7 @@ const App = () => (
           <Restore path="/" />
         </CreateRestoreTemplate>
 
-        <Dashboard path="/dashboard" />
+        <DashboardTemplate path="/dashboard" />
         <Send path="/send" />
         <Receive path="/receive" />
         <Exchange path="/exchange" />
