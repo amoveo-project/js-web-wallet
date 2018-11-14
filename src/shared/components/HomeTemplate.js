@@ -58,7 +58,7 @@ const Body = styled.div`
   z-index: 2;
 `;
 
-const Footer = styled.div`
+const Footer = styled.footer`
   width: 100%;
   padding: 48px 0;
   font-size: 20px;

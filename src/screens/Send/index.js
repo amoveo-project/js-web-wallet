@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Send from './components/Send';
+import Send from './components/Template';
 
 class SendContainer extends React.Component {
   render() {
