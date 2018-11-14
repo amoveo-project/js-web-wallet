@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import Home from './components/Home';
 
-class HomeContainer extends React.Component {
-  render() {
-    return <Home />;
-  }
-}
+import AppContext from 'shared/contexts/AppContext';
+
+const HomeContainer = () => {
+  const { setKeys, setPassphrase } = useContext(AppContext);
+
+  useEffect(() => {
+    setKeys({
+      private: null,
+      public: null,
+    });
+
+    setPassphrase('');
+  }, []);
+
+  return <Home />;
+};
 
 export default HomeContainer;

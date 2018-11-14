@@ -1,8 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 
 import { ReactComponent as SvgDownload } from 'shared/assets/icon-download.svg';
+
+import AppContext from 'shared/contexts/AppContext';
+import CreateContext from 'shared/contexts/CreateContext';
 
 const Title = styled.h1`
   font-weight: 500;
@@ -83,6 +86,9 @@ const Download = styled.button`
 `;
 
 const Create = () => {
+  const { isWalletCreated, passphrase } = useContext(AppContext);
+  const { downloadPrivateKey } = useContext(CreateContext);
+
   return (
     <Fragment>
       <MainWrap>
@@ -91,17 +97,14 @@ const Create = () => {
             Your <br />
             passphrase
           </Title>
-          <PassPhrase>
-            dapper gopher push lofty asylum tequila locker awakened custom
-            popular idled serving tequila
-          </PassPhrase>
+          <PassPhrase>{passphrase}</PassPhrase>
         </Half>
         <Half>
           <DownloadTitle>Download your passphrase file</DownloadTitle>
           <DownloadText>This is very important!</DownloadText>
-          <Download>
+          <Download onClick={downloadPrivateKey} disabled={!isWalletCreated}>
             <SvgDownload />
-            <span>Download</span> (.txt 25 KB)
+            <span>Download</span> (.txt 64 bytes)
           </Download>
         </Half>
       </MainWrap>

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import VeoNode from 'amoveo-js-light-node';
 import { Router } from '@reach/router';
 import { ThemeProvider } from 'styled-components';
 
@@ -19,35 +20,71 @@ import Receive from './screens/Receive';
 import Restore from './screens/Restore';
 import Test from './screens/Test';
 
-const App = () => (
-  <ThemeProvider theme={theme}>
-    <>
-      <GlobalStyles />
+import AppContext from 'shared/contexts/AppContext';
 
-      <Router className="routerwrap">
-        <HomeTemplate path="/">
-          <Home path="/" />
-        </HomeTemplate>
+const veoNodeUrl =
+  process.env.REACT_APP_VEO_NODE_URL || 'http://amoveo.exan.tech:8080';
+const veo = new VeoNode(veoNodeUrl);
 
-        <CreateRestoreTemplate path="/create">
-          <Create path="/" />
-        </CreateRestoreTemplate>
+const App = () => {
+  const [keys, setKeys] = useState({
+    public: '',
+    private: '',
+  });
+  const [passphrase, setPassphrase] = useState('');
+  const [isWalletCreated, setIsWalletCreated] = useState(false);
 
-        <CreateRestoreTemplate path="/restore">
-          <Restore path="/" />
-        </CreateRestoreTemplate>
+  useEffect(
+    () => {
+      const isCreated =
+        Boolean(keys.public) && Boolean(keys.private) && Boolean(passphrase);
+      setIsWalletCreated(isCreated);
+    },
+    [keys, passphrase],
+  );
 
-        <DashboardTemplate path="/dashboard" />
-        <SendTemplate path="/send" />
-        <Receive path="/receive" />
-        <Exchange path="/exchange" />
+  const appState = {
+    isWalletCreated,
+    keys,
+    passphrase,
+    setIsWalletCreated,
+    setKeys,
+    setPassphrase,
+    veo,
+  };
 
-        <Test path="/test" />
+  return (
+    <ThemeProvider theme={theme}>
+      <AppContext.Provider value={appState}>
+        <>
+          <GlobalStyles />
 
-        <NotFound default />
-      </Router>
-    </>
-  </ThemeProvider>
-);
+          <Router className="routerwrap">
+            <HomeTemplate path="/">
+              <Home path="/" />
+            </HomeTemplate>
+
+            <CreateRestoreTemplate path="/create">
+              <Create path="/" />
+            </CreateRestoreTemplate>
+
+            <CreateRestoreTemplate path="/restore">
+              <Restore path="/" />
+            </CreateRestoreTemplate>
+
+            <DashboardTemplate path="/dashboard" />
+            <SendTemplate path="/send" />
+            <Receive path="/receive" />
+            <Exchange path="/exchange" />
+
+            <Test path="/test" />
+
+            <NotFound default />
+          </Router>
+        </>
+      </AppContext.Provider>
+    </ThemeProvider>
+  );
+};
 
 export default App;

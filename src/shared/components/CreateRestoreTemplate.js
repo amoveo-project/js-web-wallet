@@ -1,9 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
 import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
+
+import AppContext from 'shared/contexts/AppContext';
 
 const Main = styled.div`
   width: 100%;
@@ -108,6 +110,8 @@ const FooterLink = styled(Link)`
 `;
 
 const App = ({ children }) => {
+  const { isWalletCreated } = useContext(AppContext);
+
   return (
     <Fragment>
       <Main>
@@ -127,7 +131,7 @@ const App = ({ children }) => {
           <Container>
             <FooterWrap>
               <FooterLink to="/support">Support</FooterLink>
-              <FooterLink to="/support">
+              <FooterLink to="/dashboard">
                 <span>Create wallet</span>
                 <IconNext />
               </FooterLink>
