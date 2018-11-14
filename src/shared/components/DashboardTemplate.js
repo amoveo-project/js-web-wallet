@@ -7,7 +7,8 @@ import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
 import { ReactComponent as SvgReceive } from 'shared/assets/icon-receive.svg';
 import { ReactComponent as SvgGear } from 'shared/assets/icon-gear.svg';
 import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg';
-import { ReactComponent as SvgNext } from 'shared/assets/icon-arrow.svg';
+import { ReactComponent as SvgPrev } from 'shared/assets/icon-arrow-left.svg';
+import { ReactComponent as SvgNext } from 'shared/assets/icon-arrow-right.svg';
 import Button from 'shared/components/Button.js';
 
 const Main = styled.div`
@@ -308,22 +309,21 @@ const TransactionsPlaceholder = styled.p`
   padding: 40px 20px;
   border-radius: 10px;
 `;
-const TransactionsRow = styled.div`
+const Transaction = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: stretch;
   width: 100%;
-
   padding: 10px;
 
   &:nth-child(2n) {
     background: rgba(0, 0, 0, 0.15);
   }
-
-  &.tr__header {
+  &:first-child {
     font-weight: 500;
   }
-  &.tr__navigation {
+  &:last-child {
+    background: none;
     justify-content: space-between;
     margin-top: 10px;
   }
@@ -333,31 +333,31 @@ const TransactionsCol = styled.div`
   line-height: 20px;
   font-size: 16px;
 
-  &.tr__value,
-  &.tr__date {
-    max-width: 160px;
-  }
-  &.tr__mixin {
-    max-width: 70px;
-  }
-  &.tr__id {
-    flex: 1;
-    padding-left: 30px;
-    position: relative;
-  }
   svg {
     width: 20px;
     height: 20px;
     padding: 4px;
-    margin: 0 10px 0 0;
+    margin: 0;
     display: inline-block;
-
-    position: absolute;
-    top: 0;
-    left: 0;
   }
 `;
+const Value = styled(TransactionsCol)`
+  max-width: 160px;
+`;
+const Date = styled(TransactionsCol)`
+  max-width: 160px;
+`;
+const Mixin = styled(TransactionsCol)`
+  max-width: 70px;
+`;
+const Type = styled(TransactionsCol)`
+  max-width: 20px;
+  text-align: center;
+`;
 const TransactionsId = styled.div`
+  flex: 1;
+  padding-left: 30px;
+  position: relative;
   word-break: break-all;
 `;
 const TransactionsNext = styled.div`
@@ -365,29 +365,77 @@ const TransactionsNext = styled.div`
   line-height: 16px;
   font-weight: 500;
   cursor: pointer;
-
-  svg {
-    margin: 0 10px 0 0;
-  }
 `;
 const TransactionsCounter = styled.div`
   opacity: 0.5;
   font-weight: 500;
 `;
-const TransactionsPrev = styled(TransactionsNext)`
-  svg {
-    margin: 0 0 0 10px;
-  }
-`;
-const IconBack = styled(SvgNext)`
+const TransactionsPrev = styled(TransactionsNext)``;
+const IconBack = styled(SvgPrev)`
   width: 8px;
   height: 18px;
   transition: transform 0.4s;
   fill: currentColor;
+  margin: 0 10px 0 0;
 `;
-const IconNext = styled(IconBack)`
-  transform: rotate(180deg);
+const IconNext = styled(SvgNext)`
+  width: 8px;
+  height: 18px;
+  transition: transform 0.4s;
+  fill: currentColor;
+  margin: 0 0 0 10px;
 `;
+
+const transactions = [
+  {
+    value: '20.00879345',
+    date: '26.10.2018 12:24',
+    mixin: '6',
+    type: 'send',
+    id:
+      '49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx',
+  },
+  {
+    value: '20.00879345',
+    date: '26.10.2018 12:24',
+    mixin: '6',
+    type: 'send',
+    id:
+      '49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx',
+  },
+  {
+    value: '20.00879345',
+    date: '26.10.2018 12:24',
+    mixin: '6',
+    type: 'send',
+    id:
+      '49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx',
+  },
+  {
+    value: '20.00879345',
+    date: '26.10.2018 12:24',
+    mixin: '6',
+    type: 'receive',
+    id:
+      '49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx',
+  },
+  {
+    value: '20.00879345',
+    date: '26.10.2018 12:24',
+    mixin: '6',
+    type: 'receive',
+    id:
+      '49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx',
+  },
+  {
+    value: '20.00879345',
+    date: '26.10.2018 12:24',
+    mixin: '6',
+    type: 'send',
+    id:
+      '49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx',
+  },
+];
 
 const DashboardTemplate = ({ children }) => {
   return (
@@ -466,77 +514,47 @@ const DashboardTemplate = ({ children }) => {
             </FlexContainer>
             <Container>
               <TransactionsLabel>Transactions</TransactionsLabel>
-              <Transactions className="transition">
-                <TransactionsPlaceholder>
-                  Your transactions will be displayed here
-                </TransactionsPlaceholder>
-              </Transactions>
-              <TransactionsLabel>Transactions</TransactionsLabel>
-              <Transactions className="transition">
-                <TransactionsRow className="tr__header">
-                  <TransactionsCol className="tr__value">
-                    Value (VEO)
-                  </TransactionsCol>
-                  <TransactionsCol className="tr__date">Date</TransactionsCol>
-                  <TransactionsCol className="tr__mixin">Mixin</TransactionsCol>
-                  <TransactionsCol className="tr__id">
+              <Transactions>
+                {transactions.length > 0 ? (
+                  <Transaction>
+                    <Value>Value</Value>
+                    <Date>Date</Date>
+                    <Mixin>Mixin</Mixin>
+                    <Type />
                     <TransactionsId>Transaction ID</TransactionsId>
-                  </TransactionsCol>
-                </TransactionsRow>
-                <TransactionsRow>
-                  <TransactionsCol className="tr__value">
-                    20.00879345
-                  </TransactionsCol>
-                  <TransactionsCol className="tr__date">
-                    26.10.2018 12:24
-                  </TransactionsCol>
-                  <TransactionsCol className="tr__mixin">6</TransactionsCol>
-                  <TransactionsCol className="tr__id">
-                    <IconSend />
-                    <TransactionsId>
-                      49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5L
-                    </TransactionsId>
-                  </TransactionsCol>
-                </TransactionsRow>
-                <TransactionsRow>
-                  <TransactionsCol className="tr__value">
-                    20.00879345
-                  </TransactionsCol>
-                  <TransactionsCol className="tr__date">
-                    26.10.2018 12:24
-                  </TransactionsCol>
-                  <TransactionsCol className="tr__mixin">6</TransactionsCol>
-                  <TransactionsCol className="tr__id">
-                    <IconSend />
-                    <TransactionsId>
-                      49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LG49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LG49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LG49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LG
-                    </TransactionsId>
-                  </TransactionsCol>
-                </TransactionsRow>
-                <TransactionsRow>
-                  <TransactionsCol className="tr__value">
-                    20.00879345
-                  </TransactionsCol>
-                  <TransactionsCol className="tr__date">
-                    26.10.2018 12:24
-                  </TransactionsCol>
-                  <TransactionsCol className="tr__mixin">6</TransactionsCol>
-                  <TransactionsCol className="tr__id">
-                    <IconReceive />
-                    <TransactionsId>
-                      49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx
-                    </TransactionsId>
-                  </TransactionsCol>
-                </TransactionsRow>
-                <TransactionsRow className="tr__navigation">
-                  <TransactionsNext>
-                    <IconBack /> Previous 10
-                  </TransactionsNext>
-                  <TransactionsCounter>2 / 10</TransactionsCounter>
+                  </Transaction>
+                ) : (
+                  <TransactionsPlaceholder>
+                    Your transactions will be displayed here
+                  </TransactionsPlaceholder>
+                )}
+
+                {transactions.map(transaction => (
+                  <Transaction>
+                    <Value>{transaction.value}</Value>
+                    <Date>{transaction.date}</Date>
+                    <Mixin>{transaction.mixin}</Mixin>
+                    <Type>
+                      {transaction.type == 'send' ? (
+                        <IconSend />
+                      ) : (
+                        <IconReceive />
+                      )}
+                    </Type>
+                    <TransactionsId>{transaction.id}</TransactionsId>
+                  </Transaction>
+                ))}
+                <Transaction>
                   <TransactionsPrev>
-                    Next 10 <IconNext />
+                    <IconBack />
+                    Previous 10
                   </TransactionsPrev>
-                </TransactionsRow>
+                  <TransactionsCounter>2 / 10</TransactionsCounter>
+                  <TransactionsNext>
+                    Next 10
+                    <IconNext />
+                  </TransactionsNext>
+                </Transaction>
               </Transactions>
             </Container>
           </Body>
