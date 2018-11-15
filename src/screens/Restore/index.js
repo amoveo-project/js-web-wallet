@@ -50,7 +50,7 @@ const RestoreContainer = () => {
 
       createWallet({ privateKey, mnemonic });
     },
-    [isValidMnemonic],
+    [isValidMnemonic, tempPassphrase],
   );
 
   useEffect(
@@ -63,7 +63,7 @@ const RestoreContainer = () => {
 
       createWallet({ privateKey, mnemonic: '' });
     },
-    [isValidPrivateKey],
+    [isValidPrivateKey, tempPrivateKey],
   );
 
   const handlePassphraseInput = e => {
