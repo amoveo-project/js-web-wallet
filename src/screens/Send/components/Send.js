@@ -65,7 +65,7 @@ const Body = styled.div`
 const Form = styled.form`
   width: 100%;
 `;
-const Field = styled.fieldset`
+const Fieldset = styled.fieldset`
   padding: 0;
   margin: 0 0 60px 0;
   border: none;
@@ -75,8 +75,8 @@ const Field = styled.fieldset`
     margin-bottom: 0;
   }
 `;
-const AmountField = styled(Field)`
-  max-width: 570px;
+const FieldsetCol = styled(Fieldset)`
+  max-width: 48%;
 `;
 const LabelContainer = styled.div`
   display: flex;
@@ -88,8 +88,9 @@ const Label = styled.label`
   font-size: 16px;
   font-weight: 300;
   margin: 0;
-  opacity: 0.5;
+  color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
+  user-select: none;
 `;
 const Max = styled.label`
   font-size: 16px;
@@ -105,6 +106,7 @@ const Input = styled.input`
   padding: 10px 0;
   margin: 0;
   line-height: 45px;
+  max-height: 67px;
   font-size: 20px;
   transition: all 0.4s;
   color: #fff;
@@ -133,6 +135,7 @@ const FooterWrap = styled.div`
   padding: 30px;
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   border-radius: 10px 10px 0 0;
   margin: 40px 0 0 0;
   color: ${props => props.theme.color.blue};
@@ -151,7 +154,6 @@ const FooterLink = styled(Link)`
     }
   }
 `;
-
 const Fee = styled.div`
   font-size: 20px;
   font-weight: 300;
@@ -180,6 +182,16 @@ const ModalWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  appearance: none;
+
+  z-index: 999;
+
+  @supports (
+    (-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))
+  ) {
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+  }
 `;
 const Modal = styled.div`
   width: 100%;
@@ -243,6 +255,7 @@ const Ok = styled.button`
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.4s;
+  background: #fff;
 
   &:hover {
     background: ${props => props.theme.color.yellow};
@@ -276,7 +289,7 @@ const SendTemplate = ({ children }) => {
           <Body>
             <Container>
               <Form>
-                <AmountField>
+                <FieldsetCol>
                   <LabelContainer>
                     <Label htmlFor="amount">Amount</Label>
                     <Max htmlFor="amount">Send max</Max>
@@ -288,23 +301,23 @@ const SendTemplate = ({ children }) => {
                     step="0.01"
                     placeholder="0.00"
                   />
-                </AmountField>
-                <Field>
+                </FieldsetCol>
+                <Fieldset>
                   <Label htmlFor="address">Receiver address</Label>
                   <Address
                     id="address"
                     type="text"
                     placeholder="e.g. donate@getviewo.org / donate.getviewo.org / a full Viewo address"
                   />
-                </Field>
-                <Field>
+                </Fieldset>
+                <Fieldset>
                   <Label htmlFor="address">Payment ID (optional)</Label>
                   <PaymentID
                     id="paymentid"
                     type="text"
                     placeholder="e.g. 59af9132941ec6e9f6ba3c4867e1cd92f2bd5fbce4325fc7b19bcdb55d640de5"
                   />
-                </Field>
+                </Fieldset>
               </Form>
             </Container>
           </Body>
