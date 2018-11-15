@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import VeoNode from 'amoveo-js-light-node';
 import { Router } from '@reach/router';
+import { ethers } from 'ethers';
 import { ThemeProvider } from 'styled-components';
 
 import GlobalStyles from './globalStyles';
@@ -36,14 +37,28 @@ const App = () => {
 
   useEffect(
     () => {
-      const isCreated =
-        Boolean(keys.public) && Boolean(keys.private) && Boolean(passphrase);
+      const isCreated = Boolean(keys.public) && Boolean(keys.private);
       setIsWalletCreated(isCreated);
     },
     [keys, passphrase],
   );
 
+  const createWallet = ({ privateKey, mnemonic = '' }) => {
+    veo.keys.generateKeyPair();
+    veo.keys.setPrivateKey(privateKey);
+
+    const keyPair = veo.keys.getKeyPair();
+
+    setKeys({
+      private: keyPair.private,
+      public: veo.keys.getPublicKey(),
+    });
+
+    setPassphrase(mnemonic);
+  };
+
   const appState = {
+    createWallet,
     isWalletCreated,
     keys,
     passphrase,

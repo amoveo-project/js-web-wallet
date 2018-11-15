@@ -1,5 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import styled from 'styled-components';
+
+import RestoreContext from 'shared/contexts/RestoreContext';
 
 const Title = styled.h1`
   font-size: 40px;
@@ -12,6 +14,10 @@ const Title = styled.h1`
   .active {
     text-decoration: underline;
     cursor: default;
+  }
+`;
+const TabName = styled.span`
+  &.active {
   }
 `;
 const PassPhraseLabel = styled.label`
@@ -74,26 +80,63 @@ const MainWrap = styled.div`
 `;
 
 const Restore = () => {
+  const {
+    currentTab,
+    handlePassphraseInput,
+    handlePrivateKeyInput,
+    handleTabChange,
+    tempPassphrase,
+    tempPrivateKey,
+  } = useContext(RestoreContext);
+
+  const isPassphraseTab = currentTab === 'passphrase';
+  const isPrivateKeyTab = currentTab === 'privateKey';
+
   return (
     <Fragment>
       <Title>
-        Restore with <span className="active">passphrase</span> or{' '}
-        <span>private key</span>
+        Restore with{' '}
+        <TabName
+          className={`${isPassphraseTab ? 'active' : ''}`}
+          onClick={() => handleTabChange('passphrase')}
+        >
+          passphrase
+        </TabName>{' '}
+        or{' '}
+        <TabName
+          className={`${isPrivateKeyTab ? 'active' : ''}`}
+          onClick={() => handleTabChange('privateKey')}
+        >
+          private key
+        </TabName>
       </Title>
-      <PassPhraseLabel htmlFor="passphrase">Your passphrase</PassPhraseLabel>
-      <PassPhraseArea
-        autoFocus
-        id="passphrase"
-        placeholder="Enter or paste your passphrase"
-        rows="1"
-      />
-      <PrivateKeyLabel htmlFor="privatekey">
-        Private key (64 symbols)
-      </PrivateKeyLabel>
-      <PrivateKey
-        id="privatekey"
-        placeholder="Enter or paste your private key"
-      />
+      {isPassphraseTab ? (
+        <Fragment>
+          <PassPhraseLabel htmlFor="passphrase">
+            Your passphrase
+          </PassPhraseLabel>
+          <PassPhraseArea
+            autoFocus
+            id="passphrase"
+            placeholder="Enter or paste your passphrase"
+            rows="1"
+            value={tempPassphrase}
+            onChange={handlePassphraseInput}
+          />
+        </Fragment>
+      ) : (
+        <Fragment>
+          <PrivateKeyLabel htmlFor="privatekey">
+            Private key (64 symbols)
+          </PrivateKeyLabel>
+          <PrivateKey
+            id="privatekey"
+            placeholder="Enter or paste your private key"
+            value={tempPrivateKey}
+            onChange={handlePrivateKeyInput}
+          />
+        </Fragment>
+      )}
     </Fragment>
   );
 };

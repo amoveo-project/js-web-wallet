@@ -8,12 +8,12 @@ import Create from './components/Create';
 import AppContext from 'shared/contexts/AppContext';
 import CreateContext from 'shared/contexts/CreateContext';
 
+const { HDNode } = ethers.utils;
+
 const CreateContainer = () => {
-  const { keys, setKeys, setPassphrase, veo } = useContext(AppContext);
+  const { createWallet, keys } = useContext(AppContext);
 
   useEffect(() => {
-    const { HDNode } = ethers.utils;
-
     const mnemonic = HDNode.entropyToMnemonic(ethers.utils.randomBytes(16));
 
     const masterNode = HDNode.fromMnemonic(mnemonic);
@@ -21,17 +21,7 @@ const CreateContainer = () => {
 
     const privateKey = veoNode.keyPair.privateKey.replace(/^0x/, '');
 
-    veo.keys.generateKeyPair();
-    veo.keys.setPrivateKey(privateKey);
-
-    const keyPair = veo.keys.getKeyPair();
-
-    setKeys({
-      private: keyPair.private,
-      public: veo.keys.getPublicKey(),
-    });
-
-    setPassphrase(mnemonic);
+    createWallet({ privateKey, mnemonic });
   }, []);
 
   function downloadPrivateKey() {
