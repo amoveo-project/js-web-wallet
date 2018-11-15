@@ -1,5 +1,6 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import styled from 'styled-components';
+import ClipboardJS from 'clipboard';
 import { Link } from '@reach/router';
 import { format, fromUnixTime } from 'date-fns';
 
@@ -210,6 +211,16 @@ const Dashboard = ({ children }) => {
   const { balance, keys } = useContext(AppContext);
   const { transactions } = useContext(DashboardContext);
 
+  useEffect(() => {
+    const clipboard = new ClipboardJS('.js-copy-address', {
+      text: () => keys.public,
+    });
+
+    return () => {
+      clipboard.destroy();
+    };
+  }, []);
+
   return (
     <Fragment>
       <Main>
@@ -239,7 +250,8 @@ const Dashboard = ({ children }) => {
               </ReceiveButton>
               <Wallet>
                 <YourWalletText>
-                  <span>Your wallet address</span> <IconClipboard />
+                  <span>Your wallet address</span>{' '}
+                  <IconClipboard className="js-copy-address" />
                 </YourWalletText>
                 <WalletAddress>{keys.public}</WalletAddress>
               </Wallet>
