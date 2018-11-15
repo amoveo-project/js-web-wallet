@@ -1,9 +1,13 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 
+import { downloadFile } from 'shared/utils/browser';
+
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
 import { ReactComponent as SvgGear } from 'shared/assets/icon-gear.svg';
+
+import AppContext from 'shared/contexts/AppContext';
 
 const HeaderSection = styled.section`
   width: 100%;
@@ -126,7 +130,7 @@ const SettingsToggle = styled.div`
     transform: rotate(90deg);
   }
 `;
-const SettingsDropdownItem = styled(Link)`
+const SettingsDropdownItem = styled.div`
   display: block;
   font-size: 16px;
   font-weight: 300;
@@ -151,6 +155,10 @@ const SettingsDropdownItem = styled(Link)`
       border: solid 2px ${props => props.theme.color.blue};
       transform: translateY(-50%);
     }
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 `;
 const SettingsDropdown = styled.div`
@@ -193,7 +201,17 @@ const LogOut = styled(Link)`
   }
 `;
 
-const Header = ({ children }) => {
+const Header = () => {
+  const { keys, passphrase } = useContext(AppContext);
+
+  const downloadPassphrase = () => {
+    downloadFile(passphrase, 'passphrase', 'text/plain');
+  };
+
+  const downloadPrivateKey = () => {
+    downloadFile(keys.private, 'key', 'text/plain');
+  };
+
   return (
     <Fragment>
       <HeaderSection>
@@ -219,15 +237,17 @@ const Header = ({ children }) => {
                 <IconGear className="gear" />
               </SettingsToggle>
               <SettingsDropdown className="settingsdropdown">
-                <SettingsDropdownItem to="/">
-                  Review private key
+                <SettingsDropdownItem onClick={downloadPrivateKey}>
+                  Download private key
                 </SettingsDropdownItem>
-                <SettingsDropdownItem to="/">
-                  Account details
-                </SettingsDropdownItem>
-                <SettingsDropdownItem to="/" className="active">
-                  Download passphrase file
-                </SettingsDropdownItem>
+                {passphrase ? (
+                  <SettingsDropdownItem
+                    onClick={downloadPassphrase}
+                    className="active"
+                  >
+                    Download passphrase file
+                  </SettingsDropdownItem>
+                ) : null}
               </SettingsDropdown>
             </Settings>
             <LogOut to="/">Log out</LogOut>
