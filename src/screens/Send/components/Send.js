@@ -242,6 +242,13 @@ const Ok = styled.button`
   border: 2px solid ${props => props.theme.color.blue};
   border-radius: 10px;
   cursor: pointer;
+  transition: all 0.4s;
+
+  &:hover {
+    background: ${props => props.theme.color.yellow};
+    border-color: ${props => props.theme.color.yellow};
+    color: ${props => props.theme.color.blue};
+  }
 `;
 const InBlockchain = styled(Ok)`
   background: ${props => props.theme.color.blue};
