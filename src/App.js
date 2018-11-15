@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import VeoNode from 'amoveo-js-light-node';
 import { Router } from '@reach/router';
 import { ethers } from 'ethers';
@@ -9,7 +9,6 @@ import theme from './theme';
 
 import CreateRestoreTemplate from 'shared/components/CreateRestoreTemplate';
 import HomeTemplate from 'shared/components/HomeTemplate';
-import DashboardTemplate from 'shared/components/DashboardTemplate';
 import SendTemplate from './screens/Send/components/Send';
 
 import Create from './screens/Create';
@@ -28,12 +27,21 @@ const veoNodeUrl =
 const veo = new VeoNode(veoNodeUrl);
 
 const App = () => {
+  const [balance, setBalance] = useState(0);
+  const [isWalletCreated, setIsWalletCreated] = useState(false);
   const [keys, setKeys] = useState({
     public: '',
     private: '',
   });
   const [passphrase, setPassphrase] = useState('');
-  const [isWalletCreated, setIsWalletCreated] = useState(false);
+  const [headerId, setHeaderId] = useState(0);
+
+  useEffect(() => {
+    const headerIdListener = data => setHeaderId(data[1]);
+    veo.events.on('header', headerIdListener);
+
+    return () => veo.events.removeListener('header', headerIdListener);
+  }, []);
 
   useEffect(
     () => {
@@ -43,7 +51,23 @@ const App = () => {
     [keys, passphrase],
   );
 
-  const createWallet = ({ privateKey, mnemonic = '' }) => {
+  useEffect(
+    async () => {
+      if (isWalletCreated) {
+        try {
+          const balance = await veo.getBalance();
+          setBalance(balance);
+        } catch (e) {
+          // no actions
+        }
+      } else {
+        setBalance(0);
+      }
+    },
+    [headerId, isWalletCreated],
+  );
+
+  const createWallet = async ({ privateKey, mnemonic = '' }) => {
     veo.keys.generateKeyPair();
     veo.keys.setPrivateKey(privateKey);
 
@@ -55,23 +79,41 @@ const App = () => {
     });
 
     setPassphrase(mnemonic);
+
+    try {
+      const balance = await veo.getBalance();
+      setBalance(balance);
+    } catch (e) {
+      // no actions
+    }
+  };
+
+  const resetWallet = () => {
+    setKeys({
+      private: '',
+      public: '',
+    });
+
+    setPassphrase('');
+
+    setBalance(0);
   };
 
   const appState = {
+    balance,
     createWallet,
+    headerId,
     isWalletCreated,
     keys,
     passphrase,
-    setIsWalletCreated,
-    setKeys,
-    setPassphrase,
+    resetWallet,
     veo,
   };
 
   return (
     <ThemeProvider theme={theme}>
       <AppContext.Provider value={appState}>
-        <>
+        <Fragment>
           <GlobalStyles />
 
           <Router className="routerwrap">
@@ -87,7 +129,7 @@ const App = () => {
               <Restore path="/" />
             </CreateRestoreTemplate>
 
-            <DashboardTemplate path="/dashboard" />
+            <Dashboard path="/dashboard" />
             <SendTemplate path="/send" />
             <Receive path="/receive" />
             <Exchange path="/exchange" />
@@ -96,7 +138,7 @@ const App = () => {
 
             <NotFound default />
           </Router>
-        </>
+        </Fragment>
       </AppContext.Provider>
     </ThemeProvider>
   );

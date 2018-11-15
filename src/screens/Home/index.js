@@ -5,16 +5,9 @@ import Home from './components/Home';
 import AppContext from 'shared/contexts/AppContext';
 
 const HomeContainer = () => {
-  const { setKeys, setPassphrase } = useContext(AppContext);
+  const { resetWallet } = useContext(AppContext);
 
-  useEffect(() => {
-    setKeys({
-      private: null,
-      public: null,
-    });
-
-    setPassphrase('');
-  }, []);
+  useEffect(() => resetWallet(), []);
 
   return <Home />;
 };
