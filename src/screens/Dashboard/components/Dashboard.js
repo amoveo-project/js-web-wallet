@@ -144,7 +144,7 @@ const Value = styled(TransactionsCol)`
 const Date = styled(TransactionsCol)`
   max-width: 160px;
 `;
-const Mixin = styled(TransactionsCol)`
+const Fee = styled(TransactionsCol)`
   max-width: 70px;
 `;
 const Type = styled(TransactionsCol)`
@@ -239,7 +239,7 @@ const Dashboard = ({ children }) => {
                   <Transaction>
                     <Value>Value</Value>
                     <Date>Date</Date>
-                    <Mixin>Mixin</Mixin>
+                    <Fee>Fee</Fee>
                     <Type />
                     <TransactionsId>Transaction ID</TransactionsId>
                   </Transaction>
@@ -258,7 +258,7 @@ const Dashboard = ({ children }) => {
                         'dd.MM.yyyy HH:mm',
                       )}
                     </Date>
-                    <Mixin>{transaction.nonce}</Mixin>
+                    <Fee>{transaction.fee / 1e8}</Fee>
                     <Type>
                       {transaction.type === 'spend' ? (
                         <IconSend />
