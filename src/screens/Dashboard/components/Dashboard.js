@@ -1,7 +1,6 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import ClipboardJS from 'clipboard';
-import { Link } from '@reach/router';
 import { format, fromUnixTime } from 'date-fns';
 
 import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
@@ -10,8 +9,9 @@ import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg
 import { ReactComponent as SvgPrev } from 'shared/assets/icon-arrow-left.svg';
 import { ReactComponent as SvgNext } from 'shared/assets/icon-arrow-right.svg';
 
-import Header from 'shared/components/Header.js';
 import Button from 'shared/components/Button.js';
+import Header from 'shared/components/Header.js';
+import Topline from 'shared/components/Topline';
 
 import AppContext from 'shared/contexts/AppContext';
 import DashboardContext from 'shared/contexts/DashboardContext';
@@ -35,36 +35,10 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 0 15px;
 `;
-const Topline = styled.section`
-  width: 100%;
-  padding: 15px 0;
-  background: rgba(0, 0, 0, 0.15);
-`;
 const FlexContainer = styled(Container)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
-const Title = styled.h1`
-  font-size: 40px;
-  margin: 25px 20px 25px 0;
-  line-height: 1.15;
-  font-weight: 500;
-`;
-const YourBalanceText = styled.p`
-  font-size: 16px;
-  opacity: 0.5;
-  text-align: right;
-  margin: 0 0 5px 0;
-`;
-const Balance = styled.div`
-  font-size: 40px;
-  color: ${props => props.theme.color.yellow};
-
-  span {
-    font-size: 20px;
-    vertical-align: baseline;
-  }
 `;
 const Body = styled.div`
   width: 100%;
@@ -208,7 +182,7 @@ const IconNext = styled(SvgNext)`
 `;
 
 const Dashboard = ({ children }) => {
-  const { balance, keys } = useContext(AppContext);
+  const { keys } = useContext(AppContext);
   const { transactions } = useContext(DashboardContext);
 
   useEffect(() => {
@@ -226,18 +200,7 @@ const Dashboard = ({ children }) => {
       <Main>
         <MainWrap>
           <Header />
-          <Topline>
-            <FlexContainer>
-              <Title>Dashboard</Title>
-              <div>
-                <YourBalanceText>Your balance</YourBalanceText>
-                <Balance>
-                  {balance.toFixed(0)}
-                  <span>.{String(balance).split('.')[1] || '00'}</span> VEO
-                </Balance>
-              </div>
-            </FlexContainer>
-          </Topline>
+          <Topline title="Dashboard" />
           <Body>
             <FlexContainer>
               <SendButton to="/send">

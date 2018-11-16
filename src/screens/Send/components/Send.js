@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 
@@ -6,7 +6,10 @@ import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
 import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
 
 import Header from 'shared/components/Header.js';
-import Button from 'shared/components/Button.js';
+import Topline from 'shared/components/Topline';
+
+import AppContext from 'shared/contexts/AppContext';
+import SendContext from 'shared/contexts/SendContext';
 
 const Main = styled.div`
   width: 100%;
@@ -26,37 +29,6 @@ const Container = styled.div`
   max-width: 1230px;
   margin: 0 auto;
   padding: 0 15px;
-`;
-const Topline = styled.section`
-  width: 100%;
-  padding: 15px 0;
-  background: rgba(0, 0, 0, 0.15);
-`;
-const FlexContainer = styled(Container)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-const Title = styled.h1`
-  font-size: 40px;
-  margin: 25px 20px 25px 0;
-  line-height: 1.15;
-  font-weight: 500;
-`;
-const YourBalanceText = styled.p`
-  font-size: 16px;
-  opacity: 0.5;
-  text-align: right;
-  margin: 0 0 5px 0;
-`;
-const Balance = styled.div`
-  font-size: 40px;
-  color: ${props => props.theme.color.yellow};
-
-  span {
-    font-size: 20px;
-    vertical-align: baseline;
-  }
 `;
 const Body = styled.div`
   width: 100%;
@@ -122,7 +94,6 @@ const Amount = styled(Input)`
   font-size: 45px;
 `;
 const Address = styled(Input)``;
-const PaymentID = styled(Input)``;
 
 const Footer = styled.footer`
   width: 100%;
@@ -268,24 +239,13 @@ const InBlockchain = styled(Ok)`
   color: #fff;
 `;
 
-const SendTemplate = ({ children }) => {
+const Send = () => {
   return (
     <Fragment>
       <Main>
         <MainWrap>
           <Header />
-          <Topline>
-            <FlexContainer>
-              <Title>Send</Title>
-              <div>
-                <YourBalanceText>Your balance</YourBalanceText>
-                <Balance>
-                  20
-                  <span>.00879345</span> VEO
-                </Balance>
-              </div>
-            </FlexContainer>
-          </Topline>
+          <Topline title="Send" />
           <Body>
             <Container>
               <Form>
@@ -307,15 +267,7 @@ const SendTemplate = ({ children }) => {
                   <Address
                     id="address"
                     type="text"
-                    placeholder="e.g. donate@getviewo.org / donate.getviewo.org / a full Viewo address"
-                  />
-                </Fieldset>
-                <Fieldset>
-                  <Label htmlFor="address">Payment ID (optional)</Label>
-                  <PaymentID
-                    id="paymentid"
-                    type="text"
-                    placeholder="e.g. 59af9132941ec6e9f6ba3c4867e1cd92f2bd5fbce4325fc7b19bcdb55d640de5"
+                    placeholder="Paste recipient address"
                   />
                 </Fieldset>
               </Form>
@@ -334,7 +286,7 @@ const SendTemplate = ({ children }) => {
             </FooterWrap>
           </Container>
         </Footer>
-        <ModalWrap>
+        {/* <ModalWrap>
           <Modal>
             <ModalIcon>
               <IconSend />
@@ -352,10 +304,10 @@ const SendTemplate = ({ children }) => {
               <InBlockchain to="/">See in blockchain</InBlockchain>
             </Buttons>
           </Modal>
-        </ModalWrap>
+        </ModalWrap> */}
       </Main>
     </Fragment>
   );
 };
 
-export default SendTemplate;
+export default Send;
