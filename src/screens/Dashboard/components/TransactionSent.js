@@ -4,10 +4,12 @@ import styled from 'styled-components';
 
 import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
 import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
+import { ReactComponent as SvgPrev } from 'shared/assets/icon-prev.svg';
 import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg';
 
 import Header from 'shared/components/Header.js';
 import ButtonMin from 'shared/components/ButtonMin.js';
+import GoBack from 'shared/components/GoBack.js';
 
 const Main = styled.div`
   width: 100%;
@@ -40,6 +42,7 @@ const IconSend = styled(SvgSend)`
   padding: 5px;
   margin: 0 20px 0 0;
 `;
+const IconBack = styled(SvgPrev)``;
 const FlexContainer = styled(Container)`
   display: flex;
   justify-content: space-between;
@@ -196,6 +199,9 @@ const TransactionReceive = ({ children }) => {
             </Container>
           </Body>
         </MainWrap>
+        <GoBack to="/dashboard">
+          <IconBack />
+        </GoBack>
       </Main>
     </Fragment>
   );
