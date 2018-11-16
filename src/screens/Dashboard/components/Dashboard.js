@@ -1,4 +1,5 @@
 import React, { Fragment, useContext, useEffect } from 'react';
+import { Link } from '@reach/router';
 import styled from 'styled-components';
 import ClipboardJS from 'clipboard';
 import { format, fromUnixTime } from 'date-fns';
@@ -110,6 +111,7 @@ const Transaction = styled.div`
   align-items: stretch;
   width: 100%;
   padding: 10px;
+  position: relative;
 
   &:nth-child(2n) {
     background: rgba(0, 0, 0, 0.15);
@@ -154,6 +156,16 @@ const TransactionsId = styled.div`
   padding-left: 30px;
   position: relative;
   word-break: break-all;
+`;
+const TransactionLink = styled(Link)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  cursor: pointer;
+  text-decoration: none;
 `;
 const TransactionsNext = styled.div`
   color: ${props => props.theme.color.yellow};
@@ -255,6 +267,7 @@ const Dashboard = ({ children }) => {
                       )}
                     </Type>
                     <TransactionsId>{transaction.hash}</TransactionsId>
+                    <TransactionLink to="#" />
                   </Transaction>
                 ))}
                 {/* <Transaction>
