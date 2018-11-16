@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import VeoNode from 'amoveo-js-light-node';
-import { Router } from '@reach/router';
-import { ethers } from 'ethers';
+import { Router, navigate } from '@reach/router';
 import { ThemeProvider } from 'styled-components';
 
 import GlobalStyles from './globalStyles';
@@ -39,6 +38,12 @@ const App = () => {
   useEffect(() => {
     const headerIdListener = data => setHeaderId(data[1]);
     veo.events.on('header', headerIdListener);
+
+    if (process.env.REACT_APP_DEBUG_PRIVATE_KEY) {
+      createWallet({ privateKey: process.env.REACT_APP_DEBUG_PRIVATE_KEY });
+
+      navigate('/dashboard');
+    }
 
     return () => veo.events.removeListener('header', headerIdListener);
   }, []);
