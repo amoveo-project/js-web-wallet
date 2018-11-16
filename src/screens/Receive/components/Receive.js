@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
+import ClipboardJS from 'clipboard';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 
@@ -7,6 +8,9 @@ import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg
 
 import Header from 'shared/components/Header.js';
 import Topline from 'shared/components/Topline';
+
+import AppContext from 'shared/contexts/AppContext';
+import ReceiveContext from 'shared/contexts/ReceiveContext';
 
 const Main = styled.div`
   width: 100%;
@@ -105,8 +109,6 @@ const Address = styled.div`
   word-break: break-all;
   line-height: 24px;
 `;
-const LabelField = styled(Input)``;
-const PaymentID = styled(Input)``;
 const Footer = styled.footer`
   width: 100%;
   font-size: 20px;
@@ -187,6 +189,21 @@ const QrCodeAddress = styled.p`
 `;
 
 const Receive = () => {
+  const { keys } = useContext(AppContext);
+  const { amount, handleAmountInput } = useContext(ReceiveContext);
+
+  useEffect(() => {
+    const clipboard = new ClipboardJS('.js-copy-address', {
+      text: () => keys.public,
+    });
+
+    return () => {
+      clipboard.destroy();
+    };
+  }, []);
+
+  const receiveUri = `${keys.public}?value=${amount}e8`;
+
   return (
     <Fragment>
       <Main>
@@ -198,11 +215,10 @@ const Receive = () => {
               <Form>
                 <Fieldset>
                   <Label>
-                    Your wallet address <IconClipboard />
+                    Your wallet address{' '}
+                    <IconClipboard className="js-copy-address" />
                   </Label>
-                  <Address>
-                    49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx5okMnAN6nJdJuNdLENtx7i6
-                  </Address>
+                  <Address>{keys.public}</Address>
                 </Fieldset>
                 <FieldsetCol>
                   <Label htmlFor="amount">Amount</Label>
@@ -212,25 +228,10 @@ const Receive = () => {
                     min="0"
                     step="0.01"
                     placeholder="0.00"
+                    value={amount}
+                    onChange={handleAmountInput}
                   />
                 </FieldsetCol>
-                <FieldsetCol>
-                  <Label htmlFor="label">Label</Label>
-                  <LabelField
-                    id="label"
-                    type="text"
-                    placeholder="e.g. payment for Chuck Norris"
-                  />
-                </FieldsetCol>
-                <Fieldset>
-                  <Label htmlFor="paymentid">Payment ID (optional)</Label>
-                  <PaymentID
-                    id="paymentid"
-                    type="text"
-                    placeholder="e.g. 59af9132941ec6e9f6ba3c4867e1cd92f2bd5fbce4325fc7b19bcdb55d640de5"
-                    defaultValue="2c5e9d85aa884c2dd5f0494af754c1d726388227539911a9a834347c23e09713"
-                  />
-                </Fieldset>
               </Form>
             </Container>
           </Body>
@@ -240,20 +241,20 @@ const Receive = () => {
             <FooterWrap>
               <QrCodeWrap>
                 <QrCode
-                  src="http://api.qrserver.com/v1/create-qr-code/?color=000000&amp;bgcolor=FFFFFF&amp;data=+viewo%3A49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVT%0ATtpmJ3JAgVQu5LLDcLV73Z5Nxx5okMnAN6nJdJuNdLENtx7i6%3F%0Atx_payment_id%3Dc2c251accadde81cc5d73c08815813df8d8ab42b2%0A5112da08ef5d4c655d461f9+&amp;qzone=1&amp;margin=0&amp;size=400x400&amp;ecc=L"
+                  src={`http://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=${encodeURIComponent(
+                    receiveUri,
+                  )}&qzone=1&margin=0&size=400x400&ecc=L`}
                   alt="qr code"
                 />
                 <div>
                   <QrCodeTitle>
                     Use this QR code to quickly receive payments
                   </QrCodeTitle>
-                  <QrCodeAddress>
-                    viewo:49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx5okMnAN6nJdJuNdLENtx7i6?tx_payment_id=c2c251accadde81cc5d73c08815813df8d8ab42b25112da08ef5d4c655d461f9
-                  </QrCodeAddress>
+                  <QrCodeAddress>{receiveUri}</QrCodeAddress>
                 </div>
               </QrCodeWrap>
-              <FooterLink to="/send">
-                Receive <IconNext />
+              <FooterLink to="/dashboard">
+                Dashboard <IconNext />
               </FooterLink>
             </FooterWrap>
           </Container>
