@@ -9,6 +9,8 @@ import theme from './theme';
 import CreateRestoreTemplate from 'shared/components/CreateRestoreTemplate';
 import HomeTemplate from 'shared/components/HomeTemplate';
 import SendTemplate from './screens/Send/components/Send';
+import TransactionReceive from './screens/Dashboard/components/TransactionReceive';
+import TransactionSent from './screens/Dashboard/components/TransactionSent';
 
 import Create from './screens/Create';
 import Dashboard from './screens/Dashboard';
@@ -137,6 +139,8 @@ const App = () => {
             <Dashboard path="/dashboard" />
             <SendTemplate path="/send" />
             <Receive path="/receive" />
+            <TransactionReceive path="/transactionreceive" />
+            <TransactionSent path="/transactionsent" />
             <Exchange path="/exchange" />
 
             <Test path="/test" />
