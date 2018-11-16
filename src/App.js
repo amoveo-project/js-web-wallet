@@ -9,8 +9,7 @@ import theme from './theme';
 import CreateRestoreTemplate from 'shared/components/CreateRestoreTemplate';
 import HomeTemplate from 'shared/components/HomeTemplate';
 import SendTemplate from './screens/Send/components/Send';
-import TransactionReceive from './screens/Dashboard/components/TransactionReceive';
-import TransactionSent from './screens/Dashboard/components/TransactionSent';
+import TransactionDetails from './screens/Dashboard/components/TransactionDetails';
 
 import Create from './screens/Create';
 import Dashboard from './screens/Dashboard';
@@ -35,6 +34,7 @@ const App = () => {
     private: '',
   });
   const [passphrase, setPassphrase] = useState('');
+  const [transactions, setTransactions] = useState([]);
   const [headerId, setHeaderId] = useState(0);
 
   useEffect(() => {
@@ -70,6 +70,22 @@ const App = () => {
       } else {
         setBalance(0);
       }
+    },
+    [headerId, isWalletCreated],
+  );
+
+  useEffect(
+    async () => {
+      const address = keys.public;
+
+      const rawData = await fetch(
+        `https://amoveo.exan.tech/explorer/api/v1/txlist?address=${address}`,
+      );
+      const data = await rawData.json();
+
+      const transactions = Array.isArray(data.result) ? data.result : [];
+
+      setTransactions(transactions);
     },
     [headerId, isWalletCreated],
   );
@@ -114,6 +130,7 @@ const App = () => {
     keys,
     passphrase,
     resetWallet,
+    transactions,
     veo,
   };
 
@@ -137,10 +154,9 @@ const App = () => {
             </CreateRestoreTemplate>
 
             <Dashboard path="/dashboard" />
+            <TransactionDetails path="/dashboard/:transactionId" />
             <SendTemplate path="/send" />
             <Receive path="/receive" />
-            <TransactionReceive path="/transactionreceive" />
-            <TransactionSent path="/transactionsent" />
             <Exchange path="/exchange" />
 
             <Test path="/test" />

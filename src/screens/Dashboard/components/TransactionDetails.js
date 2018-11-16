@@ -1,15 +1,19 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
+import { format, fromUnixTime } from 'date-fns';
 
+import { ReactComponent as SvgReceive } from 'shared/assets/icon-receive.svg';
 import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
-import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
 import { ReactComponent as SvgPrev } from 'shared/assets/icon-prev.svg';
 import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg';
 
 import Header from 'shared/components/Header.js';
 import ButtonMin from 'shared/components/ButtonMin.js';
 import GoBack from 'shared/components/GoBack.js';
+
+import AppContext from 'shared/contexts/AppContext';
+import DashboardContext from 'shared/contexts/DashboardContext';
 
 const Main = styled.div`
   width: 100%;
@@ -30,11 +34,17 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 0 15px;
 `;
-const Topline = styled.section`
+const TransactionTopline = styled.section`
   width: 100%;
   padding: 15px 0;
-  background: #fff;
+  background: ${props => (props.isSpend ? '#fff' : props.theme.color.yellow)};
   color: ${props => props.theme.color.blue};
+`;
+const IconReceive = styled(SvgReceive)`
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  margin: 0 20px 0 0;
 `;
 const IconSend = styled(SvgSend)`
   width: 30px;
@@ -139,58 +149,69 @@ const Blockchain = styled(Link)`
   border
 `;
 
-const TransactionReceive = ({ children }) => {
+const TransactionReceive = ({ transactionId }) => {
+  const { transactions } = useContext(AppContext);
+
+  const [transaction, setTransaction] = useState(null);
+
+  useEffect(() => {
+    const id = Number(transactionId);
+    const transaction = transactions.find(item => item.nonce === id);
+
+    console.log({ transaction });
+
+    setTransaction(transaction);
+  }, []);
+
+  if (!transaction) {
+    return null;
+  }
+
+  const isSpend = transaction.type === 'spend';
+
   return (
     <Fragment>
       <Main>
         <MainWrap>
           <Header />
-          <Topline>
+          <TransactionTopline isSpend={isSpend}>
             <FlexContainer>
               <Title>Transaction details</Title>
               <BalanceWrap>
-                <IconSend />
-                <Balance>
-                  20
-                  <span>.00879345</span> VEO
-                </Balance>
+                {isSpend ? <IconSend /> : <IconReceive />}
+                <Balance>{transaction.amount / 1e8} VEO</Balance>
               </BalanceWrap>
             </FlexContainer>
-          </Topline>
+          </TransactionTopline>
           <Body>
             <Container>
               <Form>
                 <Fieldset>
-                  <Label>To</Label>
-                  <To>afedc01ca49174a851tfjd...d64c975b6a774c7d36at</To>
+                  <Label>{isSpend ? 'To' : 'From'}</Label>
+                  <To>{isSpend ? transaction.to : transaction.from}</To>
                 </Fieldset>
                 <FieldsetCol>
                   <Label>When</Label>
-                  <Field>09.10.2018 16:27</Field>
+                  <Field>
+                    {format(
+                      fromUnixTime(transaction.timestamp),
+                      'dd.MM.yyyy HH:mm:ss',
+                    )}
+                  </Field>
                 </FieldsetCol>
                 <FieldsetCol>
                   <Label>Network fee</Label>
-                  <Field>0.00003436 VEO</Field>
+                  <Field>{transaction.fee / 1e8} VEO</Field>
                 </FieldsetCol>
                 <FieldsetCol>
-                  <Label>Confirmations</Label>
-                  <Field>6+</Field>
+                  <Label>Blocknumber</Label>
+                  <Field>{transaction.blocknumber}</Field>
                 </FieldsetCol>
                 <Fieldset>
                   <Label>
                     Transaction ID <IconClipboard />
                   </Label>
-                  <Field>
-                    8108aee7408c48b641a82a93545666a3fb75349991bd0e5dfe5c92475d0da964
-                  </Field>
-                </Fieldset>
-                <Fieldset>
-                  <Label>
-                    Payment ID <IconClipboard />
-                  </Label>
-                  <Field>
-                    8108aee7408c48b641a82a93545666a3fb75349991bd0e5dfe5c92475d0da964
-                  </Field>
+                  <Field>{transaction.hash}</Field>
                 </Fieldset>
                 <Fieldset>
                   <ButtonMin to="/">See in blockchain</ButtonMin>

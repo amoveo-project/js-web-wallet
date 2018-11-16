@@ -194,8 +194,8 @@ const IconNext = styled(SvgNext)`
 `;
 
 const Dashboard = ({ children }) => {
-  const { keys } = useContext(AppContext);
-  const { transactions } = useContext(DashboardContext);
+  const { keys, transactions } = useContext(AppContext);
+  const {} = useContext(DashboardContext);
 
   useEffect(() => {
     const clipboard = new ClipboardJS('.js-copy-address', {
@@ -267,7 +267,7 @@ const Dashboard = ({ children }) => {
                       )}
                     </Type>
                     <TransactionsId>{transaction.hash}</TransactionsId>
-                    <TransactionLink to="#" />
+                    <TransactionLink to={`/dashboard/${transaction.nonce}`} />
                   </Transaction>
                 ))}
                 {/* <Transaction>
