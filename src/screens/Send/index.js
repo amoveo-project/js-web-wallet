@@ -1,9 +1,97 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-import Send from './components/Template';
+import Send from './components/Send';
+
+import AppContext from 'shared/contexts/AppContext';
+import SendContext from 'shared/contexts/SendContext';
 
 const SendContainer = () => {
-  return <Send />;
+  const { balance, keys, veo } = useContext(AppContext);
+
+  const [address, setAddress] = useState('');
+  const [amount, setAmount] = useState(0);
+  const [fee, setFee] = useState(0);
+  const [isSendEnabled, setIsSendEnabled] = useState(false);
+
+  useEffect(
+    async () => {
+      const isFilled = amount > 0 && address.length > 0;
+      const isYourself = address === keys.public;
+
+      if (!isFilled || isYourself) {
+        setFee(0);
+        setIsSendEnabled(false);
+
+        return;
+      }
+
+      let fee = 0;
+      try {
+        const accountState = await veo.wallet.getAccountState(address);
+        fee = accountState.fee / 1e8;
+      } catch (e) {
+        // no actions
+      }
+
+      let proposal = {};
+      if (fee > 0) {
+        try {
+          proposal = await veo.wallet.createTxProposal(
+            keys.public,
+            address,
+            amount * 1e8,
+          );
+        } catch (e) {
+          // no actions
+        }
+      }
+
+      fee = proposal.fee ? proposal.fee / 1e8 : 0;
+      setFee(fee);
+
+      const isValid = fee > 0 && balance >= amount + fee + 1e-8;
+      console.log({ balance });
+      console.log({ amount });
+      console.log({ fee });
+      console.log({ isValid });
+      setIsSendEnabled(isValid);
+    },
+    [address, amount],
+  );
+
+  const handleAddressInput = e => {
+    setAddress(e.target.value);
+  };
+
+  const handleAmountInput = e => {
+    let value = Number(e.target.value) || 0;
+    value = value >= 0 ? value : 0;
+
+    setAmount(value);
+  };
+
+  const handleFillMax = () => {
+    let value = balance - fee - 1e-8;
+    value = value >= 0 ? value : 0;
+
+    setAmount(value);
+  };
+
+  const sendState = {
+    address,
+    amount,
+    fee,
+    handleAddressInput,
+    handleAmountInput,
+    handleFillMax,
+    isSendEnabled,
+  };
+
+  return (
+    <SendContext.Provider value={sendState}>
+      <Send />
+    </SendContext.Provider>
+  );
 };
 
 export default SendContainer;
