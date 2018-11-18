@@ -145,7 +145,7 @@ const Date = styled(TransactionsCol)`
   max-width: 160px;
 `;
 const Fee = styled(TransactionsCol)`
-  max-width: 70px;
+  max-width: 120px;
 `;
 const Type = styled(TransactionsCol)`
   max-width: 20px;
@@ -153,7 +153,7 @@ const Type = styled(TransactionsCol)`
 `;
 const TransactionsId = styled.div`
   flex: 1;
-  padding-left: 30px;
+  padding-left: 3px;
   position: relative;
   word-break: break-all;
 `;
