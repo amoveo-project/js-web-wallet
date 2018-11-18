@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from '@reach/router';
 
 import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
 
@@ -99,24 +100,27 @@ const InBlockchain = styled(Ok)`
   color: #fff;
 `;
 
-const SendModal = () => {
+const SendModal = ({ transaction, onHide }) => {
   return (
     <ModalWrap>
       <Modal>
         <ModalIcon>
           <IconSend />
         </ModalIcon>
-        <SendValue>
-          20
-          <span>.00879345</span> VEO
-        </SendValue>
+        <SendValue>{transaction.amount / 1e8} VEO</SendValue>
         <ModalText>has been sent to</ModalText>
-        <SendToAdress>
-          49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx5okMnAN6nJdJuNdLENtx7i6
-        </SendToAdress>
+        <SendToAdress>{transaction.to}</SendToAdress>
         <Buttons>
-          <Ok>OK, thanks</Ok>
-          <InBlockchain to="/">See in blockchain</InBlockchain>
+          <Ok onClick={onHide}>OK, thanks</Ok>
+          <a
+            href={`https://explorer.veopool.pw/?input=${encodeURIComponent(
+              transaction.hash,
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <InBlockchain>See in blockchain</InBlockchain>
+          </a>
         </Buttons>
       </Modal>
     </ModalWrap>

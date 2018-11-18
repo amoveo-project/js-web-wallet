@@ -12,6 +12,7 @@ const SendContainer = () => {
   const [amount, setAmount] = useState(0);
   const [fee, setFee] = useState(0);
   const [isSendEnabled, setIsSendEnabled] = useState(false);
+  const [sentTransaction, setSentTransaction] = useState(null);
 
   useEffect(
     async () => {
@@ -50,10 +51,7 @@ const SendContainer = () => {
       setFee(fee);
 
       const isValid = fee > 0 && balance >= amount + fee + 1e-8;
-      console.log({ balance });
-      console.log({ amount });
-      console.log({ fee });
-      console.log({ isValid });
+
       setIsSendEnabled(isValid);
     },
     [address, amount],
@@ -77,6 +75,39 @@ const SendContainer = () => {
     setAmount(value);
   };
 
+  const handleSendMoney = async (address, amount) => {
+    if (amount <= 0) {
+      return;
+    }
+
+    amount = amount / 1e8;
+
+    // todo: block send control
+
+    let transaction = null;
+    try {
+      transaction = await veo.wallet.sendMoney(address, amount);
+    } catch (e) {
+      console.log(e);
+      console.error('sending money failed');
+    }
+
+    // todo: unblock send control
+
+    if (!transaction) {
+      return;
+    }
+
+    setAddress('');
+    setAmount(0);
+
+    setSentTransaction(transaction);
+  };
+
+  const handleHideModal = () => {
+    setSentTransaction(null);
+  };
+
   const sendState = {
     address,
     amount,
@@ -84,7 +115,10 @@ const SendContainer = () => {
     handleAddressInput,
     handleAmountInput,
     handleFillMax,
+    handleHideModal,
+    handleSendMoney,
     isSendEnabled,
+    sentTransaction,
   };
 
   return (

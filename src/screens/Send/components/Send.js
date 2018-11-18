@@ -7,6 +7,8 @@ import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
 import Header from 'shared/components/Header.js';
 import Topline from 'shared/components/Topline';
 
+import SendModal from './SendModal';
+
 import AppContext from 'shared/contexts/AppContext';
 import SendContext from 'shared/contexts/SendContext';
 
@@ -111,12 +113,13 @@ const FooterWrap = styled.div`
   margin: 40px 0 0 0;
   color: ${props => props.theme.color.blue};
 `;
-const FooterLink = styled(Link)`
+const SendMoney = styled.div`
   font-weight: 500;
   line-height: 60px;
   color: ${props => props.theme.color.blue};
   display: inline-block;
   text-decoration: none;
+  cursor: pointer;
 
   &[disabled] {
     pointer-events: none;
@@ -152,8 +155,15 @@ const Send = () => {
     handleAddressInput,
     handleAmountInput,
     handleFillMax,
+    handleHideModal,
+    handleSendMoney,
     isSendEnabled,
+    sentTransaction,
   } = useContext(SendContext);
+
+  if (sentTransaction) {
+    return <SendModal transaction={sentTransaction} onHide={handleHideModal} />;
+  }
 
   return (
     <Fragment>
@@ -207,9 +217,9 @@ const Send = () => {
                   </span>
                 ) : null}
               </Fee>
-              <FooterLink to="/send" disabled={!isSendEnabled}>
+              <SendMoney onClick={handleSendMoney} disabled={!isSendEnabled}>
                 Send payment <IconNext />
-              </FooterLink>
+              </SendMoney>
             </FooterWrap>
           </Container>
         </Footer>
