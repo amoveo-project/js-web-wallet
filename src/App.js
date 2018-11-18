@@ -76,14 +76,7 @@ const App = () => {
 
   useEffect(
     async () => {
-      const address = keys.public;
-
-      const rawData = await fetch(
-        `https://amoveo.exan.tech/explorer/api/v1/txlist?address=${address}`,
-      );
-      const data = await rawData.json();
-
-      const transactions = Array.isArray(data.result) ? data.result : [];
+      const transactions = await veo.wallet.getTransactions();
 
       setTransactions(transactions);
     },
