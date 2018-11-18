@@ -250,7 +250,7 @@ const Dashboard = ({ children }) => {
                 )}
 
                 {transactions.map(transaction => (
-                  <Transaction>
+                  <Transaction key={transaction.hash}>
                     <Value>{transaction.amount / 1e8}</Value>
                     <Date>
                       {format(
