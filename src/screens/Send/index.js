@@ -84,7 +84,7 @@ const SendContainer = () => {
 
     let transaction = null;
     try {
-      transaction = await veo.wallet.sendMoney(address, amount / 1e8);
+      transaction = await veo.wallet.sendMoney(address, amount * 1e8);
     } catch (e) {
       console.error('sending money failed');
     }
