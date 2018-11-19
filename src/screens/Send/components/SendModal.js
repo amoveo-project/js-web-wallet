@@ -107,9 +107,7 @@ const SendModal = ({ transaction, onHide }) => {
         <ModalIcon>
           <IconSend />
         </ModalIcon>
-        <SendValue>{transaction.amount / 1e8} VEO</SendValue>
-        <ModalText>has been sent to</ModalText>
-        <SendToAdress>{transaction.to}</SendToAdress>
+        <ModalText>Transaction has been sent</ModalText>
         <Buttons>
           <Ok onClick={onHide}>OK, thanks</Ok>
           <a

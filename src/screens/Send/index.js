@@ -82,23 +82,25 @@ const SendContainer = () => {
 
     // todo: block send control
 
-    let transaction = null;
+    let hash = null;
     try {
-      transaction = await veo.wallet.sendMoney(address, amount * 1e8);
+      hash = await veo.wallet.sendMoney(address, amount * 1e8);
     } catch (e) {
       console.error('sending money failed');
     }
 
     // todo: unblock send control
 
-    if (!transaction) {
+    if (!hash) {
       return;
     }
 
     setAddress('');
     setAmount(0);
 
-    setSentTransaction(transaction);
+    setSentTransaction({
+      hash,
+    });
   };
 
   const handleHideModal = () => {
