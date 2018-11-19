@@ -260,7 +260,7 @@ const Dashboard = ({ children }) => {
                     </Date>
                     <Fee>{transaction.fee / 1e8}</Fee>
                     <Type>
-                      {transaction.type === 'spend' ? (
+                      {transaction.from === keys.public ? (
                         <IconSend />
                       ) : (
                         <IconReceive />

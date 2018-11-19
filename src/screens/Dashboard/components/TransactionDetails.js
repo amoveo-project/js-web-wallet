@@ -150,15 +150,13 @@ const Blockchain = styled(Link)`
 `;
 
 const TransactionReceive = ({ transactionId }) => {
-  const { transactions } = useContext(AppContext);
+  const { keys, transactions } = useContext(AppContext);
 
   const [transaction, setTransaction] = useState(null);
 
   useEffect(() => {
     const id = Number(transactionId);
     const transaction = transactions.find(item => item.nonce === id);
-
-    console.log({ transaction });
 
     setTransaction(transaction);
   }, []);
@@ -167,7 +165,7 @@ const TransactionReceive = ({ transactionId }) => {
     return null;
   }
 
-  const isSpend = transaction.type === 'spend';
+  const isSpend = transaction.from === keys.public;
 
   return (
     <Fragment>
