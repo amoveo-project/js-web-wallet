@@ -48,6 +48,7 @@ class Test extends React.Component {
     privateKey: null,
     error: null,
     height: 28001,
+    nodeHeight: null,
     top: null,
     balance: null,
   };
@@ -57,6 +58,10 @@ class Test extends React.Component {
       process.env.REACT_APP_VEO_NODE_URL || 'http://amoveo.exan.tech:8080';
 
     this.node = new VeoNode(veoNodeUrl);
+
+    this.node
+      .getNodeHeight()
+      .then(height => this.setState({ nodeHeight: height }));
 
     this.node.events.on('header', header => {
       this.setState(state => ({ height: header[1] }));
@@ -107,9 +112,15 @@ class Test extends React.Component {
           publicKey: this.node.keys.getPublicKey(),
         }));
 
-        this.node.getBalance().then(balance => {
-          this.setState({ balance });
-        });
+        this.node
+          .getBalance()
+          .then(balance => {
+            this.setState({ balance });
+          })
+          .catch(err => {
+            console.log("can't get balance: " + err);
+            this.setState({ balance: 0 });
+          });
       }
     };
 
@@ -160,12 +171,21 @@ class Test extends React.Component {
   };
 
   render() {
-    const { balance, publicKey, privateKey, error, height, top } = this.state;
+    const {
+      balance,
+      publicKey,
+      privateKey,
+      nodeHeight,
+      height,
+      top,
+    } = this.state;
 
     return (
       <TestWrapper>
         <TestHeader>
-          <p>Height: {height}</p>
+          <p>
+            Height: {height} / {nodeHeight}
+          </p>
 
           <p>
             <input
