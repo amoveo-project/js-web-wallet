@@ -148,6 +148,7 @@ const Blockchain = styled(Link)`
   color: ${props => props.theme.color.yellow};
   border
 `;
+const ExplorerLink = styled(ButtonMin)``;
 
 const TransactionReceive = ({ transactionId }) => {
   const { keys, transactions } = useContext(AppContext);
@@ -212,7 +213,15 @@ const TransactionReceive = ({ transactionId }) => {
                   <Field>{transaction.hash}</Field>
                 </Fieldset>
                 <Fieldset>
-                  <ButtonMin to="/">See in blockchain</ButtonMin>
+                  <ExplorerLink
+                    href={`https://explorer.veopool.pw/?input=${encodeURIComponent(
+                      transaction.hash,
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    See in blockchain
+                  </ExplorerLink>
                 </Fieldset>
               </Form>
             </Container>

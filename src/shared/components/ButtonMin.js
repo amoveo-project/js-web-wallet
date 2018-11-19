@@ -1,8 +1,6 @@
-import React, { Fragment } from 'react';
-import { Link } from '@reach/router';
 import styled from 'styled-components';
 
-const ButtonMin = styled(Link)`
+const ButtonMin = styled.a`
   display: inline-block;
   margin: 0;
   padding: 16px 20px;
