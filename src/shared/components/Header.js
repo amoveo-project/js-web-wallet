@@ -2,6 +2,8 @@ import React, { Fragment, useContext } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 
+import PartialNavLink from 'shared/components/PartialNavLink';
+
 import { downloadFile } from 'shared/utils/browser';
 
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
@@ -38,7 +40,7 @@ const Menu = styled.nav`
   display: inline-block;
   vertical-align: top;
 `;
-const MenuItem = styled(Link)`
+const MenuItem = styled(PartialNavLink)`
   font-size: 16px;
   opacity: 0.5;
   transition: all 0.4s;
@@ -221,9 +223,7 @@ const Header = () => {
               <Logo />
             </LogoLink>
             <Menu>
-              <MenuItem to="/dashboard" className="active">
-                Dashboard
-              </MenuItem>
+              <MenuItem to="/dashboard">Dashboard</MenuItem>
               <MenuItem to="/send">Send</MenuItem>
               <MenuItem to="/receive">Receive</MenuItem>
               <MenuItem to="/exchange" disabled>
