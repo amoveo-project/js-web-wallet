@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react';
-import { Link } from '@reach/router';
 import styled from 'styled-components';
+import ClipboardJS from 'clipboard';
+import { Link } from '@reach/router';
 import { format, fromUnixTime } from 'date-fns';
 
 import { ReactComponent as SvgReceive } from 'shared/assets/icon-receive.svg';
@@ -160,6 +161,14 @@ const TransactionReceive = ({ transactionId }) => {
     const transaction = transactions.find(item => item.nonce === id);
 
     setTransaction(transaction);
+
+    const clipboard = new ClipboardJS('.js-copy-hash', {
+      text: () => transaction.hash,
+    });
+
+    return () => {
+      clipboard.destroy();
+    };
   }, []);
 
   if (!transaction) {
@@ -208,7 +217,7 @@ const TransactionReceive = ({ transactionId }) => {
                 </FieldsetCol>
                 <Fieldset>
                   <Label>
-                    Transaction ID <IconClipboard />
+                    Transaction ID <IconClipboard className="js-copy-hash" />
                   </Label>
                   <Field>{transaction.hash}</Field>
                 </Fieldset>
