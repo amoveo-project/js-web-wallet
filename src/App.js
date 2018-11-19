@@ -76,6 +76,10 @@ const App = () => {
 
   useEffect(
     async () => {
+      if (!isWalletCreated) {
+        return;
+      }
+
       const transactions = await veo.wallet.getTransactions();
 
       setTransactions(transactions);
