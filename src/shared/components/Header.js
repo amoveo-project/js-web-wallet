@@ -70,6 +70,7 @@ const MenuItem = styled(PartialNavLink)`
   }
   &[disabled] {
     opacity: 0.15;
+    pointer-events: none;
   }
 `;
 const HeaderLink = styled(Link)`
@@ -204,7 +205,7 @@ const LogOut = styled(Link)`
 `;
 
 const Header = () => {
-  const { keys, passphrase } = useContext(AppContext);
+  const { isWalletCreated, keys, passphrase } = useContext(AppContext);
 
   const downloadPassphrase = () => {
     downloadFile(passphrase, 'passphrase', 'text/plain');
@@ -219,14 +220,14 @@ const Header = () => {
       <HeaderSection>
         <Container>
           <div>
-            <LogoLink to="/">
+            <LogoLink to={isWalletCreated ? '/dashboard/' : '/'}>
               <Logo />
             </LogoLink>
             <Menu>
-              <MenuItem to="/dashboard">Dashboard</MenuItem>
-              <MenuItem to="/send">Send</MenuItem>
-              <MenuItem to="/receive">Receive</MenuItem>
-              <MenuItem to="/exchange" disabled>
+              <MenuItem to="/dashboard/">Dashboard</MenuItem>
+              <MenuItem to="/send/">Send</MenuItem>
+              <MenuItem to="/receive/">Receive</MenuItem>
+              <MenuItem to="/exchange/" disabled>
                 Exchange
               </MenuItem>
             </Menu>
