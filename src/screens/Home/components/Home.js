@@ -35,9 +35,9 @@ const SvgRestore2 = styled(SvgRestore)`
 const Home = () => {
   return (
     <Fragment>
-      <Title>The simplest wayto use VEO</Title>
+      <Title>The simplest wayto use Amoveo</Title>
       <Subtitle>
-        Send and receive Viewo (VEO) safely and securely, anywhere and any time.
+        Send and receive VEO safely and securely, anywhere and any time.
       </Subtitle>
       <Buttons>
         <CreateButton to="/create">
