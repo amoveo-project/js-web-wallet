@@ -75,20 +75,17 @@ const SendContainer = () => {
     setAmount(value);
   };
 
-  const handleSendMoney = async (address, amount) => {
+  const handleSendMoney = async () => {
     if (amount <= 0) {
       return;
     }
-
-    amount = amount / 1e8;
 
     // todo: block send control
 
     let transaction = null;
     try {
-      transaction = await veo.wallet.sendMoney(address, amount);
+      transaction = await veo.wallet.sendMoney(address, amount / 1e8);
     } catch (e) {
-      console.log(e);
       console.error('sending money failed');
     }
 
