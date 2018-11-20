@@ -34,7 +34,7 @@ const Buttons = styled.div`
   display: flex;
   justify-content: space-between;
 
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     justify-content: flex-start;
   }
 `;
