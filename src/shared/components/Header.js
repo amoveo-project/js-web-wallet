@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
+import Device from 'device';
 
 import PartialNavLink from 'shared/components/PartialNavLink';
 
@@ -25,6 +26,13 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media ${Device.laptopM} {
+    padding: 0 50px;
+  }
+  @media ${Device.laptopL} {
+    padding: 0 15px;
+  }
 `;
 const LogoLink = styled(Link)`
   margin: 0 60px 0 0;

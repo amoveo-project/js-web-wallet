@@ -15,6 +15,13 @@ const Container = styled.div`
   max-width: 1230px;
   margin: 0 auto;
   padding: 0 15px;
+
+  @media ${Device.laptopM} {
+    padding: 0 50px;
+  }
+  @media ${Device.laptopL} {
+    padding: 0 15px;
+  }
 `;
 
 const FlexContainer = styled(Container)`

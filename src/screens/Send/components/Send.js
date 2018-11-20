@@ -31,6 +31,13 @@ const Container = styled.div`
   max-width: 1230px;
   margin: 0 auto;
   padding: 0 15px;
+
+  @media ${Device.laptopM} {
+    padding: 0 50px;
+  }
+  @media ${Device.laptopL} {
+    padding: 0 15px;
+  }
 `;
 const Body = styled.div`
   width: 100%;
@@ -150,9 +157,14 @@ const SendMoney = styled.div`
   }
 `;
 const Fee = styled.div`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 300;
-  line-height: 60px;
+  line-height: 30px;
+
+  @media ${Device.laptopM} {
+    line-height: 60px;
+    font-size: 20px;
+  }
 `;
 const FeeValue = styled.span`
   font-weight: 500;
