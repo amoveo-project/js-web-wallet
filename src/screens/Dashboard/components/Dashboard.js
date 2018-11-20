@@ -43,6 +43,13 @@ const FlexContainer = styled(Container)`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+
+  @media ${Device.laptop} {
+    justify-content: flex-start;
+  }
+  @media ${Device.laptopM} {
+    justify-content: space-between;
+  }
 `;
 const Body = styled.div`
   width: 100%;

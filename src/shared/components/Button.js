@@ -20,7 +20,7 @@ const Button = styled(Link)`
   width: 46%;
   user-select: none;
 
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     min-width: 290px;
     max-width: 290px;
     font-size: 20px;
@@ -45,7 +45,7 @@ const Button = styled(Link)`
     background: ${props => props.theme.color.blue};
     transition: all 0.4s;
 
-    @media ${Device.laptopM} {
+    @media ${Device.laptop} {
       width: 60px;
       height: 60px;
       margin-top: -30px;
@@ -64,7 +64,7 @@ const Button = styled(Link)`
     left: 5px;
     margin-top: -8px;
 
-    @media ${Device.laptopM} {
+    @media ${Device.laptop} {
       left: 15px;
       width: 20px;
       height: 20px;
@@ -76,7 +76,7 @@ const Button = styled(Link)`
     &:after {
       width: 45px;
 
-      @media ${Device.laptopM} {
+      @media ${Device.laptop} {
         width: 55px;
       }
     }
