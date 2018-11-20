@@ -6,7 +6,7 @@ import Device from 'device';
 const GoBack = styled(Link)`
   display: none;
 
-  @media ${Device.laptopM} {
+  @media ${Device.laptopL} {
     display: inline-block;
     position: fixed;
     top: 0;
