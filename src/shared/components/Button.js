@@ -74,7 +74,11 @@ const Button = styled(Link)`
 
   &:hover {
     &:after {
-      width: 55px;
+      width: 45px;
+
+      @media ${Device.laptopM} {
+        width: 55px;
+      }
     }
   }
 `;
