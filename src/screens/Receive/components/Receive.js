@@ -45,9 +45,13 @@ const Form = styled.form`
 `;
 const Fieldset = styled.fieldset`
   padding: 0;
-  margin: 0 0 60px 0;
+  margin: 0 0 30px 0;
   border: none;
   width: 100%;
+
+  @media ${Device.laptopM} {
+    margin: 0 0 60px 0;
+  }
 
   &:last-of-type {
     margin-bottom: 0;
@@ -63,12 +67,16 @@ const LabelContainer = styled.div`
   width: 100%;
 `;
 const Label = styled.label`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 300;
   margin: 0;
   color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
   user-select: none;
+
+  @media ${Device.laptopM} {
+    font-size: 16px;
+  }
 `;
 const Max = styled.label`
   font-size: 16px;
@@ -83,11 +91,15 @@ const Input = styled.input`
   width: 100%;
   padding: 10px 0;
   margin: 0;
-  line-height: 45px;
-  max-height: 67px;
-  font-size: 20px;
+  line-height: 24px;
+  font-size: 18px;
   transition: all 0.4s;
   color: #fff;
+
+  @media ${Device.laptopM} {
+    font-size: 20px;
+    line-height: 45px;
+  }
 
   &:hover {
     border-color: rgba(255, 255, 255, 1);
@@ -97,7 +109,11 @@ const Input = styled.input`
   }
 `;
 const Amount = styled(Input)`
-  font-size: 45px;
+  font-size: 24px;
+
+  @media ${Device.laptopM} {
+    font-size: 45px;
+  }
 `;
 const Address = styled.div`
   font-family: 'OCRAExtended';
@@ -112,9 +128,13 @@ const Address = styled.div`
 `;
 const Footer = styled.footer`
   width: 100%;
-  font-size: 20px;
+  font-size: 18px;
   position: relative;
   z-index: 2;
+
+  @media ${Device.laptopM} {
+    font-size: 20px;
+  }
 `;
 const FooterWrap = styled.div`
   background: #fff;

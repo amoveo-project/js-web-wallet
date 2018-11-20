@@ -59,12 +59,16 @@ const LabelContainer = styled.div`
   width: 100%;
 `;
 const Label = styled.label`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 300;
   margin: 0;
   color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
   user-select: none;
+
+  @media ${Device.laptopM} {
+    font-size: 16px;
+  }
 `;
 const FillMax = styled.label`
   font-size: 16px;
@@ -81,11 +85,15 @@ const Input = styled.input`
   width: 100%;
   padding: 10px 0;
   margin: 0;
-  line-height: 45px;
-  max-height: 67px;
-  font-size: 20px;
+  line-height: 24px;
+  font-size: 18px;
   transition: all 0.4s;
   color: #fff;
+
+  @media ${Device.laptopM} {
+    font-size: 20px;
+    line-height: 45px;
+  }
 
   &:hover {
     border-color: rgba(255, 255, 255, 1);
@@ -95,7 +103,11 @@ const Input = styled.input`
   }
 `;
 const Amount = styled(Input)`
-  font-size: 45px;
+  font-size: 24px;
+
+  @media ${Device.laptopM} {
+    font-size: 45px;
+  }
 `;
 const Address = styled(Input)``;
 const Footer = styled.footer`

@@ -127,12 +127,16 @@ const LabelContainer = styled.div`
   width: 100%;
 `;
 const Label = styled.label`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 300;
   margin: 0;
   color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
   user-select: none;
+
+  @media ${Device.laptopM} {
+    font-size: 16px;
+  }
 `;
 const Field = styled.div`
   width: 100%;
