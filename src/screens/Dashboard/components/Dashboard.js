@@ -205,7 +205,7 @@ const Type = styled(TransactionsCol)`
   max-width: 20px;
   text-align: center;
 `;
-const TransactionsId = styled.div`
+const Address = styled.div`
   flex: 1;
   position: relative;
   word-break: break-all;
@@ -300,7 +300,7 @@ const Dashboard = ({ children }) => {
                     <Date>Date</Date>
                     <Fee>Fee</Fee>
                     <Type />
-                    <TransactionsId>Transaction ID</TransactionsId>
+                    <Address>Address</Address>
                   </Transaction>
                 ) : (
                   <TransactionsPlaceholder>
@@ -328,7 +328,11 @@ const Dashboard = ({ children }) => {
                         <IconReceive />
                       )}
                     </Type>
-                    <TransactionsId>{transaction.hash}</TransactionsId>
+                    <Address>
+                      {transaction.from === keys.public
+                        ? transaction.to
+                        : transaction.from}
+                    </Address>
                     <TransactionLink to={`/dashboard/${transaction.nonce}`} />
                   </Transaction>
                 ))}
