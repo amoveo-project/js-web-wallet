@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
+import Device from 'device';
 
 import { ReactComponent as SvgDownload } from 'shared/assets/icon-download.svg';
 
@@ -9,8 +10,13 @@ import CreateContext from 'shared/contexts/CreateContext';
 
 const Title = styled.h1`
   font-weight: 500;
-  font-size: 60px;
-  margin: 0 0 40px 0;
+  font-size: 30px;
+  margin: 0 0 30px 0;
+
+  @media ${Device.laptopM} {
+    font-size: 60px;
+    margin: 0 0 40px 0;
+  }
 `;
 const PassPhrase = styled.p`
   font-weight: normal;
@@ -21,9 +27,14 @@ const PassPhrase = styled.p`
 `;
 const DownloadTitle = styled.p`
   font-weight: 500;
-  font-size: 60px;
-  margin: 0 0 40px 0;
+  font-size: 30px;
+  margin: 0 0 30px 0;
   color: ${props => props.theme.color.yellow};
+
+  @media ${Device.laptopM} {
+    font-size: 60px;
+    margin: 0 0 40px 0;
+  }
 `;
 const DownloadText = styled.p`
   font-size: 20px;
@@ -53,9 +64,20 @@ const MainWrap = styled.div`
 `;
 const Half = styled.div`
   width: 100%;
-  max-width: 500px;
-  padding: 0 30px 0 0;
+  max-width: 46%;
+  padding: 0;
   z-index: 2;
+
+  &:nth-child(2n) {
+    @media ${Device.laptopM} {
+      padding: 0 30px 0 0;
+    }
+  }
+
+  @media ${Device.laptopM} {
+    max-width: 500px;
+    padding: 0 30px 0 0;
+  }
 `;
 const Download = styled.button`
   border: 2px solid ${props => props.theme.color.yellow};

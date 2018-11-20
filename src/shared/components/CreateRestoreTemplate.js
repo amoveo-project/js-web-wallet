@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
+import Device from 'device';
 
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
 import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
@@ -41,9 +42,6 @@ const Container = styled.div`
 const Logo = styled(LogoIcon)`
   width: 195px;
   height: 60px;
-
-  & g {
-  }
 `;
 const IconBack = styled(SvgPrev)``;
 const IconNext = styled(SvgNext)`
@@ -68,9 +66,13 @@ const HeaderLink = styled(Link)`
 `;
 const Footer = styled.footer`
   width: 100%;
-  font-size: 20px;
+  font-size: 18px;
   position: relative;
   z-index: 2;
+
+  @media ${Device.laptopM} {
+    font-size: 20px;
+  }
 `;
 const FooterWrap = styled.div`
   background: #fff;

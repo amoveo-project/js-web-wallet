@@ -1,11 +1,17 @@
 import React, { Fragment, useContext } from 'react';
 import styled from 'styled-components';
+import Device from 'device';
 
 import RestoreContext from 'shared/contexts/RestoreContext';
 
 const Title = styled.h1`
-  font-size: 40px;
-  margin: 0 0 40px 0;
+  font-size: 30px;
+  margin: 0 0 20px 0;
+
+  @media ${Device.laptopM} {
+    font-size: 40px;
+    margin: 0 0 40px 0;
+  }
 
   span {
     color: ${props => props.theme.color.yellow};
