@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
+import Device from 'device';
 
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
 import { ReactComponent as LogoCircleSvg } from 'shared/assets/logo-circle.svg';
@@ -32,9 +33,13 @@ const LogoCircleWrap = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
-  width: 780px;
+  width: 70%;
   overflow: hidden;
   pointer-events: none;
+
+  @media ${Device.laptopM} {
+    width: 780px;
+  }
 `;
 const Logo = styled(LogoIcon)`
   width: 195px;
@@ -44,11 +49,18 @@ const Logo = styled(LogoIcon)`
   }
 `;
 const LogoCircle = styled(LogoCircleSvg)`
-  width: 960px;
-  height: 960px;
-  margin-top: -480px;
+  width: 800px;
+  height: 800px;
+  margin-top: -400px;
   position: absolute;
   top: 50%;
+  pointer-events: none;
+
+  @media ${Device.laptopM} {
+    width: 960px;
+    height: 960px;
+    margin-top: -480px;
+  }
 `;
 
 const Body = styled.div`
@@ -61,9 +73,13 @@ const Body = styled.div`
 const Footer = styled.footer`
   width: 100%;
   padding: 48px 0;
-  font-size: 20px;
+  font-size: 18px;
   position: relative;
   z-index: 2;
+
+  @media ${Device.laptopM} {
+    font-size: 20px;
+  }
 `;
 
 const HeaderLink = styled(Link)`

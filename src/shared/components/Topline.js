@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Device from 'device';
 
 import ToplineBalance from 'shared/components/ToplineBalance';
 
@@ -23,10 +24,19 @@ const FlexContainer = styled(Container)`
 `;
 
 const Title = styled.h1`
-  font-size: 40px;
-  margin: 25px 20px 25px 0;
+  font-size: 28px;
+  margin: 15px 15px 15px 0;
   line-height: 1.15;
   font-weight: 500;
+
+  @media ${Device.laptopM} {
+    font-size: 36px;
+    margin: 20px 20px 20px 0;
+  }
+  @media ${Device.laptopL} {
+    font-size: 40px;
+    margin: 25px 20px 25px 0;
+  }
 `;
 
 const Topline = ({ title = '' }) => {

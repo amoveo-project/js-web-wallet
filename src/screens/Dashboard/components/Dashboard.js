@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ClipboardJS from 'clipboard';
 import { format, fromUnixTime } from 'date-fns';
 
+import Device from 'device';
 import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
 import { ReactComponent as SvgReceive } from 'shared/assets/icon-receive.svg';
 import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg';
@@ -40,13 +41,21 @@ const FlexContainer = styled(Container)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 `;
 const Body = styled.div`
   width: 100%;
   padding: 30px 0 60px 0;
 `;
 const Wallet = styled.div`
-  flex: 1;
+  width: 100%;
+  margin: 30px 0 0 0;
+
+  @media ${Device.laptopM} {
+    flex: 1;
+    width: auto;
+    margin: 0 0 0 30px;
+  }
 `;
 const WalletAddress = styled.div`
   font-family: 'OCRAExtended';
@@ -119,33 +128,55 @@ const Transaction = styled.div`
   &:first-child {
     font-weight: 500;
   }
-  &:last-child {
-    background: none;
-    justify-content: space-between;
-    margin-top: 10px;
-  }
+`;
+const TransactionNav = styled(Transaction)`
+  background: none;
+  justify-content: space-between;
+  margin-top: 10px;
 `;
 const TransactionsCol = styled.div`
   width: 100%;
-  line-height: 20px;
-  font-size: 16px;
+  line-height: 18px;
+  font-size: 14px;
+
+  @media ${Device.laptopM} {
+    font-size: 16px;
+    line-height: 20px;
+  }
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     padding: 4px;
     margin: 0;
     display: inline-block;
+
+    @media ${Device.laptopM} {
+      width: 20px;
+      height: 20px;
+    }
   }
 `;
 const Value = styled(TransactionsCol)`
-  max-width: 160px;
+  max-width: 15%;
+
+  @media ${Device.laptopM} {
+    max-width: 160px;
+  }
 `;
 const Date = styled(TransactionsCol)`
-  max-width: 160px;
+  max-width: 15%;
+
+  @media ${Device.laptopM} {
+    max-width: 150px;
+  }
 `;
 const Fee = styled(TransactionsCol)`
-  max-width: 120px;
+  max-width: 15%;
+
+  @media ${Device.laptopM} {
+    max-width: 150px;
+  }
 `;
 const Type = styled(TransactionsCol)`
   max-width: 20px;
@@ -153,9 +184,13 @@ const Type = styled(TransactionsCol)`
 `;
 const TransactionsId = styled.div`
   flex: 1;
-  padding-left: 3px;
   position: relative;
   word-break: break-all;
+  font-size: 14px;
+
+  @media ${Device.laptopM} {
+    font-size: 16px;
+  }
 `;
 const TransactionLink = styled(Link)`
   position: absolute;
@@ -270,7 +305,7 @@ const Dashboard = ({ children }) => {
                     <TransactionLink to={`/dashboard/${transaction.nonce}`} />
                   </Transaction>
                 ))}
-                {/* <Transaction>
+                {/* <TransactionNav>
                   <TransactionsPrev>
                     <IconBack />
                     Previous 10

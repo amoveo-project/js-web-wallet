@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
+import Device from 'device';
 
 import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
 
@@ -99,9 +100,13 @@ const Amount = styled(Input)`
 const Address = styled(Input)``;
 const Footer = styled.footer`
   width: 100%;
-  font-size: 20px;
+  font-size: 18px;
   position: relative;
   z-index: 2;
+
+  @media ${Device.laptopM} {
+    font-size: 20px;
+  }
 `;
 const FooterWrap = styled.div`
   background: #fff;
@@ -115,11 +120,15 @@ const FooterWrap = styled.div`
 `;
 const SendMoney = styled.div`
   font-weight: 500;
-  line-height: 60px;
+  line-height: 30px;
   color: ${props => props.theme.color.blue};
   display: inline-block;
   text-decoration: none;
   cursor: pointer;
+
+  @media ${Device.laptopM} {
+    line-height: 60px;
+  }
 
   &[disabled] {
     pointer-events: none;
@@ -137,14 +146,21 @@ const FeeValue = styled.span`
   font-weight: 500;
 `;
 const IconNext = styled(SvgNext)`
-  width: 60px;
-  height: 60px;
+  width: 30px;
+  height: 30px;
   background: ${props => props.theme.color.yellow};
-  padding: 20px;
+  padding: 10px;
   border-radius: 30px;
   display: inline-block;
-  margin: 0 0 0 20px;
+  margin: 0 0 0 10px;
   vertical-align: top;
+
+  @media ${Device.laptopM} {
+    width: 60px;
+    height: 60px;
+    padding: 20px;
+    margin: 0 0 0 20px;
+  }
 `;
 
 const Send = () => {

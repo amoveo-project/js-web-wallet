@@ -1,17 +1,23 @@
 import React, { Fragment } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
+import Device from 'device';
 
 const GoBack = styled(Link)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 80px;
-  background: rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  z-index: 9;
-  color: #fff;
+  display: none;
+
+  @media ${Device.laptopM} {
+    display: inline-block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 80px;
+    background: rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    z-index: 9;
+    color: #fff;
+  }
 
   svg {
     width: 20px;

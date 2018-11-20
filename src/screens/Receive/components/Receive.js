@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useEffect } from 'react';
 import ClipboardJS from 'clipboard';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
+import Device from 'device';
 
 import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
 import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg';
@@ -127,10 +128,16 @@ const FooterWrap = styled.div`
 `;
 const FooterLink = styled(Link)`
   font-weight: 500;
-  line-height: 60px;
+  font-size: 18px;
+  line-height: 30px;
   color: ${props => props.theme.color.blue};
   display: inline-block;
   text-decoration: none;
+
+  @media ${Device.laptopM} {
+    line-height: 60px;
+    font-size: 20px;
+  }
 
   &[disabled] {
     pointer-events: none;
@@ -151,41 +158,70 @@ const IconClipboard = styled(SvgClipboard)`
   }
 `;
 const IconNext = styled(SvgNext)`
-  width: 60px;
-  height: 60px;
+  width: 30px;
+  height: 30px;
   background: ${props => props.theme.color.yellow};
-  padding: 20px;
+  padding: 10px;
   border-radius: 30px;
   display: inline-block;
-  margin: 0 0 0 20px;
+  margin: 0 0 0 10px;
   vertical-align: top;
+
+  @media ${Device.laptopM} {
+    width: 60px;
+    height: 60px;
+    padding: 20px;
+    margin: 0 0 0 20px;
+  }
 `;
 const QrCodeWrap = styled.div`
   width: 100%;
-  max-width: 700px;
+  max-width: 70%;
   border-right: solid 2px rgba(22, 26, 46, 0.3);
-  padding: 0 30px 0 0;
+  padding: 0 20px 0 0;
 
   display: flex;
   justify-content: flex-start;
+
+  @media ${Device.laptopM} {
+    padding: 0 30px 0 0;
+    max-width: 700px;
+  }
 `;
 const QrCode = styled.img`
-  width: 170px;
-  height: 170px;
-  min-width: 170px;
-  margin: 0 30px 0 0;
+  width: 120px;
+  height: 120px;
+  min-width: 120px;
+  margin: 0 20px 0 0;
+
+  @media ${Device.laptopM} {
+    width: 170px;
+    height: 170px;
+    min-width: 170px;
+    margin: 0 30px 0 0;
+  }
 `;
 const QrCodeTitle = styled.h3`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
-  margin: 0 0 30px 0;
+  margin: 0 0 20px 0;
+
+  @media ${Device.laptopM} {
+    font-size: 20px;
+    margin: 0 0 30px 0;
+  }
 `;
 const QrCodeAddress = styled.p`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 300;
-  line-height: 24px;
+  line-height: 20px;
   margin: 0;
   word-break: break-word;
+
+  @media ${Device.laptopM} {
+    font-size: 16px;
+    line-height: 24px;
+  }
 `;
 
 const Receive = () => {
