@@ -59,7 +59,7 @@ const Wallet = styled.div`
   width: 100%;
   margin: 30px 0 0 0;
 
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     flex: 1;
     width: auto;
     margin: 0 0 0 30px;
