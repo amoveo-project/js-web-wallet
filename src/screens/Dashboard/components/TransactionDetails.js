@@ -7,6 +7,7 @@ import { format, fromUnixTime } from 'date-fns';
 import Device from 'device';
 import { ReactComponent as SvgReceive } from 'shared/assets/icon-receive.svg';
 import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
+import { ReactComponent as SvgPending } from 'shared/assets/icon-pending.svg';
 import { ReactComponent as SvgPrev } from 'shared/assets/icon-prev.svg';
 import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg';
 
@@ -54,6 +55,15 @@ const IconSend = styled(SvgSend)`
   padding: 5px;
   margin: 0 20px 0 0;
 `;
+const IconPending = styled(SvgPending)`
+  fill: currentColor;
+  opacity: 0.5;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 16px;
+  height: 16px;
+`;
 const IconBack = styled(SvgPrev)``;
 const FlexContainer = styled(Container)`
   display: flex;
@@ -74,6 +84,7 @@ const Title = styled.h1`
 const BalanceWrap = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
 `;
 const Balance = styled.div`
   font-size: 28px;
@@ -214,7 +225,9 @@ const TransactionReceive = ({ transactionId }) => {
               <Title>Transaction details</Title>
               <BalanceWrap>
                 {isSpend ? <IconSend /> : <IconReceive />}
-                <Balance>{transaction.amount / 1e8} VEO</Balance>
+                <Balance>
+                  {transaction.amount / 1e8} VEO <IconPending />
+                </Balance>
               </BalanceWrap>
             </FlexContainer>
           </TransactionTopline>

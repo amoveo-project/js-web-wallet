@@ -7,6 +7,7 @@ import { format, fromUnixTime } from 'date-fns';
 import Device from 'device';
 import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
 import { ReactComponent as SvgReceive } from 'shared/assets/icon-receive.svg';
+import { ReactComponent as SvgPending } from 'shared/assets/icon-pending.svg';
 import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg';
 import { ReactComponent as SvgPrev } from 'shared/assets/icon-arrow-left.svg';
 import { ReactComponent as SvgNext } from 'shared/assets/icon-arrow-right.svg';
@@ -93,6 +94,10 @@ const IconSend = styled(SvgSend)`
 const IconReceive = styled(SvgReceive)`
   fill: ${props => props.theme.color.yellow};
 `;
+const IconPending = styled(SvgPending)`
+  fill: #fff;
+  opacity: 0.5;
+`;
 const IconClipboard = styled(SvgClipboard)`
   width: 16px;
   height: 16px;
@@ -163,6 +168,10 @@ const Value = styled(TransactionsCol)`
   @media ${Device.laptopM} {
     max-width: 160px;
   }
+
+  svg {
+    margin: 0 5px 0 0;
+  }
 `;
 const Date = styled(TransactionsCol)`
   max-width: 15%;
@@ -187,6 +196,7 @@ const TransactionsId = styled.div`
   position: relative;
   word-break: break-all;
   font-size: 14px;
+  padding-left: 3px;
 
   @media ${Device.laptopM} {
     font-size: 16px;
@@ -286,7 +296,10 @@ const Dashboard = ({ children }) => {
 
                 {transactions.map(transaction => (
                   <Transaction key={transaction.hash}>
-                    <Value>{transaction.amount / 1e8}</Value>
+                    <Value>
+                      <IconPending />
+                      {transaction.amount / 1e8}
+                    </Value>
                     <Date>
                       {format(
                         fromUnixTime(transaction.timestamp),
