@@ -4,6 +4,7 @@ import ClipboardJS from 'clipboard';
 import { Link } from '@reach/router';
 import { format, fromUnixTime } from 'date-fns';
 
+import Device from 'device';
 import { ReactComponent as SvgReceive } from 'shared/assets/icon-receive.svg';
 import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
 import { ReactComponent as SvgPrev } from 'shared/assets/icon-prev.svg';
@@ -60,22 +61,35 @@ const FlexContainer = styled(Container)`
   align-items: center;
 `;
 const Title = styled.h1`
-  font-size: 40px;
-  margin: 25px 20px 25px 0;
+  font-size: 28px;
+  margin: 15px 15px 15px 0;
   line-height: 1.15;
   font-weight: 500;
+
+  @media ${Device.laptopM} {
+    font-size: 40px;
+    margin: 25px 20px 25px 0;
+  }
 `;
 const BalanceWrap = styled.div`
   display: flex;
   align-items: center;
 `;
 const Balance = styled.div`
-  font-size: 40px;
+  font-size: 28px;
   color: ${props => props.theme.color.blue};
 
+  @media ${Device.laptopM} {
+    font-size: 40px;
+  }
+
   span {
-    font-size: 20px;
+    font-size: 18px;
     vertical-align: baseline;
+
+    @media ${Device.laptopM} {
+      font-size: 20px;
+    }
   }
 `;
 const Body = styled.div`
@@ -91,9 +105,13 @@ const Form = styled.form`
 `;
 const Fieldset = styled.fieldset`
   padding: 0;
-  margin: 0 0 60px 0;
+  margin: 0 0 30px 0;
   border: none;
   width: 100%;
+
+  @media ${Device.laptopM} {
+    margin: 0 0 60px 0;
+  }
 
   &:last-of-type {
     margin-bottom: 0;
@@ -120,17 +138,22 @@ const Field = styled.div`
   width: 100%;
   padding: 10px 0;
   margin: 0;
-  line-height: 45px;
-  max-height: 67px;
-  font-size: 20px;
+  line-height: 28px;
+  font-size: 16px;
   transition: all 0.4s;
   color: #fff;
+
+  @media ${Device.laptopM} {
+    font-size: 20px;
+    line-height: 45px;
+  }
 `;
 const Amount = styled(Field)`
   font-size: 45px;
 `;
 const To = styled(Field)`
   font-family: 'OCRAExtended';
+  word-break: break-all;
 `;
 const LabelField = styled(Field)``;
 const PaymentID = styled(Field)``;

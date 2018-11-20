@@ -26,6 +26,7 @@ const GlobalStyles = createGlobalStyle`
 
   body {
     display: flex;
+    background: #161a2e;
     color: #fff;
     font-family: 'Ubuntu', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
