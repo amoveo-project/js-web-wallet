@@ -21,6 +21,14 @@ const Button = styled(Link)`
   user-select: none;
 
   @media ${Device.laptop} {
+    min-width: 270px;
+    max-width: 270px;
+    font-size: 18px;
+    line-height: 50px;
+    padding: 20px;
+    margin: 0 20px 0 0;
+  }
+  @media ${Device.laptopM} {
     min-width: 290px;
     max-width: 290px;
     font-size: 20px;
