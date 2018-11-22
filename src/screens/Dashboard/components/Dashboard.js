@@ -74,13 +74,21 @@ const Wallet = styled.div`
 `;
 const WalletAddress = styled.div`
   font-family: 'OCRAExtended';
-  font-size: 20px;
+  font-size: 18px;
   word-break: break-all;
+
+  @media ${Device.laptopM} {
+    font-size: 20px;
+  }
 `;
 const YourWalletText = styled.div`
-  font-size: 16px;
+  font-size: 14px;
   margin: 0 0 20px 0;
   user-select: none;
+
+  @media ${Device.laptopM} {
+    font-size: 16px;
+  }
 
   span {
     opacity: 0.5;
