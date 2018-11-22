@@ -253,8 +253,7 @@ const IconNext = styled(SvgNext)`
 `;
 
 const Dashboard = ({ children }) => {
-  const { keys, transactions } = useContext(AppContext);
-  const {} = useContext(DashboardContext);
+  const { keys, pendingTransactions, transactions } = useContext(AppContext);
 
   useEffect(() => {
     const clipboard = new ClipboardJS('.js-copy-address', {
@@ -265,6 +264,8 @@ const Dashboard = ({ children }) => {
       clipboard.destroy();
     };
   }, []);
+
+  const allTransactions = [...pendingTransactions, ...transactions];
 
   return (
     <Fragment>
@@ -294,7 +295,7 @@ const Dashboard = ({ children }) => {
             <Container>
               <TransactionsLabel>Transactions</TransactionsLabel>
               <Transactions>
-                {transactions.length > 0 ? (
+                {allTransactions.length > 0 ? (
                   <Transaction>
                     <Value>Value</Value>
                     <Date>Date</Date>
@@ -308,10 +309,10 @@ const Dashboard = ({ children }) => {
                   </TransactionsPlaceholder>
                 )}
 
-                {transactions.map(transaction => (
+                {allTransactions.map(transaction => (
                   <Transaction key={transaction.hash}>
                     <Value>
-                      <IconPending />
+                      {transaction._isPending ? <IconPending /> : null}
                       {transaction.amount / 1e8}
                     </Value>
                     <Date>
@@ -333,7 +334,9 @@ const Dashboard = ({ children }) => {
                         ? transaction.to
                         : transaction.from}
                     </Address>
-                    <TransactionLink to={`/dashboard/${transaction.nonce}`} />
+                    <TransactionLink
+                      to={`/dashboard/${encodeURIComponent(transaction.hash)}`}
+                    />
                   </Transaction>
                 ))}
                 {/* <TransactionNav>

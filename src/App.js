@@ -34,12 +34,32 @@ const App = () => {
     private: '',
   });
   const [passphrase, setPassphrase] = useState('');
+  const [pendingTransactions, setPendingTransactions] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [headerId, setHeaderId] = useState(0);
 
   useEffect(() => {
     const headerIdListener = data => setHeaderId(data[1]);
     veo.events.on('header', headerIdListener);
+
+    const addPendingTransaction = data =>
+      setPendingTransactions(pendingTransactions => [
+        {
+          ...data.tx,
+          hash: data.id,
+          timestamp: Date.now() / 1000,
+          _isPending: true,
+        },
+        ...pendingTransactions,
+      ]);
+    veo.events.on('VEO_ADD_PENDING_TRANSACTION', addPendingTransaction);
+
+    const removePendingTransaction = data => {
+      setPendingTransactions(pendingTransactions =>
+        pendingTransactions.filter(tx => tx.hash !== data.id),
+      );
+    };
+    veo.events.on('VEO_REMOVE_PENDING_TRANSACTION', removePendingTransaction);
 
     if (process.env.REACT_APP_DEBUG_PRIVATE_KEY) {
       createWallet({ privateKey: process.env.REACT_APP_DEBUG_PRIVATE_KEY });
@@ -126,7 +146,9 @@ const App = () => {
     isWalletCreated,
     keys,
     passphrase,
+    pendingTransactions,
     resetWallet,
+    setPendingTransactions,
     transactions,
     veo,
   };

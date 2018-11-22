@@ -70,7 +70,7 @@ const SendContainer = () => {
 
   const handleFillMax = () => {
     let value = balance - fee - 1e-8;
-    value = value >= 0 ? value : 0;
+    value = value >= 0 ? value.toFixed(8) : 0;
 
     setAmount(value);
   };
@@ -101,6 +101,8 @@ const SendContainer = () => {
     setSentTransaction({
       hash,
     });
+
+    veo.wallet.syncPendingTransactions();
   };
 
   const handleHideModal = () => {

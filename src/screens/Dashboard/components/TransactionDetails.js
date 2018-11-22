@@ -16,7 +16,6 @@ import ButtonMin from 'shared/components/ButtonMin.js';
 import GoBack from 'shared/components/GoBack.js';
 
 import AppContext from 'shared/contexts/AppContext';
-import DashboardContext from 'shared/contexts/DashboardContext';
 
 const Main = styled.div`
   width: 100%;
@@ -197,13 +196,15 @@ const Blockchain = styled(Link)`
 const ExplorerLink = styled(ButtonMin)``;
 
 const TransactionReceive = ({ transactionId }) => {
-  const { keys, transactions } = useContext(AppContext);
+  const { keys, pendingTransactions, transactions } = useContext(AppContext);
 
   const [transaction, setTransaction] = useState(null);
 
   useEffect(() => {
-    const id = Number(transactionId);
-    const transaction = transactions.find(item => item.nonce === id);
+    const id = decodeURIComponent(transactionId);
+
+    const allTransactions = [...pendingTransactions, ...transactions];
+    const transaction = allTransactions.find(item => item.hash === id);
 
     setTransaction(transaction);
 
@@ -221,6 +222,7 @@ const TransactionReceive = ({ transactionId }) => {
   }
 
   const isSpend = transaction.from === keys.public;
+  const isPending = Boolean(transaction._isPending);
 
   return (
     <Fragment>
@@ -258,27 +260,32 @@ const TransactionReceive = ({ transactionId }) => {
                   <Label>Network fee</Label>
                   <Field>{transaction.fee / 1e8} VEO</Field>
                 </FieldsetCol>
-                <FieldsetCol>
-                  <Label>Blocknumber</Label>
-                  <Field>{transaction.blocknumber}</Field>
-                </FieldsetCol>
+                {!isPending ? (
+                  <FieldsetCol>
+                    <Label>Blocknumber</Label>
+                    <Field>{transaction.blocknumber}</Field>
+                  </FieldsetCol>
+                ) : null}
                 <Fieldset>
                   <Label>
-                    Transaction ID <IconClipboard className="js-copy-hash" />
+                    {!isPending ? 'Transaction ID' : 'Pending ID'}&nbsp;
+                    <IconClipboard className="js-copy-hash" />
                   </Label>
                   <Field>{transaction.hash}</Field>
                 </Fieldset>
-                <Fieldset>
-                  <ExplorerLink
-                    href={`https://explorer.veopool.pw/?input=${encodeURIComponent(
-                      transaction.hash,
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    See in blockchain
-                  </ExplorerLink>
-                </Fieldset>
+                {!isPending ? (
+                  <Fieldset>
+                    <ExplorerLink
+                      href={`https://explorer.veopool.pw/?input=${encodeURIComponent(
+                        transaction.hash,
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      See in blockchain
+                    </ExplorerLink>
+                  </Fieldset>
+                ) : null}
               </Form>
             </Container>
           </Body>
