@@ -235,7 +235,8 @@ const TransactionReceive = ({ transactionId }) => {
               <BalanceWrap>
                 {isSpend ? <IconSend /> : <IconReceive />}
                 <Balance>
-                  {transaction.amount / 1e8} VEO <IconPending />
+                  {transaction.amount / 1e8} VEO
+                  {isPending ? <IconPending /> : null}
                 </Balance>
               </BalanceWrap>
             </FlexContainer>
