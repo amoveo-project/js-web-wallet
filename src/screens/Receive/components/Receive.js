@@ -265,7 +265,7 @@ const Receive = () => {
     };
   }, []);
 
-  const receiveUri = `${keys.public}?value=${amount}e8`;
+  const receiveUri = `amoveo://${keys.public}?amount=${amount * 1e8}`;
 
   return (
     <Fragment>
