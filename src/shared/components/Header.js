@@ -235,7 +235,9 @@ const Header = () => {
               <MenuItem to="/dashboard/">Dashboard</MenuItem>
               <MenuItem to="/send/">Send</MenuItem>
               <MenuItem to="/receive/">Receive</MenuItem>
-              <MenuItem to="/exchange/">Exchange</MenuItem>
+              <MenuItem to="/exchange/" disabled>
+                Exchange
+              </MenuItem>
             </Menu>
           </div>
           <UserMenu>
