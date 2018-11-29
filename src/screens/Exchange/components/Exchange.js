@@ -183,6 +183,18 @@ const FooterLink = styled(Link)`
     }
   }
 `;
+const SendAll = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+  user-select: none;
+  cursor: pointer;
+  color: ${props => props.theme.color.yellow};
+`;
+const Course = styled.div`
+  font-size: 16px;
+  font-weight: 300;
+  text-align: center;
+`;
 
 const Exchange = () => {
   return (
@@ -209,10 +221,11 @@ const Exchange = () => {
           </Topline>
           <Body>
             <Total>55.20</Total>
-            <div>Send all</div>
+            <SendAll>Send all</SendAll>
           </Body>
         </MainWrap>
         <Footer>
+          <Course>1 VEO = 0.00004536 ETH</Course>
           <Container>
             <FooterWrap>
               <div>
