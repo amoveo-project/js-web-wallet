@@ -94,10 +94,19 @@ const FooterLink = styled(Link)`
   line-height: 60px;
   color: ${props => props.theme.color.blue};
   display: inline-block;
+
+  &[disabled] {
+    pointer-events: none;
+    svg {
+      opacity: 0.5;
+    }
+  }
 `;
 
-const App = ({ children }) => {
+const App = ({ children, path }) => {
   const { isWalletCreated } = useContext(AppContext);
+
+  const isRestore = path && path.startsWith('/restore');
 
   return (
     <Fragment>
@@ -118,8 +127,8 @@ const App = ({ children }) => {
           <Container>
             <FooterWrap>
               <FooterLink to="/support">Support</FooterLink>
-              <FooterLink to="/dashboard">
-                <span>Create wallet</span>
+              <FooterLink to="/dashboard" disabled={!isWalletCreated}>
+                <span>{isRestore ? 'Restore' : 'Create'} wallet</span>
                 <IconNext />
               </FooterLink>
             </FooterWrap>
