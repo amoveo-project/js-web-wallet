@@ -25,7 +25,7 @@ const CreateContainer = () => {
   }, []);
 
   function downloadPrivateKey() {
-    downloadFile(keys.private, keys.public, 'text/plain');
+    downloadFile(keys.private, 'key', 'text/plain');
   }
 
   const createState = {
