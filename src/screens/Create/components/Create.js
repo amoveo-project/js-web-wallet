@@ -105,6 +105,11 @@ const Download = styled.button`
   span {
     font-weight: 500;
   }
+
+  &[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 `;
 
 const Create = () => {
