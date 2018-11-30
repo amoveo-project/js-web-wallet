@@ -64,7 +64,7 @@ const App = () => {
     if (process.env.REACT_APP_DEBUG_PRIVATE_KEY) {
       createWallet({ privateKey: process.env.REACT_APP_DEBUG_PRIVATE_KEY });
 
-      navigate('/dashboard');
+      navigate('/dashboard/');
     }
 
     return () => veo.events.removeListener('header', headerIdListener);
