@@ -126,8 +126,8 @@ const App = ({ children, path }) => {
         <Footer>
           <Container>
             <FooterWrap>
-              <FooterLink to="/support">Support</FooterLink>
-              <FooterLink to="/dashboard" disabled={!isWalletCreated}>
+              <FooterLink to="/support/">Support</FooterLink>
+              <FooterLink to="/dashboard/" disabled={!isWalletCreated}>
                 <span>{isRestore ? 'Restore' : 'Create'} wallet</span>
                 <IconNext />
               </FooterLink>

@@ -57,11 +57,11 @@ const Home = () => {
         Send and receive VEO safely and securely, anywhere and any time.
       </Subtitle>
       <Buttons>
-        <CreateButton to="/create">
+        <CreateButton to="/create/">
           <IconWallet />
           <span>Create</span> wallet
         </CreateButton>
-        <Button to="/restore">
+        <Button to="/restore/">
           <SvgRestore2 />
           <span>Restore</span> wallet
         </Button>

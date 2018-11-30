@@ -291,7 +291,7 @@ const TransactionReceive = ({ transactionId }) => {
             </Container>
           </Body>
         </MainWrap>
-        <GoBack to="/dashboard">
+        <GoBack to="/dashboard/">
           <IconBack />
         </GoBack>
       </Main>

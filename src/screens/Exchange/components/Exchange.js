@@ -232,7 +232,7 @@ const Exchange = () => {
                 <p>Top up limit: 100 VEO</p>
                 <p>Network fee: 0.5 VEO</p>
               </div>
-              <FooterLink to="/dashboard">
+              <FooterLink to="/dashboard/">
                 You'll receive 2000.0021 <span>VEO</span> <IconNext />
               </FooterLink>
             </FooterWrap>

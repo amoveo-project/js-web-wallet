@@ -111,7 +111,7 @@ const HomeTemplate = ({ children }) => {
         </Body>
         <Footer>
           <Container>
-            <FooterLink to="/support">Support</FooterLink>
+            <FooterLink to="/support/">Support</FooterLink>
           </Container>
         </Footer>
         <LogoCircleWrap>

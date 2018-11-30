@@ -316,7 +316,7 @@ const Receive = () => {
                   <QrCodeAddress>{receiveUri}</QrCodeAddress>
                 </div>
               </QrCodeWrap>
-              <FooterLink to="/dashboard">
+              <FooterLink to="/dashboard/">
                 Dashboard <IconNext />
               </FooterLink>
             </FooterWrap>

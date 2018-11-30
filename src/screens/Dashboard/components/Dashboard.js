@@ -283,11 +283,11 @@ const Dashboard = ({ children }) => {
           <Topline title="Dashboard" />
           <Body>
             <FlexContainer>
-              <SendButton to="/send">
+              <SendButton to="/send/">
                 <IconSend />
                 Send
               </SendButton>
-              <ReceiveButton to="/receive">
+              <ReceiveButton to="/receive/">
                 <IconReceive />
                 Receive
               </ReceiveButton>
