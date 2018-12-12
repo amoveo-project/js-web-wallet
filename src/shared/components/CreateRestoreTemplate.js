@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react';
 import { Link } from '@reach/router';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Device from 'device';
 
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
@@ -89,7 +89,7 @@ const FooterWrap = styled.div`
   border-radius: 10px 10px 0 0;
   margin: 40px 0 0 0;
 `;
-const FooterLink = styled(Link)`
+const linkStyles = css`
   font-weight: 500;
   line-height: 60px;
   color: ${props => props.theme.color.blue};
@@ -101,6 +101,12 @@ const FooterLink = styled(Link)`
       opacity: 0.5;
     }
   }
+`;
+const FooterLink = styled(Link)`
+  ${linkStyles}
+`;
+const FooterExternalLink = styled.a`
+  ${linkStyles}
 `;
 
 const App = ({ children, path }) => {
@@ -126,7 +132,13 @@ const App = ({ children, path }) => {
         <Footer>
           <Container>
             <FooterWrap>
-              <FooterLink to="/support/">Support</FooterLink>
+              <FooterExternalLink
+                href="https://t.me/amoveo"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Support
+              </FooterExternalLink>
               <FooterLink to="/dashboard/" disabled={!isWalletCreated}>
                 <span>{isRestore ? 'Restore' : 'Create'} wallet</span>
                 <IconNext />

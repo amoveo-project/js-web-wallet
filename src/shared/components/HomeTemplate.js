@@ -92,7 +92,7 @@ const Footer = styled.footer`
 const HeaderLink = styled(Link)`
   color: #5d8ab8;
 `;
-const FooterLink = styled(Link)`
+const FooterExternalLink = styled.a`
   color: ${props => props.theme.color.yellow};
   font-weight: 500;
 `;
@@ -111,7 +111,13 @@ const HomeTemplate = ({ children }) => {
         </Body>
         <Footer>
           <Container>
-            <FooterLink to="/support/">Support</FooterLink>
+            <FooterExternalLink
+              href="https://t.me/amoveo"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Support
+            </FooterExternalLink>
           </Container>
         </Footer>
         <LogoCircleWrap>
