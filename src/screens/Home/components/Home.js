@@ -52,7 +52,7 @@ const SvgRestore2 = styled(SvgRestore)`
 const Home = () => {
   return (
     <Fragment>
-      <Title>The simplest wayto use Amoveo</Title>
+      <Title>The simplest way to use Amoveo</Title>
       <Subtitle>
         Send and receive VEO safely and securely, anywhere and any time.
       </Subtitle>
