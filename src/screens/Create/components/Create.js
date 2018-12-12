@@ -114,7 +114,7 @@ const Download = styled.button`
 
 const Create = () => {
   const { isWalletCreated, passphrase } = useContext(AppContext);
-  const { downloadPrivateKey } = useContext(CreateContext);
+  const { downloadPassphrase } = useContext(CreateContext);
 
   return (
     <Fragment>
@@ -129,9 +129,10 @@ const Create = () => {
         <Half>
           <DownloadTitle>Download your passphrase file</DownloadTitle>
           <DownloadText>This is very important!</DownloadText>
-          <Download onClick={downloadPrivateKey} disabled={!isWalletCreated}>
+          <Download onClick={downloadPassphrase} disabled={!isWalletCreated}>
             <SvgDownload />
-            <span>Download</span> (.txt 64 bytes)
+            <span>Download</span> (.txt{' '}
+            {passphrase ? `${passphrase.length} bytes` : null})
           </Download>
         </Half>
       </MainWrap>

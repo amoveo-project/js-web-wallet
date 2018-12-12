@@ -11,7 +11,7 @@ import CreateContext from 'shared/contexts/CreateContext';
 const { HDNode } = ethers.utils;
 
 const CreateContainer = () => {
-  const { createWallet, keys } = useContext(AppContext);
+  const { createWallet, passphrase } = useContext(AppContext);
 
   useEffect(() => {
     const mnemonic = HDNode.entropyToMnemonic(ethers.utils.randomBytes(16));
@@ -24,12 +24,12 @@ const CreateContainer = () => {
     createWallet({ privateKey, mnemonic });
   }, []);
 
-  function downloadPrivateKey() {
-    downloadFile(keys.private, 'key', 'text/plain');
+  function downloadPassphrase() {
+    downloadFile(passphrase, 'passphrase', 'text/plain');
   }
 
   const createState = {
-    downloadPrivateKey,
+    downloadPassphrase,
   };
 
   return (
