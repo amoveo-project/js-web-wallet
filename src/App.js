@@ -6,8 +6,8 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyles from './globalStyles';
 import theme from './theme';
 
-import CreateRestoreTemplate from 'shared/components/CreateRestoreTemplate';
-import HomeTemplate from 'shared/components/HomeTemplate';
+import CreateRestoreTemplate from './shared/components/CreateRestoreTemplate';
+import HomeTemplate from './shared/components/HomeTemplate';
 
 import Create from './screens/Create';
 import Dashboard from './screens/Dashboard';
@@ -20,7 +20,7 @@ import Send from './screens/Send/';
 import Test from './screens/Test';
 import TransactionDetails from './screens/Dashboard/components/TransactionDetails';
 
-import AppContext from 'shared/contexts/AppContext';
+import AppContext from './shared/contexts/AppContext';
 
 const veoNodeUrl =
   process.env.REACT_APP_VEO_NODE_URL || 'http://amoveo.exan.tech:8080';
