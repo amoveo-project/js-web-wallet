@@ -11,3 +11,5 @@
 package-lock.json
 yarn.lock
 flow-coverage/
+
+/package/*.deb
