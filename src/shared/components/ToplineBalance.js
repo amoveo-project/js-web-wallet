@@ -10,6 +10,7 @@ const BalanceWrapper = styled.div`
 `;
 const Balance = styled.div`
   font-size: 28px;
+  text-align: right;
   color: ${props => props.theme.color.yellow};
 
   @media ${Device.laptopM} {
@@ -27,11 +28,15 @@ const Balance = styled.div`
 `;
 const Pending = styled.div`
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 16px;
   text-align: right;
   margin: 5px 0 0 0;
-  line-height: 1.13;
   font-weight: 300;
+
+  @media ${Device.laptopM} {
+    font-size: 16px;
+  }
 `;
 const IconPending = styled(SvgPending)`
   width: 16px;
