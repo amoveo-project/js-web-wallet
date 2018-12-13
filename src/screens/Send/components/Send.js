@@ -58,12 +58,25 @@ const Fieldset = styled.fieldset`
 `;
 const FieldsetCol = styled(Fieldset)`
   max-width: 48%;
+  position: relative;
 `;
 const LabelContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+`;
+const VeoLabel = styled.div`
+  position: absolute;
+  top: 34px;
+  right: 0;
+  font-size: 14px;
+  font-weight: 300;
+
+  @media ${Device.laptopM} {
+    font-size: 20px;
+    top: 44px;
+  }
 `;
 const Label = styled.label`
   font-size: 14px;
@@ -111,9 +124,11 @@ const Input = styled.input`
 `;
 const Amount = styled(Input)`
   font-size: 24px;
+  padding-right: 50px;
 
   @media ${Device.laptopM} {
     font-size: 45px;
+    padding-right: 60px;
   }
 `;
 const Address = styled(Input)``;
@@ -232,6 +247,7 @@ const Send = () => {
                     value={amount}
                     onChange={handleAmountInput}
                   />
+                  <VeoLabel>VEO</VeoLabel>
                 </FieldsetCol>
                 <Fieldset>
                   <Label htmlFor="address">Receiver address</Label>
