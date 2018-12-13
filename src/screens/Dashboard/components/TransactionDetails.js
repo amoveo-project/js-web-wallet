@@ -283,7 +283,7 @@ const TransactionReceive = ({ transactionId }) => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      See in blockchain
+                      View in blockchain
                     </ExplorerLink>
                   </Fieldset>
                 ) : null}

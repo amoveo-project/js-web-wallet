@@ -117,7 +117,7 @@ const SendModal = ({ transaction, onHide }) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <InBlockchain>See in blockchain</InBlockchain>
+            <InBlockchain>View in blockchain</InBlockchain>
           </a>
         </Buttons>
       </Modal>
