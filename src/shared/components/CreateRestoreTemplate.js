@@ -52,14 +52,20 @@ const Logo = styled(LogoIcon)`
 `;
 const IconBack = styled(SvgPrev)``;
 const IconNext = styled(SvgNext)`
-  width: 60px;
-  height: 60px;
+  width: 30px;
+  height: 30px;
   background: ${props => props.theme.color.yellow};
-  padding: 20px;
+  padding: 10px;
   border-radius: 30px;
   display: inline-block;
   margin: 0 0 0 20px;
   vertical-align: top;
+
+  @media ${Device.laptopM} {
+    width: 60px;
+    height: 60px;
+    padding: 20px;
+  }
 `;
 
 const Body = styled.div`
@@ -91,9 +97,13 @@ const FooterWrap = styled.div`
 `;
 const linkStyles = css`
   font-weight: 500;
-  line-height: 60px;
+  line-height: 30px;
   color: ${props => props.theme.color.blue};
   display: inline-block;
+
+  @media ${Device.laptopM} {
+    line-height: 60px;
+  }
 
   &[disabled] {
     pointer-events: none;
