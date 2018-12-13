@@ -14,7 +14,7 @@ const Title = styled.h1`
   margin: 0 0 30px 0;
 
   @media ${Device.laptopM} {
-    font-size: 60px;
+    font-size: 40px;
     margin: 0 0 40px 0;
   }
 `;
@@ -32,7 +32,7 @@ const DownloadTitle = styled.p`
   color: ${props => props.theme.color.yellow};
 
   @media ${Device.laptopM} {
-    font-size: 60px;
+    font-size: 40px;
     margin: 0 0 40px 0;
   }
 `;

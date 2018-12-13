@@ -104,6 +104,7 @@ const linkStyles = css`
 `;
 const FooterLink = styled(Link)`
   ${linkStyles}
+  text-decoration: none;
 `;
 const FooterExternalLink = styled.a`
   ${linkStyles}
