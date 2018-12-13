@@ -3,18 +3,11 @@ import styled from 'styled-components';
 import Device from 'device';
 
 import AppContext from 'shared/contexts/AppContext';
+import { ReactComponent as SvgPending } from 'shared/assets/icon-pending.svg';
 
-const YourBalanceText = styled.p`
-  font-size: 14px;
-  opacity: 0.5;
-  text-align: right;
-  margin: 0 0 5px 0;
-
-  @media ${Device.laptopM} {
-    font-size: 16px;
-  }
+const BalanceWrapper = styled.div`
+  position: relative;
 `;
-
 const Balance = styled.div`
   font-size: 28px;
   color: ${props => props.theme.color.yellow};
@@ -32,18 +25,36 @@ const Balance = styled.div`
     }
   }
 `;
+const Pending = styled.div`
+  color: #fff;
+  font-size: 16px;
+  text-align: right;
+  margin: 5px 0 0 0;
+  line-height: 1.13;
+  font-weight: 300;
+`;
+const IconPending = styled(SvgPending)`
+  width: 16px;
+  height: 16px;
+  margin: 0 10px 0 0;
+  fill: #fff;
+  opacity: 0.5;
+`;
 
 const ToplineBalance = () => {
   const { balance } = useContext(AppContext);
 
   return (
-    <div>
-      <YourBalanceText>Your balance</YourBalanceText>
+    <BalanceWrapper>
       <Balance>
         {balance.toFixed(0)}
         <span>.{String(balance).split('.')[1] || '00'}</span> VEO
       </Balance>
-    </div>
+      <Pending>
+        <IconPending />
+        <span>Pending: 40.0175869</span>
+      </Pending>
+    </BalanceWrapper>
   );
 };
 
