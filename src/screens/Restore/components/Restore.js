@@ -84,6 +84,39 @@ const MainWrap = styled.div`
   flex-wrap: warp;
   background: red;
 `;
+const LoadKey = styled.button`
+  border: 2px solid ${props => props.theme.color.yellow};
+  color: ${props => props.theme.color.yellow};
+  padding: 18px 30px;
+  margin: 40px 0 0 0;
+  line-height: 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  background: none;
+  cursor: pointer;
+  transition: all 0.4s;
+
+  &:hover {
+    background: ${props => props.theme.color.yellow};
+    color: ${props => props.theme.color.blue};
+  }
+
+  svg {
+    fill: currentColor;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin: 0 20px 0 0;
+  }
+  span {
+    font-weight: 500;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+`;
 
 const Restore = () => {
   const {
@@ -141,6 +174,7 @@ const Restore = () => {
             value={tempPrivateKey}
             onChange={handlePrivateKeyInput}
           />
+          <LoadKey>Load key from file</LoadKey>
         </Fragment>
       )}
     </Fragment>

@@ -82,7 +82,7 @@ const Half = styled.div`
 const Download = styled.button`
   border: 2px solid ${props => props.theme.color.yellow};
   color: ${props => props.theme.color.yellow};
-  padding: 20px;
+  padding: 18px;
   line-height: 20px;
   border-radius: 10px;
   font-size: 20px;
