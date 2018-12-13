@@ -42,7 +42,25 @@ const IconPending = styled(SvgPending)`
 `;
 
 const ToplineBalance = () => {
-  const { balance } = useContext(AppContext);
+  const { balance, keys, pendingTransactions } = useContext(AppContext);
+
+  const pendingBalances = pendingTransactions.reduce(
+    (acc, cur) => {
+      const isSpend = cur.from === keys.public;
+
+      if (isSpend) {
+        acc.spend += cur.amount;
+      } else {
+        acc.receive += cur.amount;
+      }
+
+      return acc;
+    },
+    {
+      spend: 0,
+      receive: 0,
+    },
+  );
 
   return (
     <BalanceWrapper>
@@ -50,10 +68,23 @@ const ToplineBalance = () => {
         {balance.toFixed(0)}
         <span>.{String(balance).split('.')[1] || '00'}</span> VEO
       </Balance>
-      <Pending>
-        <IconPending />
-        <span>Pending: 40.0175869</span>
-      </Pending>
+      {pendingTransactions.length > 0 && (
+        <Pending>
+          <IconPending />
+          <span>
+            Pending:
+            {pendingBalances.receive > 0
+              ? ` +${pendingBalances.receive / 1e8}`
+              : null}
+            {pendingBalances.receive > 0 && pendingBalances.spend > 0
+              ? ','
+              : null}
+            {pendingBalances.spend > 0
+              ? ` −${pendingBalances.spend / 1e8}`
+              : null}
+          </span>
+        </Pending>
+      )}
     </BalanceWrapper>
   );
 };
