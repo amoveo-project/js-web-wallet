@@ -77,7 +77,7 @@ const ToplineBalance = () => {
               ? ` +${pendingBalances.receive / 1e8}`
               : null}
             {pendingBalances.receive > 0 && pendingBalances.spend > 0
-              ? ','
+              ? ' /'
               : null}
             {pendingBalances.spend > 0
               ? ` −${pendingBalances.spend / 1e8}`
