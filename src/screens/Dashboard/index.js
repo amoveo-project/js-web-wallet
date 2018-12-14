@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import Dashboard from './components/Dashboard';
 
@@ -6,7 +6,14 @@ import AppContext from 'shared/contexts/AppContext';
 import DashboardContext from 'shared/contexts/DashboardContext';
 
 const DashboardContainer = ({ navigate }) => {
-  const { isWalletCreated, veo } = useContext(AppContext);
+  const {
+    isWalletCreated,
+    transactions,
+    pendingTransactions,
+    veo,
+  } = useContext(AppContext);
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (!isWalletCreated) {
@@ -32,7 +39,14 @@ const DashboardContainer = ({ navigate }) => {
     [isWalletCreated],
   );
 
-  const dashboardState = {};
+  const handlePageChange = diff => {
+    setCurrentPage(currentPage => currentPage + diff);
+  };
+
+  const dashboardState = {
+    currentPage,
+    handlePageChange,
+  };
 
   return (
     <DashboardContext.Provider value={dashboardState}>

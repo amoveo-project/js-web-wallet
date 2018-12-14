@@ -19,6 +19,8 @@ import Topline from 'shared/components/Topline';
 import AppContext from 'shared/contexts/AppContext';
 import DashboardContext from 'shared/contexts/DashboardContext';
 
+import { TRANSACTIONS_PER_PAGE } from '../constants/transactions';
+
 const Main = styled.div`
   width: 100%;
   min-height: 100%;
@@ -239,6 +241,11 @@ const TransactionsNext = styled.div`
   line-height: 16px;
   font-weight: 500;
   cursor: pointer;
+
+  &[disabled] {
+    opacity: 0;
+    pointer-events: none;
+  }
 `;
 const TransactionsCounter = styled.div`
   opacity: 0.5;
@@ -262,6 +269,7 @@ const IconNext = styled(SvgNext)`
 
 const Dashboard = ({ children }) => {
   const { keys, pendingTransactions, transactions } = useContext(AppContext);
+  const { currentPage, handlePageChange } = useContext(DashboardContext);
 
   useEffect(() => {
     const clipboard = new ClipboardJS('.js-copy-address', {
@@ -274,6 +282,13 @@ const Dashboard = ({ children }) => {
   }, []);
 
   const allTransactions = [...pendingTransactions, ...transactions];
+
+  const maxPage = Math.ceil(allTransactions.length / TRANSACTIONS_PER_PAGE);
+
+  const visibleTransactions = allTransactions.slice(
+    (currentPage - 1) * TRANSACTIONS_PER_PAGE,
+    currentPage * TRANSACTIONS_PER_PAGE,
+  );
 
   return (
     <Fragment>
@@ -303,7 +318,7 @@ const Dashboard = ({ children }) => {
             <Container>
               <TransactionsLabel>Transactions</TransactionsLabel>
               <Transactions>
-                {allTransactions.length > 0 ? (
+                {visibleTransactions.length > 0 ? (
                   <Transaction>
                     <Value>Value</Value>
                     <Date>Date</Date>
@@ -317,7 +332,7 @@ const Dashboard = ({ children }) => {
                   </TransactionsPlaceholder>
                 )}
 
-                {allTransactions.map(transaction => (
+                {visibleTransactions.map(transaction => (
                   <Transaction key={transaction.hash}>
                     <Value>
                       {transaction._isPending ? <IconPending /> : null}
@@ -347,17 +362,31 @@ const Dashboard = ({ children }) => {
                     />
                   </Transaction>
                 ))}
-                {/* <TransactionNav>
-                  <TransactionsPrev>
-                    <IconBack />
-                    Previous 10
-                  </TransactionsPrev>
-                  <TransactionsCounter>2 / 10</TransactionsCounter>
-                  <TransactionsNext>
-                    Next 10
-                    <IconNext />
-                  </TransactionsNext>
-                </Transaction> */}
+                {allTransactions.length > TRANSACTIONS_PER_PAGE ? (
+                  <TransactionNav>
+                    <TransactionsPrev
+                      onClick={() => {
+                        handlePageChange(-1);
+                      }}
+                      disabled={currentPage < 2}
+                    >
+                      <IconBack />
+                      Previous {TRANSACTIONS_PER_PAGE}
+                    </TransactionsPrev>
+                    <TransactionsCounter>
+                      {currentPage} / {maxPage}
+                    </TransactionsCounter>
+                    <TransactionsNext
+                      onClick={() => {
+                        handlePageChange(1);
+                      }}
+                      disabled={currentPage >= maxPage}
+                    >
+                      Next {TRANSACTIONS_PER_PAGE}
+                      <IconNext />
+                    </TransactionsNext>
+                  </TransactionNav>
+                ) : null}
               </Transactions>
             </Container>
           </Body>
