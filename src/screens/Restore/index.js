@@ -6,6 +6,8 @@ import Restore from './components/Restore';
 import AppContext from 'shared/contexts/AppContext';
 import RestoreContext from 'shared/contexts/RestoreContext';
 
+import { PRIVATE_KEY_LENGTH } from './constants/keys';
+
 const RestoreContainer = () => {
   const { createWallet } = useContext(AppContext);
 
@@ -27,7 +29,7 @@ const RestoreContainer = () => {
 
   useEffect(
     () => {
-      const isValidPrivateKey = tempPrivateKey.length === 64;
+      const isValidPrivateKey = tempPrivateKey.length === PRIVATE_KEY_LENGTH;
       setIsValidPrivateKey(isValidPrivateKey);
     },
     [tempPrivateKey],
@@ -81,8 +83,37 @@ const RestoreContainer = () => {
     setTempPrivateKey('');
   };
 
+  const handleKeyLoading = e => {
+    const files = e.target.files;
+
+    if (files.length < 1) {
+      alert('No file chosen');
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onloadend = e => {
+      if (e.total !== PRIVATE_KEY_LENGTH) {
+        alert('Wrong private key length');
+        return;
+      }
+
+      if (e.target.readyState === FileReader.DONE) {
+        const privateKey = e.target.result;
+
+        setTempPrivateKey(privateKey);
+      }
+    };
+
+    reader.readAsText(files[0]);
+
+    e.target.value = null;
+  };
+
   const restoreState = {
     currentTab,
+    handleKeyLoading,
     handlePassphraseInput,
     handlePrivateKeyInput,
     handleTabChange,

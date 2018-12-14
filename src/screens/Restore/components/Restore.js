@@ -4,6 +4,8 @@ import Device from 'device';
 
 import RestoreContext from 'shared/contexts/RestoreContext';
 
+import { PRIVATE_KEY_LENGTH } from '../constants/keys';
+
 const Title = styled.h1`
   font-size: 30px;
   margin: 0 0 20px 0;
@@ -84,7 +86,8 @@ const MainWrap = styled.div`
   flex-wrap: warp;
   background: red;
 `;
-const LoadKey = styled.button`
+const LoadKey = styled.div`
+  display: inline-block;
   border: 2px solid ${props => props.theme.color.yellow};
   color: ${props => props.theme.color.yellow};
   padding: 18px 30px;
@@ -117,10 +120,16 @@ const LoadKey = styled.button`
     pointer-events: none;
   }
 `;
+const LoadKeyInput = styled.input`
+  position: fixed;
+  top: -1000px;
+  opacity: 0;
+`;
 
 const Restore = () => {
   const {
     currentTab,
+    handleKeyLoading,
     handlePassphraseInput,
     handlePrivateKeyInput,
     handleTabChange,
@@ -166,7 +175,7 @@ const Restore = () => {
       ) : (
         <Fragment>
           <PrivateKeyLabel htmlFor="privatekey">
-            Private key (64 symbols)
+            Private key ({PRIVATE_KEY_LENGTH} symbols)
           </PrivateKeyLabel>
           <PrivateKey
             id="privatekey"
@@ -174,7 +183,15 @@ const Restore = () => {
             value={tempPrivateKey}
             onChange={handlePrivateKeyInput}
           />
-          <LoadKey>Load key from file</LoadKey>
+          <label htmlFor="privatekeyInput">
+            <LoadKey>Load key from file</LoadKey>
+          </label>
+          <LoadKeyInput
+            id="privatekeyInput"
+            type="file"
+            onChange={handleKeyLoading}
+            accept="text/*"
+          />
         </Fragment>
       )}
     </Fragment>
