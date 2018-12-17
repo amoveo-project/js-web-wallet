@@ -159,7 +159,7 @@ const Transaction = styled.div`
   }
 `;
 const TransactionNav = styled(Transaction)`
-  background: none;
+  background: none !important;
   justify-content: space-between;
   margin-top: 10px;
 `;
