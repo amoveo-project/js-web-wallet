@@ -39,6 +39,12 @@ const App = () => {
   const [headerId, setHeaderId] = useState(0);
 
   useEffect(() => {
+    const beforeunloadListener = e => {
+      e.preventDefault();
+      e.returnValue = ''; // Chrome requires returnValue to be set
+    };
+    window.addEventListener('beforeunload', beforeunloadListener);
+
     const headerIdListener = data => setHeaderId(data[1]);
     veo.events.on('header', headerIdListener);
 
@@ -67,7 +73,18 @@ const App = () => {
       navigate('/dashboard/');
     }
 
-    return () => veo.events.removeListener('header', headerIdListener);
+    return () => {
+      window.removeEventListener('beforeunload', beforeunloadListener);
+      veo.events.removeListener('header', headerIdListener);
+      veo.events.removeListener(
+        'VEO_ADD_PENDING_TRANSACTION',
+        addPendingTransaction,
+      );
+      veo.events.removeListener(
+        'VEO_REMOVE_PENDING_TRANSACTION',
+        removePendingTransaction,
+      );
+    };
   }, []);
 
   useEffect(
