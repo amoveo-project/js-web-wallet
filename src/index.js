@@ -12,6 +12,7 @@ import App from './App'; */
 // serviceWorker.unregister();
 
 import 'whatwg-fetch';
+import 'what-input';
 
 import React from 'react';
 import { render } from 'react-dom';

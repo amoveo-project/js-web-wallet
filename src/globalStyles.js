@@ -49,6 +49,10 @@ const GlobalStyles = createGlobalStyle`
   .routerwrap {
     flex: 1;
   }
+
+  [data-whatintent='mouse'] *:focus {
+    outline: none;
+  }
 `;
 
 export default GlobalStyles;
