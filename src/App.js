@@ -107,6 +107,15 @@ const App = () => {
     [headerId, isWalletCreated],
   );
 
+  useEffect(
+    () => {
+      if (isWalletCreated) {
+        veo.wallet.syncPendingTransactions();
+      }
+    },
+    [headerId, isWalletCreated],
+  );
+
   const createWallet = async ({ privateKey, mnemonic = '' }) => {
     veo.keys.generateKeyPair();
     veo.keys.setPrivateKey(privateKey);
