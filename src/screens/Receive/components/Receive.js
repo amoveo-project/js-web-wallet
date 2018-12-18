@@ -280,7 +280,9 @@ const Receive = () => {
     };
   }, []);
 
-  const receiveUri = `amoveo://${keys.public}?amount=${amount * 1e8}`;
+  const receiveUri = `amoveo://${encodeURIComponent(
+    keys.public,
+  )}?amount=${amount * 1e8}`;
 
   return (
     <Fragment>
