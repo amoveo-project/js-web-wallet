@@ -20,8 +20,18 @@ const Title = styled.h1`
     cursor: pointer;
   }
   .active {
-    text-decoration: underline;
+    position: relative;
     cursor: default;
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 4px;
+      background: ${props => props.theme.color.yellow};
+    }
   }
 `;
 const TabName = styled.span`
@@ -40,12 +50,12 @@ const PassPhraseArea = styled.textarea`
   font-size: 20px;
   line-height: 30px;
   width: 100%;
-  min-height: 240px;
+  min-height: 150px;
   background: rgba(0, 0, 0, 0.15);
   border: none;
   border-radius: 10px;
   color: #fff;
-  padding: 50px;
+  padding: 75px 30px;
   text-align: center;
   resize: none;
 
@@ -66,10 +76,15 @@ const PrivateKey = styled.input`
   color: #fff;
   padding: 20px 20px 20px 0;
   text-align: left;
+  transition: all 0.4s;
 
   &::placeholder {
     color: #fff;
     opacity: 0.3;
+  }
+  &:focus,
+  &:hover {
+    border-color: #fff;
   }
 `;
 const PrivateKeyLabel = styled(PassPhraseLabel)`
