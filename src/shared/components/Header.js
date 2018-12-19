@@ -12,6 +12,11 @@ import { ReactComponent as SvgGear } from 'shared/assets/icon-gear.svg';
 
 import AppContext from 'shared/contexts/AppContext';
 
+import {
+  DOWNLOAD_PASSPHRASE,
+  DOWNLOAD_PRIVATE_KEY,
+} from 'shared/constants/actions';
+
 const HeaderSection = styled.section`
   width: 100%;
   padding: 15px 0;
@@ -213,14 +218,28 @@ const LogOut = styled(Link)`
 `;
 
 const Header = () => {
-  const { isWalletCreated, keys, passphrase } = useContext(AppContext);
+  const {
+    isWalletCreated,
+    keys,
+    passphrase,
+    setUnusedActions,
+    unusedActions,
+  } = useContext(AppContext);
 
   const downloadPassphrase = () => {
     downloadFile(passphrase, 'passphrase', 'text/plain');
+
+    setUnusedActions(unusedActions =>
+      unusedActions.filter(item => item !== DOWNLOAD_PASSPHRASE),
+    );
   };
 
   const downloadPrivateKey = () => {
     downloadFile(keys.private, 'key', 'text/plain');
+
+    setUnusedActions(unusedActions =>
+      unusedActions.filter(item => item !== DOWNLOAD_PRIVATE_KEY),
+    );
   };
 
   return (
@@ -241,18 +260,31 @@ const Header = () => {
             </Menu>
           </div>
           <UserMenu>
-            <Settings className="notice">
+            <Settings className={unusedActions.length > 0 ? 'notice' : null}>
               <SettingsToggle>
                 <IconGear className="gear" />
               </SettingsToggle>
               <SettingsDropdown className="settingsdropdown">
-                <SettingsDropdownItem onClick={downloadPrivateKey}>
+                <SettingsDropdownItem
+                  onClick={downloadPrivateKey}
+                  className={
+                    unusedActions.length > 0 &&
+                    unusedActions.includes(DOWNLOAD_PRIVATE_KEY)
+                      ? 'active'
+                      : null
+                  }
+                >
                   Download private key
                 </SettingsDropdownItem>
                 {passphrase ? (
                   <SettingsDropdownItem
                     onClick={downloadPassphrase}
-                    className="active"
+                    className={
+                      unusedActions.length > 0 &&
+                      unusedActions.includes(DOWNLOAD_PASSPHRASE)
+                        ? 'active'
+                        : null
+                    }
                   >
                     Download passphrase file
                   </SettingsDropdownItem>

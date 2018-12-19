@@ -8,10 +8,12 @@ import Create from './components/Create';
 import AppContext from 'shared/contexts/AppContext';
 import CreateContext from 'shared/contexts/CreateContext';
 
+import { DOWNLOAD_PASSPHRASE } from '../../shared/constants/actions';
+
 const { HDNode } = ethers.utils;
 
 const CreateContainer = () => {
-  const { createWallet, passphrase } = useContext(AppContext);
+  const { createWallet, passphrase, setUnusedActions } = useContext(AppContext);
 
   useEffect(() => {
     const mnemonic = HDNode.entropyToMnemonic(ethers.utils.randomBytes(16));
@@ -26,6 +28,9 @@ const CreateContainer = () => {
 
   function downloadPassphrase() {
     downloadFile(passphrase, 'passphrase', 'text/plain');
+    setUnusedActions(unusedActions =>
+      unusedActions.filter(item => item !== DOWNLOAD_PASSPHRASE),
+    );
   }
 
   const createState = {

@@ -22,21 +22,30 @@ import TransactionDetails from './screens/Dashboard/components/TransactionDetail
 
 import AppContext from 'shared/contexts/AppContext';
 
+import {
+  DOWNLOAD_PASSPHRASE,
+  DOWNLOAD_PRIVATE_KEY,
+  VEO_ADD_PENDING_TRANSACTION,
+  VEO_REMOVE_PENDING_TRANSACTION,
+  VEO_UPDATE_HEADER,
+} from 'shared/constants/actions';
+
 const veoNodeUrl =
   process.env.REACT_APP_VEO_NODE_URL || 'http://amoveo.exan.tech:8080';
 const veo = new VeoNode(veoNodeUrl);
 
 const App = () => {
   const [balance, setBalance] = useState(0);
+  const [headerId, setHeaderId] = useState(0);
   const [isWalletCreated, setIsWalletCreated] = useState(false);
-  const [keys, setKeys] = useState({
-    public: '',
-    private: '',
-  });
+  const [keys, setKeys] = useState({ public: '', private: '' });
   const [passphrase, setPassphrase] = useState('');
   const [pendingTransactions, setPendingTransactions] = useState([]);
   const [transactions, setTransactions] = useState([]);
-  const [headerId, setHeaderId] = useState(0);
+  const [unusedActions, setUnusedActions] = useState([
+    DOWNLOAD_PASSPHRASE,
+    DOWNLOAD_PRIVATE_KEY,
+  ]);
 
   useEffect(() => {
     const beforeunloadListener = e => {
@@ -46,7 +55,7 @@ const App = () => {
     window.addEventListener('beforeunload', beforeunloadListener);
 
     const headerIdListener = data => setHeaderId(data[1]);
-    veo.events.on('header', headerIdListener);
+    veo.events.on(VEO_UPDATE_HEADER, headerIdListener);
 
     const addPendingTransaction = data =>
       setPendingTransactions(pendingTransactions => [
@@ -58,14 +67,14 @@ const App = () => {
         },
         ...pendingTransactions,
       ]);
-    veo.events.on('VEO_ADD_PENDING_TRANSACTION', addPendingTransaction);
+    veo.events.on(VEO_ADD_PENDING_TRANSACTION, addPendingTransaction);
 
     const removePendingTransaction = data => {
       setPendingTransactions(pendingTransactions =>
         pendingTransactions.filter(tx => tx.hash !== data.id),
       );
     };
-    veo.events.on('VEO_REMOVE_PENDING_TRANSACTION', removePendingTransaction);
+    veo.events.on(VEO_REMOVE_PENDING_TRANSACTION, removePendingTransaction);
 
     if (process.env.REACT_APP_DEBUG_PRIVATE_KEY) {
       createWallet({ privateKey: process.env.REACT_APP_DEBUG_PRIVATE_KEY });
@@ -75,13 +84,13 @@ const App = () => {
 
     return () => {
       window.removeEventListener('beforeunload', beforeunloadListener);
-      veo.events.removeListener('header', headerIdListener);
+      veo.events.removeListener(VEO_UPDATE_HEADER, headerIdListener);
       veo.events.removeListener(
-        'VEO_ADD_PENDING_TRANSACTION',
+        VEO_ADD_PENDING_TRANSACTION,
         addPendingTransaction,
       );
       veo.events.removeListener(
-        'VEO_REMOVE_PENDING_TRANSACTION',
+        VEO_REMOVE_PENDING_TRANSACTION,
         removePendingTransaction,
       );
     };
@@ -146,6 +155,12 @@ const App = () => {
 
     setPassphrase(mnemonic);
 
+    if (!mnemonic) {
+      setUnusedActions(unusedActions =>
+        unusedActions.filter(item => item !== DOWNLOAD_PASSPHRASE),
+      );
+    }
+
     try {
       const balance = await veo.getBalance();
       setBalance(balance);
@@ -161,8 +176,8 @@ const App = () => {
     });
 
     setPassphrase('');
-
     setBalance(0);
+    setUnusedActions([DOWNLOAD_PASSPHRASE, DOWNLOAD_PRIVATE_KEY]);
   };
 
   const appState = {
@@ -175,7 +190,9 @@ const App = () => {
     pendingTransactions,
     resetWallet,
     setPendingTransactions,
+    setUnusedActions,
     transactions,
+    unusedActions,
     veo,
   };
 
