@@ -32,6 +32,9 @@ const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  input {
+    font-family: 'Ubuntu', 'Helvetica Neue', sans-serif;
+  }
 
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
