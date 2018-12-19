@@ -21,29 +21,14 @@ const RestoreContainer = () => {
     () => {
       const { HDNode } = ethers.utils;
 
-      const isValidMnemonic = HDNode.isValidMnemonic(tempPassphrase);
+      const mnemonic = tempPassphrase;
+
+      const isValidMnemonic = HDNode.isValidMnemonic(mnemonic);
       setIsValidMnemonic(isValidMnemonic);
-    },
-    [tempPassphrase],
-  );
 
-  useEffect(
-    () => {
-      const isValidPrivateKey = tempPrivateKey.length === PRIVATE_KEY_LENGTH;
-      setIsValidPrivateKey(isValidPrivateKey);
-    },
-    [tempPrivateKey],
-  );
-
-  useEffect(
-    () => {
       if (!isValidMnemonic) {
         return;
       }
-
-      const mnemonic = tempPassphrase;
-
-      const { HDNode } = ethers.utils;
 
       const masterNode = HDNode.fromMnemonic(mnemonic);
       const veoNode = masterNode.derivePath("m/44'/488'/0'/0/0");
@@ -52,20 +37,23 @@ const RestoreContainer = () => {
 
       createWallet({ privateKey, mnemonic });
     },
-    [isValidMnemonic, tempPassphrase],
+    [tempPassphrase],
   );
 
   useEffect(
     () => {
+      const privateKey = tempPrivateKey;
+
+      const isValidPrivateKey = privateKey.length === PRIVATE_KEY_LENGTH;
+      setIsValidPrivateKey(isValidPrivateKey);
+
       if (!isValidPrivateKey) {
         return;
       }
 
-      const privateKey = tempPrivateKey;
-
       createWallet({ privateKey, mnemonic: '' });
     },
-    [isValidPrivateKey, tempPrivateKey],
+    [tempPrivateKey],
   );
 
   const handlePassphraseInput = e => {
