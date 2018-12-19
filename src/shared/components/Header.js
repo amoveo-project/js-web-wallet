@@ -164,8 +164,8 @@ const SettingsDropdownItem = styled.div`
       position: absolute;
       top: 50%;
       left: -26px;
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 10px;
       background: ${props => props.theme.color.yellow};
       border: solid 2px ${props => props.theme.color.blue};
