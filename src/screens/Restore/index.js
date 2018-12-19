@@ -9,7 +9,7 @@ import RestoreContext from 'shared/contexts/RestoreContext';
 import { PRIVATE_KEY_LENGTH } from './constants/keys';
 
 const RestoreContainer = () => {
-  const { createWallet } = useContext(AppContext);
+  const { createWallet, resetWallet } = useContext(AppContext);
 
   const [currentTab, setCurrentTab] = useState('passphrase');
   const [tempPassphrase, setTempPassphrase] = useState('');
@@ -17,8 +17,14 @@ const RestoreContainer = () => {
   const [isValidMnemonic, setIsValidMnemonic] = useState(false);
   const [isValidPrivateKey, setIsValidPrivateKey] = useState(false);
 
+  useEffect(() => {
+    resetWallet();
+  }, []);
+
   useEffect(
     () => {
+      resetWallet();
+
       const { HDNode } = ethers.utils;
 
       const mnemonic = tempPassphrase;
@@ -42,6 +48,8 @@ const RestoreContainer = () => {
 
   useEffect(
     () => {
+      resetWallet();
+
       const privateKey = tempPrivateKey;
 
       const isValidPrivateKey = privateKey.length === PRIVATE_KEY_LENGTH;
@@ -66,6 +74,8 @@ const RestoreContainer = () => {
 
   const handleTabChange = (tab = 'passphrase') => {
     setCurrentTab(tab);
+
+    resetWallet();
 
     setTempPassphrase('');
     setTempPrivateKey('');
