@@ -161,7 +161,7 @@ const App = ({ children, path }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Github
+                  Download
                 </GithubLink>
               </FooterExternalLinks>
               <FooterLink to="/dashboard/" disabled={!isWalletCreated}>

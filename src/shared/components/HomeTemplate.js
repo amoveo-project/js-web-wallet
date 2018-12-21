@@ -130,7 +130,7 @@ const HomeTemplate = ({ children }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Github
+              Download
             </GithubLink>
           </Container>
         </Footer>
