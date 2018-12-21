@@ -34,7 +34,7 @@ yarn start
 or
 
 ```
-npm run start
+npm start
 ```
 
 ## License
