@@ -95,6 +95,7 @@ const FooterWrap = styled.div`
   border-radius: 10px 10px 0 0;
   margin: 40px 0 0 0;
 `;
+const FooterExternalLinks = styled.div``;
 const linkStyles = css`
   font-weight: 500;
   line-height: 30px;
@@ -119,6 +120,10 @@ const FooterLink = styled(Link)`
 const FooterExternalLink = styled.a`
   ${linkStyles}
 `;
+const SupportLink = styled(FooterExternalLink)`
+  margin-right: 15px;
+`;
+const GithubLink = styled(FooterExternalLink)``;
 
 const App = ({ children, path }) => {
   const { isWalletCreated } = useContext(AppContext);
@@ -143,13 +148,22 @@ const App = ({ children, path }) => {
         <Footer>
           <Container>
             <FooterWrap>
-              <FooterExternalLink
-                href="https://t.me/amoveo"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Support
-              </FooterExternalLink>
+              <FooterExternalLinks>
+                <SupportLink
+                  href="https://t.me/amoveo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Support
+                </SupportLink>
+                <GithubLink
+                  href="https://github.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Github
+                </GithubLink>
+              </FooterExternalLinks>
               <FooterLink to="/dashboard/" disabled={!isWalletCreated}>
                 <span>{isRestore ? 'Restore' : 'Create'} wallet</span>
                 <IconNext />

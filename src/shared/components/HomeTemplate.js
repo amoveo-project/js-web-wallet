@@ -97,6 +97,13 @@ const FooterExternalLink = styled.a`
   font-weight: 500;
 `;
 
+const SupportLink = styled(FooterExternalLink)`
+  margin-right: 15px;
+`;
+const GithubLink = styled(FooterExternalLink)`
+  color: white;
+`;
+
 const HomeTemplate = ({ children }) => {
   return (
     <Fragment>
@@ -111,13 +118,20 @@ const HomeTemplate = ({ children }) => {
         </Body>
         <Footer>
           <Container>
-            <FooterExternalLink
+            <SupportLink
               href="https://t.me/amoveo"
               target="_blank"
               rel="noopener noreferrer"
             >
               Support
-            </FooterExternalLink>
+            </SupportLink>
+            <GithubLink
+              href="https://github.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Github
+            </GithubLink>
           </Container>
         </Footer>
         <LogoCircleWrap>
