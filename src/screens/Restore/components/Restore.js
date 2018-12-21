@@ -195,7 +195,7 @@ const Restore = () => {
           <PrivateKey
             id="privatekey"
             placeholder="Enter or paste your private key"
-            autocomplete="off"
+            autoComplete="off"
             value={tempPrivateKey}
             onChange={handlePrivateKeyInput}
           />
