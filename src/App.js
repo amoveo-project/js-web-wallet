@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import VeoNode from 'amoveo-js-light-node';
+import debounce from 'lodash/debounce';
 import { Router, navigate } from '@reach/router';
 import { ThemeProvider } from 'styled-components';
 
@@ -54,8 +55,11 @@ const App = () => {
     };
     window.addEventListener('beforeunload', beforeunloadListener);
 
-    const headerIdListener = data => setHeaderId(data[1]);
-    veo.events.on(VEO_UPDATE_HEADER, headerIdListener);
+    const headerIdListener = data => {
+      console.log({ data });
+      setHeaderId(data[1]);
+    };
+    veo.events.on(VEO_UPDATE_HEADER, debounce(headerIdListener, 300));
 
     const addPendingTransaction = data =>
       setPendingTransactions(pendingTransactions => [
