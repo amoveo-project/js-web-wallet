@@ -35,6 +35,9 @@ const GlobalStyles = createGlobalStyle`
   input {
     font-family: 'Ubuntu', 'Helvetica Neue', sans-serif;
   }
+  button {
+    font-family: 'Ubuntu', 'Helvetica Neue', sans-serif;
+  }
 
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
