@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "url": "/static/media/icon-send.0e9fae7d.svg"
   },
   {
-    "revision": "7c73b894aa71d9a38f95",
-    "url": "/static/js/main.7c73b894.chunk.js"
+    "revision": "a393d179f7d33ea1cf6c",
+    "url": "/static/js/main.a393d179.chunk.js"
   },
   {
     "revision": "229c360febb4351a89df",
@@ -84,11 +84,11 @@ self.__precacheManifest = [
     "url": "/static/media/icon-wallet.e60cb77c.svg"
   },
   {
-    "revision": "e74bbc924cf7933c3800",
-    "url": "/static/js/1.e74bbc92.chunk.js"
+    "revision": "472bb78254e7d2595644",
+    "url": "/static/js/1.472bb782.chunk.js"
   },
   {
-    "revision": "e54fbde9d8868ef8f9e8ab96d40a193c",
+    "revision": "2d468ed90d867deaf644d868e343800d",
     "url": "/index.html"
   }
 ];
