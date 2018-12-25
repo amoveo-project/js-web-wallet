@@ -131,7 +131,9 @@ const Amount = styled(Input)`
     padding-right: 60px;
   }
 `;
-const Address = styled(Input)``;
+const Address = styled(Input)`
+  font-family: 'OCRAExtended';
+`;
 const Footer = styled.footer`
   width: 100%;
   font-size: 18px;

@@ -1,5 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import VeoNode from 'amoveo-js-light-node';
+import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import { Router, navigate } from '@reach/router';
 import { ThemeProvider } from 'styled-components';
 
@@ -37,6 +39,8 @@ const veo = new VeoNode(veoNodeUrl);
 const App = () => {
   const [balance, setBalance] = useState(0);
   const [headerId, setHeaderId] = useState(0);
+  const [headerIdSync, setHeaderIdSync] = useState(0);
+  const [headerIdTop, setHeaderIdTop] = useState(0);
   const [isWalletCreated, setIsWalletCreated] = useState(false);
   const [keys, setKeys] = useState({ public: '', private: '' });
   const [passphrase, setPassphrase] = useState('');
@@ -48,14 +52,29 @@ const App = () => {
   ]);
 
   useEffect(() => {
+    const setTopHeader = async () => {
+      const headerIdTop = await veo.getNodeHeight();
+      setHeaderIdTop(headerIdTop);
+    };
+    setTopHeader();
+
     const beforeunloadListener = e => {
       e.preventDefault();
       e.returnValue = ''; // Chrome requires returnValue to be set
     };
     window.addEventListener('beforeunload', beforeunloadListener);
 
-    const headerIdListener = data => setHeaderId(data[1]);
-    veo.events.on(VEO_UPDATE_HEADER, headerIdListener);
+    const headerIdListener = data => {
+      setHeaderId(data[1]);
+
+      setTopHeader();
+    };
+    veo.events.on(VEO_UPDATE_HEADER, debounce(headerIdListener, 300));
+
+    const headerIdSyncListener = data => {
+      setHeaderIdSync(data[1]);
+    };
+    veo.events.on(VEO_UPDATE_HEADER, throttle(headerIdSyncListener, 300));
 
     const addPendingTransaction = data =>
       setPendingTransactions(pendingTransactions => [
@@ -85,6 +104,7 @@ const App = () => {
     return () => {
       window.removeEventListener('beforeunload', beforeunloadListener);
       veo.events.removeListener(VEO_UPDATE_HEADER, headerIdListener);
+      veo.events.removeListener(VEO_UPDATE_HEADER, headerIdSyncListener);
       veo.events.removeListener(
         VEO_ADD_PENDING_TRANSACTION,
         addPendingTransaction,
@@ -184,6 +204,8 @@ const App = () => {
     balance,
     createWallet,
     headerId,
+    headerIdSync,
+    headerIdTop,
     isWalletCreated,
     keys,
     passphrase,
