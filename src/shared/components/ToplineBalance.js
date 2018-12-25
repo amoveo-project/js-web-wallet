@@ -8,6 +8,20 @@ import { ReactComponent as SvgPending } from 'shared/assets/icon-pending.svg';
 const BalanceWrapper = styled.div`
   position: relative;
 `;
+const BalanceRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+`;
+const SyncProgress = styled.span`
+  margin-right: 12px;
+
+  font-size: 16px;
+
+  @media ${Device.laptopM} {
+    font-size: 20px;
+  }
+`;
 const Balance = styled.div`
   font-size: 28px;
   text-align: right;
@@ -47,7 +61,13 @@ const IconPending = styled(SvgPending)`
 `;
 
 const ToplineBalance = () => {
-  const { balance, keys, pendingTransactions } = useContext(AppContext);
+  const {
+    balance,
+    headerIdSync,
+    headerIdTop,
+    keys,
+    pendingTransactions,
+  } = useContext(AppContext);
 
   const pendingBalances = pendingTransactions.reduce(
     (acc, cur) => {
@@ -67,12 +87,22 @@ const ToplineBalance = () => {
     },
   );
 
+  const isShowSync =
+    headerIdSync > 0 && headerIdTop > 0 && headerIdSync < headerIdTop;
+
   return (
     <BalanceWrapper>
-      <Balance>
-        {balance.toFixed(0)}
-        <span>.{String(balance).split('.')[1] || '00'}</span> VEO
-      </Balance>
+      <BalanceRow>
+        {isShowSync ? (
+          <SyncProgress>
+            sync in progress {headerIdSync} / {headerIdTop}
+          </SyncProgress>
+        ) : null}
+        <Balance>
+          {balance.toFixed(0)}
+          <span>.{String(balance).split('.')[1] || '00'}</span> VEO
+        </Balance>
+      </BalanceRow>
       {pendingTransactions.length > 0 && (
         <Pending>
           <IconPending />
