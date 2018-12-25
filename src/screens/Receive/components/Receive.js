@@ -258,7 +258,7 @@ const QrCodeAddress = styled.p`
   font-weight: 300;
   line-height: 20px;
   margin: 0;
-  word-break: break-word;
+  word-break: break-all;
 
   @media ${Device.laptopM} {
     font-size: 16px;
