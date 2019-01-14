@@ -5,6 +5,7 @@
 .DS_Store
 *~*
 /build
+/dist
 
 # these cause more harm than good
 # when working with contributors
