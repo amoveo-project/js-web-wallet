@@ -63,7 +63,7 @@
     ]
   },
   "build": {
-    "appId": "com.your-domain",
+    "appId": "com.amoveo.wallet",
     "compression": "normal",
     "productName": "Amoveo Wallet",
     "directories": {
@@ -71,7 +71,7 @@
       "output": "dist"
     },
     "mac": {
-      "icon": "public/apple-touch-icon.png",
+      "icon": "icon.icns",
       "type": "distribution",
       "target": [
         "pkg",
@@ -81,10 +81,10 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "public/favicon.ico"
+      "icon": "icon.png"
     },
     "linux": {
-      "icon": "public/apple-touch-icon.png",
+      "icon": "icon.png",
       "target": [
         "snap",
         "AppImage"
