@@ -82,10 +82,9 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "icon.png"
+      "icon": "icon.ico"
     },
     "linux": {
-      "icon": "icon.png",
       "target": [
         "snap",
         "AppImage"
