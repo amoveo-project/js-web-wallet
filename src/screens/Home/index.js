@@ -4,10 +4,16 @@ import Home from './components/Home';
 
 import AppContext from 'shared/contexts/AppContext';
 
-const HomeContainer = () => {
+const HomeContainer = ({ path }) => {
   const { resetWallet } = useContext(AppContext);
 
-  useEffect(() => resetWallet(), []);
+  useEffect(() => {
+    const isLogout = path && path.startsWith('/logout');
+
+    if (isLogout) {
+      resetWallet();
+    }
+  }, []);
 
   return <Home />;
 };

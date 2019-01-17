@@ -8,6 +8,7 @@
     "clipboard": "2.0.4",
     "date-fns": "2.0.0-alpha.25",
     "electron-is-dev": "1.0.1",
+    "electron-store": "2.0.0",
     "ethers": "4.0.12",
     "lodash": "4.17.11",
     "react": "16.7.0-alpha.0",
@@ -62,34 +63,34 @@
     ]
   },
   "build": {
-		"appId": "com.your-domain",
-		"compression": "normal",
-		"productName": "Amoveo Wallet",
-		"directories": {
-			"buildResources": "build",
-			"output": "dist"
-		},
-		"mac": {
-			"icon": "public/apple-touch-icon.png",
-			"type": "distribution",
-			"target": [
-				"pkg",
-				"dmg"
-			],
-			"category": "public.app-category.finance"
-		},
-		"win": {
-			"target": "nsis",
-			"icon": "public/favicon.ico"
-		},
-		"linux": {
-			"icon": "public/apple-touch-icon.png",
-			"target": [
-				"snap",
-				"AppImage"
-			],
-			"description": "Amoveo Wallet",
-			"category": "Finance"
-		}
-	}
+    "appId": "com.your-domain",
+    "compression": "normal",
+    "productName": "Amoveo Wallet",
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    },
+    "mac": {
+      "icon": "public/apple-touch-icon.png",
+      "type": "distribution",
+      "target": [
+        "pkg",
+        "dmg"
+      ],
+      "category": "public.app-category.finance"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "public/favicon.ico"
+    },
+    "linux": {
+      "icon": "public/apple-touch-icon.png",
+      "target": [
+        "snap",
+        "AppImage"
+      ],
+      "description": "Amoveo Wallet",
+      "category": "Finance"
+    }
+  }
 }
