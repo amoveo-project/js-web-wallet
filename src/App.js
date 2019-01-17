@@ -2,7 +2,13 @@ import React, { Fragment, useEffect, useState } from 'react';
 import VeoNode from 'amoveo-js-light-node';
 import debounce from 'lodash/debounce';
 import throttle from 'lodash/throttle';
-import { Router, navigate } from '@reach/router';
+import {
+  createMemorySource,
+  createHistory,
+  LocationProvider,
+  Router,
+  navigate,
+} from '@reach/router';
 import { ThemeProvider } from 'styled-components';
 
 import GlobalStyles from './globalStyles';
@@ -36,6 +42,9 @@ const veoNodeUrl =
   process.env.REACT_APP_VEO_NODE_URL || 'http://amoveo.exan.tech:8080';
 const veo = new VeoNode(veoNodeUrl);
 
+const memorySource = createMemorySource('/');
+const routerHistory = createHistory(window._isElectron ? memorySource : window);
+
 const App = () => {
   const [balance, setBalance] = useState(0);
   const [headerId, setHeaderId] = useState(0);
@@ -57,12 +66,6 @@ const App = () => {
       setHeaderIdTop(headerIdTop);
     };
     setTopHeader();
-
-    const beforeunloadListener = e => {
-      e.preventDefault();
-      e.returnValue = ''; // Chrome requires returnValue to be set
-    };
-    window.addEventListener('beforeunload', beforeunloadListener);
 
     const headerIdListener = data => {
       setHeaderId(data[1]);
@@ -95,6 +98,15 @@ const App = () => {
     };
     veo.events.on(VEO_REMOVE_PENDING_TRANSACTION, removePendingTransaction);
 
+    const beforeunloadListener = e => {
+      e.preventDefault();
+      e.returnValue = ''; // Chrome requires returnValue to be set
+    };
+
+    if (!window._isElectron) {
+      window.addEventListener('beforeunload', beforeunloadListener);
+    }
+
     if (window._isElectron) {
       const privateKey = window._amoveoWallet.getConfigPrivateKey();
       const mnemonic = window._amoveoWallet.getConfigPassphrase();
@@ -102,18 +114,17 @@ const App = () => {
       if (privateKey) {
         createWallet({ privateKey, mnemonic });
 
-        navigate('/dashboard/');
+        routerHistory.navigate('/dashboard/');
       }
     }
 
     if (!window._isElectron && process.env.REACT_APP_DEBUG_PRIVATE_KEY) {
       createWallet({ privateKey: process.env.REACT_APP_DEBUG_PRIVATE_KEY });
 
-      navigate('/dashboard/');
+      routerHistory.navigate('/dashboard/');
     }
 
     return () => {
-      window.removeEventListener('beforeunload', beforeunloadListener);
       veo.events.removeListener(VEO_UPDATE_HEADER, headerIdListener);
       veo.events.removeListener(VEO_UPDATE_HEADER, headerIdSyncListener);
       veo.events.removeListener(
@@ -124,6 +135,10 @@ const App = () => {
         VEO_REMOVE_PENDING_TRANSACTION,
         removePendingTransaction,
       );
+
+      if (!window._isElectron) {
+        window.removeEventListener('beforeunload', beforeunloadListener);
+      }
     };
   }, []);
 
@@ -245,30 +260,32 @@ const App = () => {
         <Fragment>
           <GlobalStyles />
 
-          <Router className="routerwrap">
-            <HomeTemplate path="/">
-              <Home path="/" />
-              <Home path="/logout" />
-            </HomeTemplate>
+          <LocationProvider history={routerHistory}>
+            <Router className="routerwrap">
+              <HomeTemplate path="/">
+                <Home path="/" />
+                <Home path="/logout" />
+              </HomeTemplate>
 
-            <CreateRestoreTemplate path="/create">
-              <Create path="/" />
-            </CreateRestoreTemplate>
+              <CreateRestoreTemplate path="/create">
+                <Create path="/" />
+              </CreateRestoreTemplate>
 
-            <CreateRestoreTemplate path="/restore">
-              <Restore path="/" />
-            </CreateRestoreTemplate>
+              <CreateRestoreTemplate path="/restore">
+                <Restore path="/" />
+              </CreateRestoreTemplate>
 
-            <Dashboard path="/dashboard" />
-            <TransactionDetails path="/dashboard/:transactionId" />
-            <Send path="/send" />
-            <Receive path="/receive" />
-            <Exchange path="/exchange" />
+              <Dashboard path="/dashboard" />
+              <TransactionDetails path="/dashboard/:transactionId" />
+              <Send path="/send" />
+              <Receive path="/receive" />
+              <Exchange path="/exchange" />
 
-            <Test path="/test" />
+              <Test path="/test" />
 
-            <NotFound default />
-          </Router>
+              <NotFound default />
+            </Router>
+          </LocationProvider>
         </Fragment>
       </AppContext.Provider>
     </ThemeProvider>
