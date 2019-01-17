@@ -6,8 +6,6 @@ window._isElectron = true;
 function getConfigPrivateKey() {
   const defaultPrivateKey = "";
 
-  console.log("getConfigPrivateKey", store.get("privateKey"));
-
   try {
     return store.get("privateKey", defaultPrivateKey);
   } catch (e) {
@@ -21,7 +19,6 @@ function setConfigPrivateKey(privateKey) {
   }
 
   try {
-    console.log("setConfigPrivateKey", privateKey);
     store.set("privateKey", privateKey);
   } catch (e) {
     // no actions
