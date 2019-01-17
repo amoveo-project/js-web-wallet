@@ -95,7 +95,18 @@ const App = () => {
     };
     veo.events.on(VEO_REMOVE_PENDING_TRANSACTION, removePendingTransaction);
 
-    if (process.env.REACT_APP_DEBUG_PRIVATE_KEY) {
+    if (window._isElectron) {
+      const privateKey = window._amoveoWallet.getConfigPrivateKey();
+      const mnemonic = window._amoveoWallet.getConfigPassphrase();
+
+      if (privateKey) {
+        createWallet({ privateKey, mnemonic });
+
+        navigate('/dashboard/');
+      }
+    }
+
+    if (!window._isElectron && process.env.REACT_APP_DEBUG_PRIVATE_KEY) {
       createWallet({ privateKey: process.env.REACT_APP_DEBUG_PRIVATE_KEY });
 
       navigate('/dashboard/');
@@ -175,6 +186,11 @@ const App = () => {
 
     setPassphrase(mnemonic);
 
+    if (window._isElectron) {
+      window._amoveoWallet.setConfigPrivateKey(keyPair.private);
+      window._amoveoWallet.setConfigPassphrase(mnemonic);
+    }
+
     if (!mnemonic) {
       setUnusedActions(unusedActions =>
         unusedActions.filter(item => item !== DOWNLOAD_PASSPHRASE),
@@ -198,6 +214,11 @@ const App = () => {
     setPassphrase('');
     setBalance(0);
     setUnusedActions([DOWNLOAD_PASSPHRASE, DOWNLOAD_PRIVATE_KEY]);
+
+    if (window._isElectron) {
+      window._amoveoWallet.setConfigPrivateKey('');
+      window._amoveoWallet.setConfigPassphrase('');
+    }
   };
 
   const appState = {
@@ -227,6 +248,7 @@ const App = () => {
           <Router className="routerwrap">
             <HomeTemplate path="/">
               <Home path="/" />
+              <Home path="/logout" />
             </HomeTemplate>
 
             <CreateRestoreTemplate path="/create">

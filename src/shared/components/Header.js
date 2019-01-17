@@ -291,7 +291,7 @@ const Header = () => {
                 ) : null}
               </SettingsDropdown>
             </Settings>
-            <LogOut to="/">Log out</LogOut>
+            <LogOut to="/logout">Log out</LogOut>
           </UserMenu>
         </Container>
       </HeaderSection>
