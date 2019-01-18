@@ -7,7 +7,6 @@ import {
   createHistory,
   LocationProvider,
   Router,
-  navigate,
 } from '@reach/router';
 import { ThemeProvider } from 'styled-components';
 
@@ -42,8 +41,12 @@ const veoNodeUrl =
   process.env.REACT_APP_VEO_NODE_URL || 'http://amoveo.exan.tech:8080';
 const veo = new VeoNode(veoNodeUrl);
 
+const isFileProtocol = window.location.protocol.startsWith('file:');
+
 const memorySource = createMemorySource('/');
-const routerHistory = createHistory(window._isElectron ? memorySource : window);
+const routerHistory = createHistory(
+  window._isElectron || isFileProtocol ? memorySource : window,
+);
 
 const App = () => {
   const [balance, setBalance] = useState(0);
