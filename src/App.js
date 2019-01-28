@@ -54,7 +54,7 @@ const App = () => {
   const [headerIdSync, setHeaderIdSync] = useState(0);
   const [headerIdTop, setHeaderIdTop] = useState(0);
   const [isWalletCreated, setIsWalletCreated] = useState(false);
-  const [keys, setKeys] = useState({ public: '', private: '' });
+  const [keys, setKeys] = useState({ public: '' });
   const [passphrase, setPassphrase] = useState('');
   const [pendingTransactions, setPendingTransactions] = useState([]);
   const [transactions, setTransactions] = useState([]);
@@ -147,7 +147,7 @@ const App = () => {
 
   useEffect(
     () => {
-      const isCreated = Boolean(keys.public) && Boolean(keys.private);
+      const isCreated = Boolean(keys.public);
       setIsWalletCreated(isCreated);
     },
     [keys, passphrase],
@@ -198,7 +198,6 @@ const App = () => {
     const keyPair = veo.keys.getKeyPair();
 
     setKeys({
-      private: keyPair.private,
       public: veo.keys.getPublicKey(),
     });
 
@@ -225,7 +224,6 @@ const App = () => {
 
   const resetWallet = () => {
     setKeys({
-      private: '',
       public: '',
     });
 
