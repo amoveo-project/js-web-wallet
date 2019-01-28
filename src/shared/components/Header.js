@@ -220,10 +220,10 @@ const LogOut = styled(Link)`
 const Header = () => {
   const {
     isWalletCreated,
-    keys,
     passphrase,
     setUnusedActions,
     unusedActions,
+    veo,
   } = useContext(AppContext);
 
   const downloadPassphrase = () => {
@@ -235,7 +235,9 @@ const Header = () => {
   };
 
   const downloadPrivateKey = () => {
-    downloadFile(keys.private, 'key', 'text/plain');
+    const keyPair = veo.keys.getKeyPair();
+
+    downloadFile(keyPair.private, 'key', 'text/plain');
 
     setUnusedActions(unusedActions =>
       unusedActions.filter(item => item !== DOWNLOAD_PRIVATE_KEY),
