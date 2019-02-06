@@ -1,5 +1,7 @@
 const Store = require("electron-store");
-const store = new Store();
+const store = new Store({
+  encryptionKey: "amoveo-temp-encryption-key"
+});
 
 window._isElectron = true;
 
