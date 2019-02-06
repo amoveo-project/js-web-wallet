@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import { Link } from '@reach/router';
 import styled from 'styled-components';
 import Device from 'device';
 
@@ -87,10 +86,6 @@ const Footer = styled.footer`
   @media ${Device.laptopM} {
     font-size: 20px;
   }
-`;
-
-const HeaderLink = styled(Link)`
-  color: #5d8ab8;
 `;
 const FooterExternalLink = styled.a`
   color: ${props => props.theme.color.yellow};

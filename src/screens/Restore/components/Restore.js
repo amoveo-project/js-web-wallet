@@ -90,17 +90,6 @@ const PrivateKey = styled.input`
 const PrivateKeyLabel = styled(PassPhraseLabel)`
   margin: 0;
 `;
-const MainWrap = styled.div`
-  width: 100%;
-  flex: 1;
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  flex-wrap: warp;
-  background: red;
-`;
 const LoadKey = styled.div`
   display: inline-block;
   border: 2px solid ${props => props.theme.color.yellow};

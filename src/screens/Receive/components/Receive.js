@@ -68,12 +68,6 @@ const FieldsetCol = styled(Fieldset)`
   max-width: 48%;
   position: relative;
 `;
-const LabelContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-`;
 const Label = styled.label`
   font-size: 14px;
   font-weight: 300;
@@ -97,12 +91,6 @@ const VeoLabel = styled.div`
     font-size: 20px;
     top: 44px;
   }
-`;
-const Max = styled.label`
-  font-size: 16px;
-  font-weight: 500;
-  margin: 0;
-  color: ${props => props.theme.color.yellow};
 `;
 const Input = styled.input`
   background: none;

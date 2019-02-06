@@ -74,9 +74,6 @@ const Body = styled.div`
   position: static;
   z-index: 2;
 `;
-const HeaderLink = styled(Link)`
-  color: #5d8ab8;
-`;
 const Footer = styled.footer`
   width: 100%;
   font-size: 18px;

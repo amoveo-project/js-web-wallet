@@ -1,5 +1,4 @@
 import React, { Fragment, useContext } from 'react';
-import { Link } from '@reach/router';
 import styled from 'styled-components';
 import Device from 'device';
 

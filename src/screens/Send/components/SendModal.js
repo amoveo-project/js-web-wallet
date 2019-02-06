@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from '@reach/router';
 
 import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
 
@@ -49,27 +48,10 @@ const IconSend = styled(SvgSend)`
   height: 20px;
   fill: ${props => props.theme.color.yellow};
 `;
-const SendValue = styled.div`
-  font-size: 40px;
-  margin: 0 0 10px 0;
-  font-weight: 300;
-
-  span {
-    font-size: 20px;
-    vertical-align: baseline;
-  }
-`;
 const ModalText = styled.div`
   font-size: 20px;
   margin: 0 0 30px 0;
   font-weight: 300;
-`;
-const SendToAdress = styled.div`
-  font-size: 16px;
-  margin: 0 0 10px 0;
-  opacity: 0.5;
-  word-break: break-all;
-  line-height: 1.5;
 `;
 const Buttons = styled.div`
   width: 100%;

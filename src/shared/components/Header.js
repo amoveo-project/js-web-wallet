@@ -86,9 +86,6 @@ const MenuItem = styled(PartialNavLink)`
     pointer-events: none;
   }
 `;
-const HeaderLink = styled(Link)`
-  color: #5d8ab8;
-`;
 const IconGear = styled(SvgGear)`
   width: 20px;
   height: 20px;

@@ -1,7 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ClipboardJS from 'clipboard';
-import { Link } from '@reach/router';
 import { format, fromUnixTime } from 'date-fns';
 
 import Device from 'device';
@@ -137,12 +136,6 @@ const Fieldset = styled.fieldset`
 const FieldsetCol = styled(Fieldset)`
   max-width: 30%;
 `;
-const LabelContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-`;
 const Label = styled.label`
   font-size: 14px;
   font-weight: 300;
@@ -169,15 +162,10 @@ const Field = styled.div`
     line-height: 45px;
   }
 `;
-const Amount = styled(Field)`
-  font-size: 45px;
-`;
 const To = styled(Field)`
   font-family: 'OCRAExtended';
   word-break: break-all;
 `;
-const LabelField = styled(Field)``;
-const PaymentID = styled(Field)``;
 const IconClipboard = styled(SvgClipboard)`
   width: 16px;
   height: 16px;
@@ -188,10 +176,6 @@ const IconClipboard = styled(SvgClipboard)`
   &:active {
     transform: scale(0.9);
   }
-`;
-const Blockchain = styled(Link)`
-  color: ${props => props.theme.color.yellow};
-  border
 `;
 const ExplorerLink = styled(ButtonMin)``;
 
