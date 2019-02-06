@@ -1,5 +1,3 @@
-import { createGlobalStyle } from 'styled-components';
-
 const Theme = {
   color: {
     yellow: '#fff200',

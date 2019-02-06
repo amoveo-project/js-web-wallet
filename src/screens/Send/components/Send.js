@@ -1,5 +1,4 @@
 import React, { Fragment, useContext } from 'react';
-import { Link } from '@reach/router';
 import styled from 'styled-components';
 import Device from 'device';
 
@@ -10,7 +9,6 @@ import Topline from 'shared/components/Topline';
 
 import SendModal from './SendModal';
 
-import AppContext from 'shared/contexts/AppContext';
 import SendContext from 'shared/contexts/SendContext';
 
 const Main = styled.div`

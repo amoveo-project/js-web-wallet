@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 

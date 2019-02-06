@@ -1,8 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import Receive from './components/Receive';
 
-import AppContext from 'shared/contexts/AppContext';
 import ReceiveContext from 'shared/contexts/ReceiveContext';
 
 const ReceiveContainer = () => {

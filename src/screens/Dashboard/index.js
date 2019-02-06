@@ -6,12 +6,7 @@ import AppContext from 'shared/contexts/AppContext';
 import DashboardContext from 'shared/contexts/DashboardContext';
 
 const DashboardContainer = ({ navigate }) => {
-  const {
-    isWalletCreated,
-    transactions,
-    pendingTransactions,
-    veo,
-  } = useContext(AppContext);
+  const { isWalletCreated, veo } = useContext(AppContext);
 
   const [currentPage, setCurrentPage] = useState(1);
 
