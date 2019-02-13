@@ -32,6 +32,7 @@ const Modal = styled.div`
   padding: 30px;
   border-radius: 10px;
   position: relative;
+  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
 `;
 const ModalText = styled.div`
   font-size: 40px;

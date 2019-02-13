@@ -33,6 +33,7 @@ const Modal = styled.div`
   border-radius: 10px;
   position: relative;
   text-align: center;
+  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
 `;
 const ModalIcon = styled.div`
   position: absolute;
