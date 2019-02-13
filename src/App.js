@@ -23,6 +23,7 @@ import Home from './screens/Home';
 import NotFound from './screens/NotFound';
 import Receive from './screens/Receive';
 import Restore from './screens/Restore';
+import Recent from './screens/Recent';
 import Send from './screens/Send/';
 import Test from './screens/Test';
 import TransactionDetails from './screens/Dashboard/components/TransactionDetails';
@@ -319,6 +320,7 @@ const App = () => {
               <TransactionDetails path="/dashboard/:transactionId" />
               <Send path="/send" />
               <Receive path="/receive" />
+              <Recent path="/recent" />
               <Exchange path="/exchange" />
 
               <Test path="/test" />
