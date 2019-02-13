@@ -12,6 +12,7 @@ import Topline from 'shared/components/Topline';
 
 import AppContext from 'shared/contexts/AppContext';
 import ReceiveContext from 'shared/contexts/ReceiveContext';
+import Decimal from 'decimal.js-light';
 
 const Main = styled.div`
   width: 100%;
@@ -270,7 +271,7 @@ const Receive = () => {
 
   const receiveUri = `amoveo://${encodeURIComponent(
     keys.public,
-  )}?amount=${amount * 1e8}`;
+  )}?amount=${amount}`;
 
   return (
     <Fragment>
@@ -296,7 +297,7 @@ const Receive = () => {
                     min="0"
                     step="0.01"
                     placeholder="0.00"
-                    value={amount}
+                    value={new Decimal(amount).mul(1e-8).val()}
                     onChange={handleAmountInput}
                   />
                   <VeoLabel>VEO</VeoLabel>
@@ -310,7 +311,7 @@ const Receive = () => {
             <FooterWrap>
               <QrCodeWrap>
                 <QrCode
-                  src={`http://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=${encodeURIComponent(
+                  src={`https://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=${encodeURIComponent(
                     receiveUri,
                   )}&qzone=1&margin=0&size=400x400&ecc=L`}
                   alt="qr code"

@@ -10,6 +10,9 @@ import Topline from 'shared/components/Topline';
 import SendModal from './SendModal';
 
 import SendContext from 'shared/contexts/SendContext';
+import Decimal from 'decimal.js-light';
+
+Decimal.config({ toExpNeg: -8 });
 
 const Main = styled.div`
   width: 100%;
@@ -244,7 +247,7 @@ const Send = () => {
                     min="0"
                     step="0.01"
                     placeholder="0.00"
-                    value={amount}
+                    value={new Decimal(amount).mul(1e-8).val()}
                     onChange={handleAmountInput}
                   />
                   <VeoLabel>VEO</VeoLabel>
@@ -269,7 +272,8 @@ const Send = () => {
               <Fee>
                 {fee > 0 ? (
                   <span>
-                    Network fee: <FeeValue>{fee} VEO</FeeValue>
+                    Network fee:{' '}
+                    <FeeValue>{new Decimal(fee).mul(1e-8).val()} VEO</FeeValue>
                   </span>
                 ) : null}
               </Fee>

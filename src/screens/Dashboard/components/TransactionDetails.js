@@ -15,6 +15,7 @@ import ButtonMin from 'shared/components/ButtonMin.js';
 import GoBack from 'shared/components/GoBack.js';
 
 import AppContext from 'shared/contexts/AppContext';
+import Decimal from 'decimal.js-light';
 
 const Main = styled.div`
   width: 100%;
@@ -219,7 +220,7 @@ const TransactionReceive = ({ transactionId }) => {
               <BalanceWrap>
                 {isSpend ? <IconSend /> : <IconReceive />}
                 <Balance>
-                  {transaction.amount / 1e8} VEO
+                  {new Decimal(transaction.amount).mul(1e-8).val()} VEO
                   {isPending ? <IconPending /> : null}
                 </Balance>
               </BalanceWrap>
@@ -243,7 +244,9 @@ const TransactionReceive = ({ transactionId }) => {
                 </FieldsetCol>
                 <FieldsetCol>
                   <Label>Network fee</Label>
-                  <Field>{transaction.fee / 1e8} VEO</Field>
+                  <Field>
+                    {new Decimal(transaction.fee).mul(1e-8).val()} VEO
+                  </Field>
                 </FieldsetCol>
                 {!isPending ? (
                   <FieldsetCol>
