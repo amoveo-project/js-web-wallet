@@ -19,13 +19,9 @@ const DashboardContainer = ({ navigate }) => {
 
   useEffect(
     () => {
-      if (!isWalletCreated) {
-        return () => {
-          veo.wallet.stopPendingSync();
-        };
+      if (isWalletCreated) {
+        veo.wallet.startPendingSync();
       }
-
-      veo.wallet.startPendingSync();
 
       return () => {
         veo.wallet.stopPendingSync();

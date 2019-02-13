@@ -4,12 +4,13 @@ import Send from './components/Send';
 
 import AppContext from 'shared/contexts/AppContext';
 import SendContext from 'shared/contexts/SendContext';
+import Decimal from 'decimal.js-light';
 
 const SendContainer = () => {
   const { balance, keys, veo } = useContext(AppContext);
 
   const [address, setAddress] = useState('');
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1000000);
   const [fee, setFee] = useState(0);
   const [isSendEnabled, setIsSendEnabled] = useState(false);
   const [sentTransaction, setSentTransaction] = useState(null);
@@ -29,7 +30,7 @@ const SendContainer = () => {
       let fee = 0;
       try {
         const accountState = await veo.wallet.getAccountState(address);
-        fee = accountState.fee / 1e8;
+        fee = accountState.fee;
       } catch (e) {
         // no actions
       }
@@ -40,17 +41,17 @@ const SendContainer = () => {
           proposal = await veo.wallet.createTxProposal(
             keys.public,
             address,
-            amount * 1e8,
+            amount,
           );
         } catch (e) {
           // no actions
         }
       }
 
-      fee = proposal.fee ? proposal.fee / 1e8 : 0;
+      fee = proposal.fee;
       setFee(fee);
 
-      const isValid = fee > 0 && balance >= amount + fee + 1e-8;
+      const isValid = fee > 0 && balance >= amount + fee;
 
       setIsSendEnabled(isValid);
     },
@@ -65,13 +66,11 @@ const SendContainer = () => {
     let value = Number(e.target.value) || 0;
     value = value >= 0 ? value : 0;
 
-    setAmount(value);
+    setAmount(new Decimal(value).mul(1e8).toNumber());
   };
 
   const handleFillMax = () => {
-    let value = balance - fee - 1e-8;
-    value = value >= 0 ? value.toFixed(8) : 0;
-
+    let value = balance - fee;
     setAmount(value);
   };
 
@@ -84,8 +83,9 @@ const SendContainer = () => {
 
     let hash = null;
     try {
-      hash = await veo.wallet.sendMoney(address, amount * 1e8);
+      hash = await veo.wallet.sendMoney(address, amount);
     } catch (e) {
+      console.error(e);
       console.error('sending money failed');
     }
 
@@ -96,7 +96,7 @@ const SendContainer = () => {
     }
 
     setAddress('');
-    setAmount(0);
+    setAmount(1000000);
 
     setSentTransaction({
       hash,
