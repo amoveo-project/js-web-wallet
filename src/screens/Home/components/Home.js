@@ -1,12 +1,13 @@
 import React, { Fragment, useContext } from 'react';
+import { Link } from '@reach/router';
 import styled from 'styled-components';
 import Device from 'device';
 
 import { ReactComponent as SvgWallet } from 'shared/assets/icon-wallet.svg';
 import { ReactComponent as SvgRestore } from 'shared/assets/icon-restore.svg';
-import Button from 'shared/components/Button';
-
 import AppContext from 'shared/contexts/AppContext';
+import Button from 'shared/components/Button';
+import ErrorModal from 'shared/components/ErrorModal';
 
 const Title = styled.h1`
   font-weight: 500;
@@ -39,21 +40,30 @@ const Buttons = styled.div`
     justify-content: flex-start;
   }
 `;
-const CreateButton = styled(Button)`
-  background: ${props => props.theme.color.yellow};
-`;
+const MainButton = styled(Button)`
+  &:first-child {
+    background: ${props => props.theme.color.yellow};
 
-const Links = styled.div`
-  margin-top: 2em;
+    svg {
+      fill: ${props => props.theme.color.yellow};
+    }
+  }
 `;
-
-const LedgerButton = styled.a`
-  color: ${props => props.theme.color.yellow};
+const WalletsLinks = styled.div`
+  margin: 40px 0 0 0;
+`;
+const WalletsLink = styled(Link)`
+  color: #fff;
+  font-size: 20px;
   font-weight: 500;
+  margin: 0 40px 0 0;
+`;
+const HardwareLink = styled(WalletsLink)`
+  opacity: 0.5;
 `;
 
 const IconWallet = styled(SvgWallet)`
-  fill: ${props => props.theme.color.yellow};
+  fill: #fff;
 `;
 const SvgRestore2 = styled(SvgRestore)`
   fill: #fff;
@@ -72,23 +82,40 @@ const Home = () => {
         Send and receive VEO safely and securely, <br />
         anywhere and any time.
       </Subtitle>
-      <Buttons>
-        <CreateButton to="/create/">
-          <IconWallet />
-          <span>Create</span> wallet
-        </CreateButton>
-        <Button to="/restore/">
-          <SvgRestore2 />
-          <span>Open</span> wallet
-        </Button>
-      </Buttons>
-      <Links>
-        {u2fSupport && false ? ( // TODO uncomment later when modals will be ready
-          <LedgerButton href="#" disabled={!u2fSupport} onClick={enterLedger}>
-            <span>Use Ledger</span> Hardware Wallet
-          </LedgerButton>
-        ) : null}
-      </Links>
+      {window._isElectron ? (
+        <Fragment>
+          <Buttons>
+            <MainButton to="/create/">
+              <IconWallet />
+              <span>Last</span> wallet
+            </MainButton>
+            <MainButton to="/restore/">
+              <SvgRestore2 />
+              <span>Create</span> wallet
+            </MainButton>
+          </Buttons>
+          <WalletsLinks>
+            <WalletsLink to="/recent/">Recent wallets</WalletsLink>
+            <WalletsLink to="">Restore wallet</WalletsLink>
+            {u2fSupport && false ? (
+              <HardwareLink onClick={enterLedger}>Use hardware wallet</HardwareLink>
+            ) : null}
+          </WalletsLinks>
+        </Fragment>
+      ) : (
+        <Buttons>
+          <MainButton to="/create/">
+            <IconWallet />
+            <span>Create</span> wallet
+          </MainButton>
+          <MainButton to="/restore/">
+            <SvgRestore2 />
+            <span>Restore</span> wallet
+          </MainButton>
+        </Buttons>
+      )}
+
+      <ErrorModal />
     </Fragment>
   );
 };
