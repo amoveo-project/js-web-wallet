@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
-import { Link } from '@reach/router';
+import React, { Fragment, useContext } from 'react';
 import styled from 'styled-components';
 import Device from 'device';
 
 import { ReactComponent as SvgWallet } from 'shared/assets/icon-wallet.svg';
 import { ReactComponent as SvgRestore } from 'shared/assets/icon-restore.svg';
-import Button from 'shared/components/Button.js';
-import ErrorModal from 'shared/components/ErrorModal';
+import Button from 'shared/components/Button';
+
+import AppContext from 'shared/contexts/AppContext';
 
 const Title = styled.h1`
   font-weight: 500;
@@ -39,36 +39,29 @@ const Buttons = styled.div`
     justify-content: flex-start;
   }
 `;
-const MainButton = styled(Button)`
-  &:first-child {
-    background: ${props => props.theme.color.yellow};
+const CreateButton = styled(Button)`
+  background: ${props => props.theme.color.yellow};
+`;
 
-    svg {
-      fill: ${props => props.theme.color.yellow};
-    }
-  }
+const Links = styled.div`
+  margin-top: 2em;
 `;
-const WalletsLinks = styled.div`
-  margin: 40px 0 0 0;
-`;
-const WalletsLink = styled(Link)`
-  color: #fff;
-  font-size: 20px;
+
+const LedgerButton = styled.a`
+  color: ${props => props.theme.color.yellow};
   font-weight: 500;
-  margin: 0 40px 0 0;
-`;
-const HardwareLink = styled(WalletsLink)`
-  opacity: 0.5;
 `;
 
 const IconWallet = styled(SvgWallet)`
-  fill: #fff;
+  fill: ${props => props.theme.color.yellow};
 `;
 const SvgRestore2 = styled(SvgRestore)`
   fill: #fff;
 `;
 
 const Home = () => {
+  const { enterLedger, u2fSupport } = useContext(AppContext);
+
   return (
     <Fragment>
       <Title>
@@ -79,38 +72,23 @@ const Home = () => {
         Send and receive VEO safely and securely, <br />
         anywhere and any time.
       </Subtitle>
-      {window._isElectron ? (
-        <Fragment>
-          <Buttons>
-            <MainButton to="/create/">
-              <IconWallet />
-              <span>Last</span> wallet
-            </MainButton>
-            <MainButton to="/restore/">
-              <SvgRestore2 />
-              <span>Create</span> wallet
-            </MainButton>
-          </Buttons>
-          <WalletsLinks>
-            <WalletsLink to="/recent/">Recent wallets</WalletsLink>
-            <WalletsLink to="">Restore wallet</WalletsLink>
-            <HardwareLink to="">Use hardware wallet</HardwareLink>
-          </WalletsLinks>
-        </Fragment>
-      ) : (
-        <Buttons>
-          <MainButton to="/create/">
-            <IconWallet />
-            <span>Create</span> wallet
-          </MainButton>
-          <MainButton to="/restore/">
-            <SvgRestore2 />
-            <span>Restore</span> wallet
-          </MainButton>
-        </Buttons>
-      )}
-
-      <ErrorModal />
+      <Buttons>
+        <CreateButton to="/create/">
+          <IconWallet />
+          <span>Create</span> wallet
+        </CreateButton>
+        <Button to="/restore/">
+          <SvgRestore2 />
+          <span>Open</span> wallet
+        </Button>
+      </Buttons>
+      <Links>
+        {u2fSupport && false ? ( // TODO uncomment later when modals will be ready
+          <LedgerButton href="#" disabled={!u2fSupport} onClick={enterLedger}>
+            <span>Use Ledger</span> Hardware Wallet
+          </LedgerButton>
+        ) : null}
+      </Links>
     </Fragment>
   );
 };
