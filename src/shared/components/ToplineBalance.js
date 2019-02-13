@@ -4,6 +4,7 @@ import Device from 'device';
 
 import AppContext from 'shared/contexts/AppContext';
 import { ReactComponent as SvgPending } from 'shared/assets/icon-pending.svg';
+import Decimal from 'decimal.js-light';
 
 const BalanceWrapper = styled.div`
   position: relative;
@@ -99,8 +100,8 @@ const ToplineBalance = () => {
           </SyncProgress>
         ) : null}
         <Balance>
-          {balance.toFixed(0)}
-          <span>.{String(balance).split('.')[1] || '00'}</span> VEO
+          {new Decimal(balance).mul(1e-8).val() | 0}
+          <span>.{balance % 10 ** 8}</span> VEO
         </Balance>
       </BalanceRow>
       {pendingTransactions.length > 0 && (
@@ -109,13 +110,13 @@ const ToplineBalance = () => {
           <span>
             Pending:
             {pendingBalances.receive > 0
-              ? ` +${pendingBalances.receive / 1e8}`
+              ? ` +${new Decimal(pendingBalances.receive).mul(1e-8).val()}`
               : null}
             {pendingBalances.receive > 0 && pendingBalances.spend > 0
               ? ' /'
               : null}
             {pendingBalances.spend > 0
-              ? ` −${pendingBalances.spend / 1e8}`
+              ? ` −${new Decimal(pendingBalances.spend).mul(1e-8).val()}`
               : null}
           </span>
         </Pending>

@@ -1,10 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import styled from 'styled-components';
 import Device from 'device';
 
 import { ReactComponent as SvgWallet } from 'shared/assets/icon-wallet.svg';
 import { ReactComponent as SvgRestore } from 'shared/assets/icon-restore.svg';
-import Button from 'shared/components/Button.js';
+import Button from 'shared/components/Button';
+
+import AppContext from 'shared/contexts/AppContext';
 
 const Title = styled.h1`
   font-weight: 500;
@@ -41,6 +43,15 @@ const CreateButton = styled(Button)`
   background: ${props => props.theme.color.yellow};
 `;
 
+const Links = styled.div`
+  margin-top: 2em;
+`;
+
+const LedgerButton = styled.a`
+  color: ${props => props.theme.color.yellow};
+  font-weight: 500;
+`;
+
 const IconWallet = styled(SvgWallet)`
   fill: ${props => props.theme.color.yellow};
 `;
@@ -49,6 +60,8 @@ const SvgRestore2 = styled(SvgRestore)`
 `;
 
 const Home = () => {
+  const { enterLedger, u2fSupport } = useContext(AppContext);
+
   return (
     <Fragment>
       <Title>
@@ -66,9 +79,16 @@ const Home = () => {
         </CreateButton>
         <Button to="/restore/">
           <SvgRestore2 />
-          <span>Restore</span> wallet
+          <span>Open</span> wallet
         </Button>
       </Buttons>
+      <Links>
+        {u2fSupport && false ? ( // TODO uncomment later when modals will be ready
+          <LedgerButton href="#" disabled={!u2fSupport} onClick={enterLedger}>
+            <span>Use Ledger</span> Hardware Wallet
+          </LedgerButton>
+        ) : null}
+      </Links>
     </Fragment>
   );
 };

@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import VeoNode from 'amoveo-js-light-node';
+import VeoNode, { LedgerKeys } from 'amoveo-js-light-node';
 import debounce from 'lodash/debounce';
 import throttle from 'lodash/throttle';
 import {
@@ -28,6 +28,9 @@ import Test from './screens/Test';
 import TransactionDetails from './screens/Dashboard/components/TransactionDetails';
 
 import AppContext from 'shared/contexts/AppContext';
+
+import Transport from '@ledgerhq/hw-transport-u2f';
+import Veo from 'hw-app-veo';
 
 import {
   DOWNLOAD_PASSPHRASE,
@@ -62,8 +65,12 @@ const App = () => {
     DOWNLOAD_PASSPHRASE,
     DOWNLOAD_PRIVATE_KEY,
   ]);
+  const [u2fSupport, setU2fSupport] = useState(false);
 
+  // didMount
   useEffect(() => {
+    Transport.isSupported().then(setU2fSupport);
+
     const setTopHeader = async () => {
       const headerIdTop = await veo.getNodeHeight();
       setHeaderIdTop(headerIdTop);
@@ -176,7 +183,6 @@ const App = () => {
       }
 
       const transactions = await veo.wallet.getTransactions();
-
       setTransactions(transactions);
     },
     [headerId, isWalletCreated],
@@ -237,6 +243,37 @@ const App = () => {
     }
   };
 
+  const enterLedger = async () => {
+    const transport = await Transport.create();
+    transport.setDebugMode(true);
+    const ledger = new Veo(transport);
+    const ledgerKeys = new LedgerKeys(ledger);
+
+    try {
+      await ledgerKeys.generateKeyPair();
+      veo.wallet.keys = ledgerKeys;
+      const publicKey = ledgerKeys.getPublicKey();
+
+      setKeys({
+        private: '0xd09face', // random
+        public: publicKey,
+      });
+
+      setPassphrase('');
+      setBalance(0);
+      setUnusedActions([DOWNLOAD_PASSPHRASE, DOWNLOAD_PRIVATE_KEY]);
+
+      if (window._isElectron) {
+        window._amoveoWallet.setConfigPrivateKey('');
+        window._amoveoWallet.setConfigPassphrase('');
+      }
+
+      routerHistory.navigate('/dashboard/');
+    } catch {
+      // TODO show message that connection with Ledger wasn't successful
+    }
+  };
+
   const appState = {
     balance,
     createWallet,
@@ -248,11 +285,13 @@ const App = () => {
     passphrase,
     pendingTransactions,
     resetWallet,
+    enterLedger,
     setPendingTransactions,
     setUnusedActions,
     transactions,
     unusedActions,
     veo,
+    u2fSupport,
   };
 
   return (

@@ -3,6 +3,7 @@ import { Link } from '@reach/router';
 import styled from 'styled-components';
 import ClipboardJS from 'clipboard';
 import { format, fromUnixTime } from 'date-fns';
+import Decimal from 'decimal.js-light';
 
 import Device from 'device';
 import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
@@ -336,7 +337,7 @@ const Dashboard = ({ children }) => {
                   <Transaction key={transaction.hash}>
                     <Value>
                       {transaction._isPending ? <IconPending /> : null}
-                      {transaction.amount / 1e8}
+                      {new Decimal(transaction.amount).mul(1e-8).val()}
                     </Value>
                     <Date>
                       {format(
@@ -344,7 +345,7 @@ const Dashboard = ({ children }) => {
                         'dd.MM.yyyy HH:mm',
                       )}
                     </Date>
-                    <Fee>{transaction.fee / 1e8}</Fee>
+                    <Fee>{new Decimal(transaction.fee).mul(1e-8).val()}</Fee>
                     <Type>
                       {transaction.from === keys.public ? (
                         <IconSend />
