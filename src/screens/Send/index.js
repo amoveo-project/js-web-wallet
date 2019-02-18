@@ -5,9 +5,12 @@ import Send from './components/Send';
 import AppContext from 'shared/contexts/AppContext';
 import SendContext from 'shared/contexts/SendContext';
 import Decimal from 'decimal.js-light';
+import { LEDGER_MAGIC_NUMBER } from '../../shared/constants/ledger';
+import LedgerModal from '../../shared/components/LedgerModal';
+import ErrorModal from '../../shared/components/ErrorModal';
 
 const SendContainer = () => {
-  const { balance, keys, veo } = useContext(AppContext);
+  const { balance, keys, veo, setModal } = useContext(AppContext);
 
   const [address, setAddress] = useState('');
   const [amount, setAmount] = useState(1000000);
@@ -80,29 +83,33 @@ const SendContainer = () => {
     }
 
     // todo: block send control
-
-    let hash = null;
     try {
-      hash = await veo.wallet.sendMoney(address, amount);
-    } catch (e) {
-      console.error(e);
-      console.error('sending money failed');
+      if (keys.private === LEDGER_MAGIC_NUMBER) {
+        setModal(
+          <LedgerModal
+            title="Hey"
+            text="Confirm your transaction on wallet"
+            onClick={() => setModal(null)}
+          />,
+        );
+      }
+      const hash = await veo.wallet.sendMoney(address, amount);
+      setAddress('');
+      setAmount(1000000);
+
+      setSentTransaction({
+        hash,
+      });
+
+      veo.wallet.syncPendingTransactions();
+    } catch {
+      setModal(
+        <ErrorModal
+          text="Sending Money failed"
+          onClick={() => setModal(null)}
+        />,
+      );
     }
-
-    // todo: unblock send control
-
-    if (!hash) {
-      return;
-    }
-
-    setAddress('');
-    setAmount(1000000);
-
-    setSentTransaction({
-      hash,
-    });
-
-    veo.wallet.syncPendingTransactions();
   };
 
   const handleHideModal = () => {
