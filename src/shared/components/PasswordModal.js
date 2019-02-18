@@ -21,7 +21,7 @@ const Button = styled.button`
   font-size: 20px;
   font-weight: 500;
   padding: 18px 20px;
-  margin: 0 30px 0 0;
+  margin: 0 15px;
   display: inline-block;
   line-height: 20px;
   border: 2px solid ${props => props.theme.color.blue};
