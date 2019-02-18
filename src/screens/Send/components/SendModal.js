@@ -1,63 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Modal } from 'shared/components/Modal/Modal';
+import { ModalIcon } from 'shared/components/Modal/ModalIcon';
+import { ModalText } from 'shared/components/Modal/ModalText';
+import { Buttons } from 'shared/components/Modal/ModalButtons';
 
 import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
 
-const ModalWrap = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  appearance: none;
-
-  z-index: 999;
-
-  @supports (
-    (-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))
-  ) {
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-  }
-`;
-const Modal = styled.div`
-  width: 100%;
-  max-width: 570px;
-  background: #fff;
-  color: ${props => props.theme.color.blue};
-  padding: 90px 30px 30px 30px;
-  border-radius: 10px;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
-`;
-const ModalIcon = styled.div`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  padding: 20px;
-  margin-left: -30px;
-  background: ${props => props.theme.color.blue};
-  border-radius: 0 0 30px 30px;
-`;
 const IconSend = styled(SvgSend)`
   width: 20px;
   height: 20px;
   fill: ${props => props.theme.color.yellow};
-`;
-const ModalText = styled.div`
-  font-size: 20px;
-  margin: 0 0 30px 0;
-  font-weight: 300;
-`;
-const Buttons = styled.div`
-  width: 100%;
-  text-align: center;
-  margin: 30px 0 0 0;
 `;
 const Ok = styled.button`
   font-size: 20px;
@@ -85,26 +38,24 @@ const InBlockchain = styled(Ok)`
 
 const SendModal = ({ transaction, onHide }) => {
   return (
-    <ModalWrap>
-      <Modal>
-        <ModalIcon>
-          <IconSend />
-        </ModalIcon>
-        <ModalText>Transaction has been sent</ModalText>
-        <Buttons>
-          <Ok onClick={onHide}>OK, thanks</Ok>
-          <a
-            href={`https://explorer.veopool.pw/?input=${encodeURIComponent(
-              transaction.hash,
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <InBlockchain>View in blockchain</InBlockchain>
-          </a>
-        </Buttons>
-      </Modal>
-    </ModalWrap>
+    <Modal textAlign="center">
+      <ModalIcon>
+        <IconSend />
+      </ModalIcon>
+      <ModalText>Transaction has been sent</ModalText>
+      <Buttons textAlign="center">
+        <Ok onClick={onHide}>OK, thanks</Ok>
+        <a
+          href={`https://explorer.veopool.pw/?input=${encodeURIComponent(
+            transaction.hash,
+          )}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <InBlockchain>View in blockchain</InBlockchain>
+        </a>
+      </Buttons>
+    </Modal>
   );
 };
 

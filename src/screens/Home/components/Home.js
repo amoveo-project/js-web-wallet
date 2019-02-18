@@ -7,7 +7,6 @@ import { ReactComponent as SvgWallet } from 'shared/assets/icon-wallet.svg';
 import { ReactComponent as SvgRestore } from 'shared/assets/icon-restore.svg';
 import AppContext from 'shared/contexts/AppContext';
 import Button from 'shared/components/Button';
-import ErrorModal from 'shared/components/ErrorModal';
 
 const Title = styled.h1`
   font-weight: 500;
@@ -58,10 +57,16 @@ const WalletsLink = styled(Link)`
   font-weight: 500;
   margin: 0 40px 0 0;
 `;
-const HardwareLink = styled(WalletsLink)`
+const HardwareLink = styled.a`
   opacity: 0.5;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0 40px 0 0;
 `;
-
+// const HardwareLink = styled(WalletsLink)`
+//   opacity: 0.5;
+// `;
 const IconWallet = styled(SvgWallet)`
   fill: #fff;
 `;
@@ -82,40 +87,24 @@ const Home = () => {
         Send and receive VEO safely and securely, <br />
         anywhere and any time.
       </Subtitle>
-      {window._isElectron ? (
-        <Fragment>
-          <Buttons>
-            <MainButton to="/create/">
-              <IconWallet />
-              <span>Last</span> wallet
-            </MainButton>
-            <MainButton to="/restore/">
-              <SvgRestore2 />
-              <span>Create</span> wallet
-            </MainButton>
-          </Buttons>
-          <WalletsLinks>
-            <WalletsLink to="/recent/">Recent wallets</WalletsLink>
-            <WalletsLink to="">Restore wallet</WalletsLink>
-            {u2fSupport && false ? (
-              <HardwareLink onClick={enterLedger}>Use hardware wallet</HardwareLink>
-            ) : null}
-          </WalletsLinks>
-        </Fragment>
-      ) : (
-        <Buttons>
-          <MainButton to="/create/">
-            <IconWallet />
-            <span>Create</span> wallet
-          </MainButton>
-          <MainButton to="/restore/">
-            <SvgRestore2 />
-            <span>Restore</span> wallet
-          </MainButton>
-        </Buttons>
-      )}
 
-      <ErrorModal />
+      <Buttons>
+        {/*<MainButton to="">*/}
+        {/*  <IconWallet />*/}
+        {/*  <span>Last</span> wallet*/}
+        {/*</MainButton>*/}
+        <MainButton to="/create/">
+          <SvgRestore2 />
+          <span>Create</span> wallet
+        </MainButton>
+      </Buttons>
+      <WalletsLinks>
+        {/*<WalletsLink to="/recent/">Recent wallets</WalletsLink>*/}
+        <WalletsLink to="/restore/">Restore wallet</WalletsLink>
+        {u2fSupport ? (
+          <HardwareLink onClick={enterLedger}>Use hardware wallet</HardwareLink>
+        ) : null}
+      </WalletsLinks>
     </Fragment>
   );
 };

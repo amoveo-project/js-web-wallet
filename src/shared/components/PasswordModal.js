@@ -1,43 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Modal } from 'shared/components/Modal/Modal';
+import { ModalText } from 'shared/components/Modal/ModalText';
+import { Buttons } from 'shared/components/Modal/ModalButtons';
 
-import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
-
-const ModalWrap = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  appearance: none;
-
-  z-index: 999;
-
-  @supports (
-    (-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))
-  ) {
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-  }
-`;
-const Modal = styled.div`
-  width: 100%;
-  max-width: 570px;
-  background: #fff;
-  color: ${props => props.theme.color.blue};
-  padding: 30px;
-  border-radius: 10px;
-  position: relative;
-`;
-const ModalText = styled.div`
-  font-size: 40px;
-  margin: 0 0 30px 0;
-  font-weight: 300;
-`;
 const ModalForm = styled.form`
   margin: 0;
   padding: 0;
@@ -51,12 +17,7 @@ const ModalInput = styled.input`
   font-size: 20px;
   width: 100%;
 `;
-const Buttons = styled.div`
-  width: 100%;
-  text-align: left;
-  margin: 30px 0 0 0;
-`;
-const Cancel = styled.button`
+const Button = styled.button`
   font-size: 20px;
   font-weight: 500;
   padding: 18px 20px;
@@ -68,6 +29,7 @@ const Cancel = styled.button`
   cursor: pointer;
   transition: all 0.4s;
   background: #fff;
+  color: #000;
 
   &:hover {
     background: ${props => props.theme.color.yellow};
@@ -75,25 +37,23 @@ const Cancel = styled.button`
     color: ${props => props.theme.color.blue};
   }
 `;
-const Ok = styled(Cancel)`
+const PrimaryButton = styled(Button)`
   background: ${props => props.theme.color.blue};
   color: #fff;
 `;
 
 const PasswordModal = () => {
   return (
-    <ModalWrap>
-      <Modal>
-        <ModalText>Wallet password</ModalText>
-        <ModalForm>
-          <ModalInput placeholder="Enter wallet password" />
-          <Buttons>
-            <Cancel>Cancel</Cancel>
-            <Ok>Submits</Ok>
-          </Buttons>
-        </ModalForm>
-      </Modal>
-    </ModalWrap>
+    <Modal padding="30px">
+      <ModalText size="40px">Wallet password</ModalText>
+      <ModalForm>
+        <ModalInput placeholder="Enter wallet password" />
+        <Buttons>
+          <Button>Cancel</Button>
+          <PrimaryButton>Submits</PrimaryButton>
+        </Buttons>
+      </ModalForm>
+    </Modal>
   );
 };
 
