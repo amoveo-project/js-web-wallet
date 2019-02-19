@@ -63,6 +63,7 @@ const HardwareLink = styled.a`
   font-size: 20px;
   font-weight: 500;
   margin: 0 40px 0 0;
+  text-decoration: underline;
 `;
 // const HardwareLink = styled(WalletsLink)`
 //   opacity: 0.5;
