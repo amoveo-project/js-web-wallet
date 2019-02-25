@@ -35,7 +35,7 @@ const RestoreContainer = () => {
       const masterNode = HDNode.fromMnemonic(mnemonic);
       const veoNode = masterNode.derivePath("m/44'/488'/0'/0/0");
 
-      const privateKey = veoNode.keyPair.privateKey.replace(/^0x/, '');
+      const privateKey = veoNode.privateKey.replace(/^0x/, '');
 
       createWallet({ privateKey, mnemonic });
     }
