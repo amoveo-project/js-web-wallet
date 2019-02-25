@@ -153,13 +153,15 @@ const App = ({ children, path }) => {
                 >
                   Support
                 </SupportLink>
-                <GithubLink
-                  href="https://github.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Download
-                </GithubLink>
+                {!window._isElectron ? (
+                  <GithubLink
+                    href="https://github.com/amoveo-project/js-web-wallet/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Download
+                  </GithubLink>
+                ) : null}
               </FooterExternalLinks>
               <FooterLink to="/dashboard/" disabled={!isWalletCreated}>
                 <span>{isRestore ? 'Restore' : 'Create'} wallet</span>
