@@ -11,24 +11,20 @@ const DashboardContainer = ({ navigate }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    if (!isWalletCreated) {
+    if (isWalletCreated) {
       navigate('/');
-      return;
     }
   }, []);
 
-  useEffect(
-    () => {
-      if (isWalletCreated) {
-        veo.wallet.startPendingSync();
-      }
+  useEffect(() => {
+    if (isWalletCreated) {
+      veo.wallet.startPendingSync();
+    }
 
-      return () => {
-        veo.wallet.stopPendingSync();
-      };
-    },
-    [isWalletCreated],
-  );
+    return () => {
+      veo.wallet.stopPendingSync();
+    };
+  }, [isWalletCreated]);
 
   const handlePageChange = diff => {
     setCurrentPage(currentPage => currentPage + diff);
