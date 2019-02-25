@@ -157,50 +157,44 @@ const App = () => {
     };
   }, []);
 
-  useEffect(
-    () => {
-      const isCreated = Boolean(keys.public);
-      setIsWalletCreated(isCreated);
-    },
-    [keys, passphrase],
-  );
+  useEffect(() => {
+    const isCreated = Boolean(keys.public);
+    setIsWalletCreated(isCreated);
+  }, [keys, passphrase]);
 
-  useEffect(
-    async () => {
-      if (isWalletCreated) {
-        try {
-          const balance = await veo.getBalance();
-          setBalance(balance);
-        } catch (e) {
-          // no actions
-        }
-      } else {
-        setBalance(0);
+  async function setBalanceAsync(isWalletCreated) {
+    if (isWalletCreated) {
+      try {
+        const balance = await veo.getBalance();
+        setBalance(balance);
+      } catch (e) {
+        // no actions
       }
-    },
-    [headerId, isWalletCreated],
-  );
+    } else {
+      setBalance(0);
+    }
+  }
 
-  useEffect(
-    async () => {
-      if (!isWalletCreated) {
-        return;
-      }
+  useEffect(() => {
+    setBalanceAsync(isWalletCreated);
+  }, [headerId, isWalletCreated]);
 
+  async function setTransactionsAsync(isWalletCreated) {
+    if (isWalletCreated) {
       const transactions = await veo.wallet.getTransactions();
       setTransactions(transactions);
-    },
-    [headerId, isWalletCreated],
-  );
+    }
+  }
 
-  useEffect(
-    () => {
-      if (isWalletCreated) {
-        veo.wallet.syncPendingTransactions();
-      }
-    },
-    [headerId, isWalletCreated],
-  );
+  useEffect(() => {
+    setTransactionsAsync(isWalletCreated);
+  }, [headerId, isWalletCreated]);
+
+  useEffect(() => {
+    if (isWalletCreated) {
+      veo.wallet.syncPendingTransactions();
+    }
+  }, [headerId, isWalletCreated]);
 
   const createWallet = async ({ privateKey, mnemonic = '' }) => {
     veo.keys.generateKeyPair();

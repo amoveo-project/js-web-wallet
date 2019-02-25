@@ -21,48 +21,38 @@ const RestoreContainer = () => {
     resetWallet();
   }, []);
 
-  useEffect(
-    () => {
-      resetWallet();
+  useEffect(() => {
+    resetWallet();
 
-      const { HDNode } = ethers.utils;
+    const { HDNode } = ethers.utils;
 
-      const mnemonic = tempPassphrase;
+    const mnemonic = tempPassphrase;
 
-      const isValidMnemonic = HDNode.isValidMnemonic(mnemonic);
-      setIsValidMnemonic(isValidMnemonic);
+    const isValidMnemonic = HDNode.isValidMnemonic(mnemonic);
+    setIsValidMnemonic(isValidMnemonic);
 
-      if (!isValidMnemonic) {
-        return;
-      }
-
+    if (isValidMnemonic) {
       const masterNode = HDNode.fromMnemonic(mnemonic);
       const veoNode = masterNode.derivePath("m/44'/488'/0'/0/0");
 
       const privateKey = veoNode.keyPair.privateKey.replace(/^0x/, '');
 
       createWallet({ privateKey, mnemonic });
-    },
-    [tempPassphrase],
-  );
+    }
+  }, [tempPassphrase]);
 
-  useEffect(
-    () => {
-      resetWallet();
+  useEffect(() => {
+    resetWallet();
 
-      const privateKey = tempPrivateKey;
+    const privateKey = tempPrivateKey;
 
-      const isValidPrivateKey = privateKey.length === PRIVATE_KEY_LENGTH;
-      setIsValidPrivateKey(isValidPrivateKey);
+    const isValidPrivateKey = privateKey.length === PRIVATE_KEY_LENGTH;
+    setIsValidPrivateKey(isValidPrivateKey);
 
-      if (!isValidPrivateKey) {
-        return;
-      }
-
+    if (isValidPrivateKey) {
       createWallet({ privateKey, mnemonic: '' });
-    },
-    [tempPrivateKey],
-  );
+    }
+  }, [tempPrivateKey]);
 
   const handlePassphraseInput = e => {
     setTempPassphrase(e.target.value);
