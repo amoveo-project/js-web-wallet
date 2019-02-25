@@ -11,7 +11,7 @@ const DashboardContainer = ({ navigate }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    if (isWalletCreated) {
+    if (!isWalletCreated) {
       navigate('/');
     }
   }, []);
