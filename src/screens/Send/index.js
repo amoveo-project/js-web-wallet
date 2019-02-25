@@ -18,18 +18,14 @@ const SendContainer = () => {
   const [isSendEnabled, setIsSendEnabled] = useState(false);
   const [sentTransaction, setSentTransaction] = useState(null);
 
-  useEffect(
-    async () => {
-      const isFilled = amount > 0 && address.length > 0;
-      const isYourself = address === keys.public;
+  async function setIsSendEnabledAsync() {
+    const isFilled = amount > 0 && address.length > 0;
+    const isYourself = address === keys.public;
 
-      if (!isFilled || isYourself) {
-        setFee(0);
-        setIsSendEnabled(false);
-
-        return;
-      }
-
+    if (!isFilled || isYourself) {
+      setFee(0);
+      setIsSendEnabled(false);
+    } else {
       let fee = 0;
       try {
         const accountState = await veo.wallet.getAccountState(address);
@@ -57,9 +53,12 @@ const SendContainer = () => {
       const isValid = fee > 0 && balance >= amount + fee;
 
       setIsSendEnabled(isValid);
-    },
-    [address, amount],
-  );
+    }
+  }
+
+  useEffect(() => {
+    setIsSendEnabledAsync(address, amount);
+  }, [address, amount]);
 
   const handleAddressInput = e => {
     setAddress(e.target.value);
