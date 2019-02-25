@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+
+import { ReactComponent as SvgLedger } from 'shared/assets/icon-ledger.svg';
 import { Modal } from 'shared/components/Modal/Modal';
+import { ModalTitle } from 'shared/components/Modal/ModalTitle';
 import { ModalIcon } from 'shared/components/Modal/ModalIcon';
 import { ModalText } from 'shared/components/Modal/ModalText';
 import { Buttons } from 'shared/components/Modal/ModalButtons';
 
-import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
-
-const IconSend = styled(SvgSend)`
+const IconLedger = styled(SvgLedger)`
   width: 20px;
   height: 20px;
   fill: ${props => props.theme.color.yellow};
 `;
-const Ok = styled.button`
+const Button = styled.button`
   font-size: 20px;
   font-weight: 500;
   padding: 18px 20px;
@@ -23,7 +24,8 @@ const Ok = styled.button`
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.4s;
-  background: #fff;
+  background: ${props => props.theme.color.blue};
+  color: #fff;
 
   &:hover {
     background: ${props => props.theme.color.yellow};
@@ -31,32 +33,20 @@ const Ok = styled.button`
     color: ${props => props.theme.color.blue};
   }
 `;
-const InBlockchain = styled(Ok)`
-  background: ${props => props.theme.color.blue};
-  color: #fff;
-`;
 
-const SendModal = ({ transaction, onHide }) => {
+const LedgerModal = ({ title, text, onClick }) => {
   return (
     <Modal textAlign="center">
       <ModalIcon>
-        <IconSend />
+        <IconLedger />
       </ModalIcon>
-      <ModalText>Transaction has been sent</ModalText>
+      <ModalTitle>{title}</ModalTitle>
+      <ModalText>{text}</ModalText>
       <Buttons textAlign="center">
-        <Ok onClick={onHide}>OK, thanks</Ok>
-        <a
-          href={`https://explorer.veopool.pw/?input=${encodeURIComponent(
-            transaction.hash,
-          )}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <InBlockchain>View in blockchain</InBlockchain>
-        </a>
+        <Button onClick={onClick}>OK</Button>
       </Buttons>
     </Modal>
   );
 };
 
-export default SendModal;
+export default LedgerModal;

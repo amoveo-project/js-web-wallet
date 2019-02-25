@@ -88,16 +88,20 @@ const Footer = styled.footer`
   }
 `;
 const FooterExternalLink = styled.a`
-  color: ${props => props.theme.color.yellow};
+  color: #fff;
   font-weight: 500;
+  opacity: 0.5;
+  transition: opacity 0.4s;
+
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 const SupportLink = styled(FooterExternalLink)`
   margin-right: 15px;
 `;
-const GithubLink = styled(FooterExternalLink)`
-  color: white;
-`;
+const GithubLink = styled(FooterExternalLink)``;
 
 const HomeTemplate = ({ children }) => {
   return (

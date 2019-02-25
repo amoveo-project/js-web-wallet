@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Modal } from 'shared/components/Modal/Modal';
+import { ModalTitle } from 'shared/components/Modal/ModalTitle';
 import { ModalIcon } from 'shared/components/Modal/ModalIcon';
 import { ModalText } from 'shared/components/Modal/ModalText';
 import { Buttons } from 'shared/components/Modal/ModalButtons';
 
-import { ReactComponent as SvgSend } from 'shared/assets/icon-send.svg';
+import { ReactComponent as SvgError } from 'shared/assets/icon-stop.svg';
 
-const IconSend = styled(SvgSend)`
+const IconError = styled(SvgError)`
   width: 20px;
   height: 20px;
   fill: ${props => props.theme.color.yellow};
 `;
-const Ok = styled.button`
+const Button = styled.button`
   font-size: 20px;
   font-weight: 500;
   padding: 18px 20px;
@@ -23,40 +24,34 @@ const Ok = styled.button`
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.4s;
-  background: #fff;
+  background: ${props => props.theme.color.yellow};
+  color: ${props => props.theme.color.blue};
 
   &:hover {
-    background: ${props => props.theme.color.yellow};
-    border-color: ${props => props.theme.color.yellow};
+    background: #fff;
+    border-color: #fff;
     color: ${props => props.theme.color.blue};
   }
 `;
-const InBlockchain = styled(Ok)`
+const PrimaryButton = styled(Button)`
   background: ${props => props.theme.color.blue};
   color: #fff;
 `;
 
-const SendModal = ({ transaction, onHide }) => {
+const ErrorModal = ({ text, onClick }) => {
   return (
-    <Modal textAlign="center">
+    <Modal bgColor="yellow" textAlign="center">
       <ModalIcon>
-        <IconSend />
+        <IconError />
       </ModalIcon>
-      <ModalText>Transaction has been sent</ModalText>
+      <ModalTitle>An error has occurred</ModalTitle>
+      <ModalText>{text}</ModalText>
       <Buttons textAlign="center">
-        <Ok onClick={onHide}>OK, thanks</Ok>
-        <a
-          href={`https://explorer.veopool.pw/?input=${encodeURIComponent(
-            transaction.hash,
-          )}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <InBlockchain>View in blockchain</InBlockchain>
-        </a>
+        {/*<Button bgColor="yellow" color="blue">Optional button</Button>*/}
+        <PrimaryButton onClick={onClick}>OK</PrimaryButton>
       </Buttons>
     </Modal>
   );
 };
 
-export default SendModal;
+export default ErrorModal;

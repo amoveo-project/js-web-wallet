@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import VeoNode, { LedgerKeys } from 'amoveo-js-light-node';
 import debounce from 'lodash/debounce';
 import throttle from 'lodash/throttle';
@@ -23,11 +23,14 @@ import Home from './screens/Home';
 import NotFound from './screens/NotFound';
 import Receive from './screens/Receive';
 import Restore from './screens/Restore';
+import Recent from './screens/Recent';
 import Send from './screens/Send/';
 import Test from './screens/Test';
 import TransactionDetails from './screens/Dashboard/components/TransactionDetails';
 
 import AppContext from 'shared/contexts/AppContext';
+import ErrorModal from 'shared/components/ErrorModal';
+import LedgerModal from 'shared/components/LedgerModal';
 
 import Transport from '@ledgerhq/hw-transport-u2f';
 import Veo from 'hw-app-veo';
@@ -39,6 +42,7 @@ import {
   VEO_REMOVE_PENDING_TRANSACTION,
   VEO_UPDATE_HEADER,
 } from 'shared/constants/actions';
+import { LEDGER_MAGIC_NUMBER } from 'shared/constants/ledger';
 
 const veoNodeUrl =
   process.env.REACT_APP_VEO_NODE_URL || 'http://amoveo.exan.tech:8080';
@@ -66,6 +70,7 @@ const App = () => {
     DOWNLOAD_PRIVATE_KEY,
   ]);
   const [u2fSupport, setU2fSupport] = useState(false);
+  const [modal, setModal] = useState(null);
 
   // didMount
   useEffect(() => {
@@ -250,12 +255,19 @@ const App = () => {
     const ledgerKeys = new LedgerKeys(ledger);
 
     try {
+      setModal(
+        <LedgerModal
+          title="Connecting to Ledger"
+          text="Please wait"
+          onClick={() => setModal(null)}
+        />,
+      );
       await ledgerKeys.generateKeyPair();
       veo.wallet.keys = ledgerKeys;
       const publicKey = ledgerKeys.getPublicKey();
 
       setKeys({
-        private: '0xd09face', // random
+        private: LEDGER_MAGIC_NUMBER, // random
         public: publicKey,
       });
 
@@ -268,9 +280,15 @@ const App = () => {
         window._amoveoWallet.setConfigPassphrase('');
       }
 
+      setModal(null);
       routerHistory.navigate('/dashboard/');
-    } catch {
-      // TODO show message that connection with Ledger wasn't successful
+    } catch (e) {
+      setModal(
+        <ErrorModal
+          text="Can't find Ledger Nano S"
+          onClick={() => setModal(null)}
+        />,
+      );
     }
   };
 
@@ -288,6 +306,7 @@ const App = () => {
     enterLedger,
     setPendingTransactions,
     setUnusedActions,
+    setModal,
     transactions,
     unusedActions,
     veo,
@@ -297,36 +316,37 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <AppContext.Provider value={appState}>
-        <Fragment>
-          <GlobalStyles />
+        <GlobalStyles />
 
-          <LocationProvider history={routerHistory}>
-            <Router className="routerwrap">
-              <HomeTemplate path="/">
-                <Home path="/" />
-                <Home path="/logout" />
-              </HomeTemplate>
+        <LocationProvider history={routerHistory}>
+          <Router className="routerwrap">
+            <HomeTemplate path="/">
+              <Home path="/" />
+              <Home path="/logout" />
+            </HomeTemplate>
 
-              <CreateRestoreTemplate path="/create">
-                <Create path="/" />
-              </CreateRestoreTemplate>
+            <CreateRestoreTemplate path="/create">
+              <Create path="/" />
+            </CreateRestoreTemplate>
 
-              <CreateRestoreTemplate path="/restore">
-                <Restore path="/" />
-              </CreateRestoreTemplate>
+            <CreateRestoreTemplate path="/restore">
+              <Restore path="/" />
+            </CreateRestoreTemplate>
 
-              <Dashboard path="/dashboard" />
-              <TransactionDetails path="/dashboard/:transactionId" />
-              <Send path="/send" />
-              <Receive path="/receive" />
-              <Exchange path="/exchange" />
+            <Dashboard path="/dashboard" />
+            <TransactionDetails path="/dashboard/:transactionId" />
+            <Send path="/send" />
+            <Receive path="/receive" />
+            <Recent path="/recent" />
+            <Exchange path="/exchange" />
 
-              <Test path="/test" />
+            <Test path="/test" />
 
-              <NotFound default />
-            </Router>
-          </LocationProvider>
-        </Fragment>
+            <NotFound default />
+          </Router>
+        </LocationProvider>
+
+        {modal}
       </AppContext.Provider>
     </ThemeProvider>
   );
