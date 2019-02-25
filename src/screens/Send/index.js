@@ -56,7 +56,9 @@ const SendContainer = () => {
     }
   }
 
-  useEffect(setIsSendEnabledAsync(address, amount), [address, amount]);
+  useEffect(() => {
+    setIsSendEnabledAsync(address, amount);
+  }, [address, amount]);
 
   const handleAddressInput = e => {
     setAddress(e.target.value);
