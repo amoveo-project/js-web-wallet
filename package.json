@@ -1,6 +1,6 @@
 {
   "name": "amoveo-js-wallet",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "main": "public/electron.js",
   "homepage": "./",
@@ -70,7 +70,7 @@
     ]
   },
   "build": {
-    "appId": "com.amoveo.wallet",
+    "appId": "io.amoveo.wallet",
     "compression": "normal",
     "productName": "Amoveo Wallet",
     "directories": {
@@ -84,11 +84,24 @@
         "pkg",
         "dmg"
       ],
-      "category": "public.app-category.finance"
+      "category": "public.app-category.finance",
+      "publish": {
+        "provider": "s3",
+        "bucket": "amoveo-wallet",
+        "path": "/release/osx/"
+      }
     },
     "win": {
-      "target": "nsis",
-      "icon": "icon.ico"
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "icon.ico",
+      "publish": {
+        "provider": "s3",
+        "bucket": "amoveo-wallet",
+        "path": "/release/win/"
+      }
     },
     "linux": {
       "target": [
@@ -96,7 +109,12 @@
         "AppImage"
       ],
       "description": "Amoveo Wallet",
-      "category": "Finance"
+      "category": "Finance",
+      "publish": {
+        "provider": "s3",
+        "bucket": "amoveo-wallet",
+        "path": "/release/linux/"
+      }
     }
   }
 }
