@@ -35,6 +35,8 @@
   "scripts": {
     "build": "react-scripts build",
     "dist": "npx build --x64 --macos --win --linux --c.extraMetadata.main=build/electron.js -p always",
+    "dist-osx": "npx build --x64 --macos --c.extraMetadata.main=build/electron.js -p always",
+    "dist-winlin": "npx build --x64 --win --linux --c.extraMetadata.main=build/electron.js -p always",
     "electron": "electron .",
     "pack": "electron-builder --dir",
     "start": "react-scripts start",
