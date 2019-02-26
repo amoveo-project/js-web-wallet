@@ -27,9 +27,6 @@ function createWindow() {
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
-
   if (isDev) {
     const {
       default: installExtension,
@@ -39,6 +36,9 @@ function createWindow() {
     installExtension(REACT_DEVELOPER_TOOLS)
       .then(name => {
         console.log(`Added Extension: ${name}`);
+
+        // Open the DevTools.
+        mainWindow.webContents.openDevTools();
       })
       .catch(err => {
         console.log("An error occurred: ", err);
