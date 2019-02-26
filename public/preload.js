@@ -1,3 +1,11 @@
+const {
+  addWallet,
+  getLastId,
+  getWallets,
+  openWallet,
+  setLastId
+} = require("./walletHelpers");
+
 const Store = require("electron-store");
 const store = new Store({
   encryptionKey: "amoveo-temp-encryption-key"
@@ -50,8 +58,13 @@ function setConfigPassphrase(passphrase) {
 }
 
 window._amoveoWallet = {
+  addWallet,
   getConfigPassphrase,
   getConfigPrivateKey,
+  getLastId,
+  getWallets,
   setConfigPassphrase,
-  setConfigPrivateKey
+  setConfigPrivateKey,
+  setLastId,
+  openWallet
 };

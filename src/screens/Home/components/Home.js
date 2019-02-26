@@ -5,8 +5,11 @@ import Device from 'device';
 
 import { ReactComponent as SvgWallet } from 'shared/assets/icon-wallet.svg';
 import { ReactComponent as SvgRestore } from 'shared/assets/icon-restore.svg';
-import AppContext from 'shared/contexts/AppContext';
+
 import Button from 'shared/components/Button';
+
+import AppContext from 'shared/contexts/AppContext';
+import HomeContext from 'shared/contexts/HomeContext';
 
 const Title = styled.h1`
   font-weight: 500;
@@ -40,6 +43,8 @@ const Buttons = styled.div`
   }
 `;
 const MainButton = styled(Button)`
+  cursor: pointer;
+
   &:first-child {
     background: ${props => props.theme.color.yellow};
 
@@ -77,6 +82,9 @@ const SvgRestore2 = styled(SvgRestore)`
 
 const Home = () => {
   const { enterLedger, u2fSupport } = useContext(AppContext);
+  const { lastWalletId, openLastWallet } = useContext(HomeContext);
+
+  const isLastWallet = Boolean(lastWalletId);
 
   return (
     <Fragment>
@@ -90,17 +98,21 @@ const Home = () => {
       </Subtitle>
 
       <Buttons>
-        {/*<MainButton to="">*/}
-        {/*  <IconWallet />*/}
-        {/*  <span>Last</span> wallet*/}
-        {/*</MainButton>*/}
-        <MainButton to="/create/">
+        {window._isElectron && isLastWallet && (
+          <MainButton onClick={openLastWallet} as="div">
+            <IconWallet />
+            <span>Last</span> wallet
+          </MainButton>
+        )}
+        <MainButton to="/create/" as={Link}>
           <SvgRestore2 />
           <span>Create</span> wallet
         </MainButton>
       </Buttons>
       <WalletsLinks>
-        {/*<WalletsLink to="/recent/">Recent wallets</WalletsLink>*/}
+        {window._isElectron && (
+          <WalletsLink to="/recent/">Recent wallets</WalletsLink>
+        )}
         <WalletsLink to="/restore/">Restore wallet</WalletsLink>
         {u2fSupport ? (
           <HardwareLink onClick={enterLedger}>Use hardware wallet</HardwareLink>
