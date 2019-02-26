@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from '@reach/router';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Device from 'device';
 
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
@@ -8,6 +8,8 @@ import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
 import { ReactComponent as SvgPrev } from 'shared/assets/icon-prev.svg';
 
 import GoBack from 'shared/components/GoBack.js';
+
+import RecentContext from 'shared/contexts/RecentContext';
 
 const Main = styled.div`
   width: 100%;
@@ -133,6 +135,8 @@ const Delete = styled.button`
 `;
 
 const Restore = () => {
+  const { openWallet, wallets } = useContext(RecentContext);
+
   return (
     <Fragment>
       <Main>
@@ -148,25 +152,18 @@ const Restore = () => {
             <Container>
               <Title>Recent wallets</Title>
               <Wallets>
-                <Wallet>
-                  <Used>Used 10.02.2019</Used>
-                  <Name>
-                    49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx5okMnAN6nJdJuNdLENtx7i6
-                  </Name>
-                </Wallet>
-                <Wallet>
-                  <Used>Used 10.02.2019</Used>
-                  <Name>
-                    49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx5okMnAN6nJdJuNdLENtx7i6
-                  </Name>
-                  <Delete>Delete wallet</Delete>
-                </Wallet>
-                <Wallet>
-                  <Used>Used 10.02.2019</Used>
-                  <Name>
-                    49pn7NpkLncRLmqJSP6E3th14GuedWvHs7C2UEV9LGfkVTTtpmJ3JAgVQu5LLDcLV73Z5Nxx5okMnAN6nJdJuNdLENtx7i6
-                  </Name>
-                </Wallet>
+                {wallets.map(wallet => (
+                  <Wallet
+                    key={wallet.publicKey}
+                    onClick={() => {
+                      openWallet(wallet.publicKey);
+                    }}
+                  >
+                    {/* <Used>Used 10.02.2019</Used> */}
+                    <Name>{wallet.publicKey}</Name>
+                    {/* <Delete>Delete wallet</Delete> */}
+                  </Wallet>
+                ))}
               </Wallets>
             </Container>
           </Body>

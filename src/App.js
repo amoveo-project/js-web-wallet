@@ -122,7 +122,7 @@ const App = () => {
       window.addEventListener('beforeunload', beforeunloadListener);
     }
 
-    if (window._isElectron) {
+    /* if (window._isElectron) {
       const privateKey = window._amoveoWallet.getConfigPrivateKey();
       const mnemonic = window._amoveoWallet.getConfigPassphrase();
 
@@ -131,7 +131,7 @@ const App = () => {
 
         routerHistory.navigate('/dashboard/');
       }
-    }
+    } */
 
     if (!window._isElectron && process.env.REACT_APP_DEBUG_PRIVATE_KEY) {
       createWallet({ privateKey: process.env.REACT_APP_DEBUG_PRIVATE_KEY });
@@ -209,6 +209,14 @@ const App = () => {
     setPassphrase(mnemonic);
 
     if (window._isElectron) {
+      await window._amoveoWallet.addWallet({
+        publicKey: keyPair.public,
+        privateKey: keyPair.private,
+        password: '',
+        mnemonic,
+      });
+      await window._amoveoWallet.setLastId(keyPair.public);
+
       window._amoveoWallet.setConfigPrivateKey(keyPair.private);
       window._amoveoWallet.setConfigPassphrase(mnemonic);
     }
