@@ -1306,6 +1306,17 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
+amoveo-js-light-node@0.2.0:
+  version "0.2.0"
+  resolved "http://nexus.ghcg.com/repository/npm-all/amoveo-js-light-node/-/amoveo-js-light-node-0.2.0.tgz#da2573a229ab6f854075ea0d0b7ccbf1390cfe5b"
+  integrity sha512-N7mpUMSMMET+pq+2ZMxjsUipRY9zmOZxpt6nOnkDVd7IW8Gbpb3YjU6u/RWd/X1hE2K31/RFSzmQBpXHKNM8Cg==
+  dependencies:
+    big-integer "^1.6.41"
+    dexie "2.0.4"
+    elliptic "6.4.1"
+    eventemitter3 "3.1.0"
+    sjcl "^1.0.8"
+
 ansi-align@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ansi-align/-/ansi-align-2.0.0.tgz#c36aeccba563b89ceb556f3690f0b1d9e3547f7f"
@@ -1961,6 +1972,11 @@ bfj@6.1.1:
     check-types "^7.3.0"
     hoopy "^0.1.2"
     tryer "^1.0.0"
+
+big-integer@^1.6.41:
+  version "1.6.42"
+  resolved "http://nexus.ghcg.com/repository/npm-all/big-integer/-/big-integer-1.6.42.tgz#91623ae5ceeff9a47416c56c9440a66f12f534f1"
+  integrity sha512-3UQFKcRMx+5Z+IK5vYTMYK2jzLRJkt+XqyDdacgWgtMjjuifKpKTFneJLEgeBElOE2/lXZ1LcMcb5s8pwG2U8Q==
 
 big.js@^5.2.2:
   version "5.2.2"
@@ -3427,6 +3443,11 @@ detect-port-alt@1.1.6:
     address "^1.0.1"
     debug "^2.6.0"
 
+dexie@2.0.4:
+  version "2.0.4"
+  resolved "http://nexus.ghcg.com/repository/npm-all/dexie/-/dexie-2.0.4.tgz#6027a5e05879424e8f9979d8c14e7420f27e3a11"
+  integrity sha512-aQ/s1U2wHxwBKRrt2Z/mwFNHMQWhESerFsMYzE+5P5OsIe5o1kgpFMWkzKTtkvkyyEni6mWr/T4HUJuY9xIHLA==
+
 diff-sequences@^24.0.0:
   version "24.0.0"
   resolved "http://nexus.ghcg.com/repository/npm-all/diff-sequences/-/diff-sequences-24.0.0.tgz#cdf8e27ed20d8b8d3caccb4e0c0d8fe31a173013"
@@ -3745,7 +3766,7 @@ elliptic@6.3.3:
     hash.js "^1.0.0"
     inherits "^2.0.1"
 
-elliptic@^6.0.0:
+elliptic@6.4.1, elliptic@^6.0.0:
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.4.1.tgz#c2d0b7776911b86722c632c3c06c60f2f819939a"
   integrity sha512-BsXLz5sqX8OHcsh7CqBMztyXARmGQ3LWPtGjJi6DiJHq5C/qvi9P3OqgswKSDftbu8+IoI/QDTAm2fFnQ9SZSQ==
@@ -4090,7 +4111,7 @@ ethers@^4.0.26:
     uuid "2.0.1"
     xmlhttprequest "1.8.0"
 
-eventemitter3@^3.0.0:
+eventemitter3@3.1.0, eventemitter3@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.0.tgz#090b4d6cdbd645ed10bf750d4b5407942d7ba163"
   integrity sha512-ivIvhpq/Y0uSjcHDcOIccjmYjGLcP09MFGE7ysAwkAvkXfpZlC985pH2/ui64DKazbTW/4kN3yqozUxlXzI6cA==
@@ -9895,6 +9916,11 @@ sisteransi@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-0.1.1.tgz#5431447d5f7d1675aac667ccd0b865a4994cb3ce"
   integrity sha512-PmGOd02bM9YO5ifxpw36nrNMBTptEtfRl4qUYl9SndkolplkrZZOW7PGHjrZL53QvMVj9nQ+TKqUnRsw4tJa4g==
+
+sjcl@^1.0.8:
+  version "1.0.8"
+  resolved "http://nexus.ghcg.com/repository/npm-all/sjcl/-/sjcl-1.0.8.tgz#f2ec8d7dc1f0f21b069b8914a41a8f236b0e252a"
+  integrity sha512-LzIjEQ0S0DpIgnxMEayM1rq9aGwGRG4OnZhCdjx7glTaJtf4zRfpg87ImfjSJjoW9vKpagd82McDOwbRT5kQKQ==
 
 slash@^1.0.0:
   version "1.0.0"
