@@ -52,6 +52,10 @@ const MainButton = styled(Button)`
       fill: ${props => props.theme.color.yellow};
     }
   }
+
+  &:not(:first-child) {
+    margin-left: 30px;
+  }
 `;
 const WalletsLinks = styled.div`
   margin: 40px 0 0 0;

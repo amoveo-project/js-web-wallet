@@ -28,13 +28,9 @@ const HomeContainer = ({ navigate, path }) => {
   }
 
   async function openLastWallet() {
-    const {
-      privateKeyEncrypted,
-      mnemonicEncrypted,
-    } = await window._amoveoWallet.openWallet(lastWalletId);
-
-    const privateKey = privateKeyEncrypted;
-    const mnemonic = mnemonicEncrypted;
+    const { privateKey, mnemonic } = await window._amoveoWallet.openWallet(
+      lastWalletId,
+    );
 
     if (privateKey) {
       createWallet({ privateKey, mnemonic });
