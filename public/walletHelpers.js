@@ -155,7 +155,19 @@ function setLastId(walletId) {
   });
 }
 
-function openWallet(walletId, password) {
+function openWallet(walletId) {
+  return openConfig().then(configObj => {
+    const wallet = configObj.wallets.find(item => item.publicKey === walletId);
+
+    if (wallet) {
+      return wallet;
+    } else {
+      throw new Error("Wallet not found");
+    }
+  });
+}
+
+function decryptWallet(walletId, password) {
   return openConfig().then(configObj => {
     const wallet = configObj.wallets.find(item => item.publicKey === walletId);
 
@@ -193,6 +205,7 @@ function getWallets() {
 
 module.exports = {
   addWallet,
+  decryptWallet,
   getLastId,
   getWallets,
   openConfig,

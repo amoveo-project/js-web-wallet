@@ -185,6 +185,36 @@ const App = () => {
     }
   }, [headerId, isWalletCreated]);
 
+  const storeWallet = async ({ password }) => {
+    const keyPair = veo.keys.getKeyPair();
+    const mnemonic = passphrase;
+
+    if (window._isElectron) {
+      await window._amoveoWallet.addWallet({
+        publicKey: keyPair.public,
+        privateKey: keyPair.private,
+        password,
+        mnemonic,
+      });
+      await window._amoveoWallet.setLastId(keyPair.public);
+    }
+  };
+
+  const recoverWallet = async ({ walletId, password }) => {
+    try {
+      const { privateKey, mnemonic } = await window._amoveoWallet.decryptWallet(
+        walletId,
+        password,
+      );
+
+      if (privateKey) {
+        createWallet({ privateKey, mnemonic });
+      }
+    } catch (e) {
+      throw new Error("Couldn't recover wallet");
+    }
+  };
+
   const createWallet = async ({ privateKey, mnemonic = '' }) => {
     veo.keys.generateKeyPair();
     veo.keys.setPrivateKey(privateKey);
@@ -198,12 +228,6 @@ const App = () => {
     setPassphrase(mnemonic);
 
     if (window._isElectron) {
-      await window._amoveoWallet.addWallet({
-        publicKey: keyPair.public,
-        privateKey: keyPair.private,
-        password: '',
-        mnemonic,
-      });
       await window._amoveoWallet.setLastId(keyPair.public);
     }
 
@@ -282,9 +306,11 @@ const App = () => {
     pendingTransactions,
     resetWallet,
     enterLedger,
+    recoverWallet,
     setPendingTransactions,
     setUnusedActions,
     setModal,
+    storeWallet,
     transactions,
     unusedActions,
     veo,

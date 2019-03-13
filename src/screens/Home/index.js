@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import Home from './components/Home';
 
+import RecoverPasswordModal from 'shared/components/RecoverPasswordModal';
+
 import AppContext from 'shared/contexts/AppContext';
 import HomeContext from 'shared/contexts/HomeContext';
 
 const HomeContainer = ({ navigate, path }) => {
-  const { createWallet, resetWallet } = useContext(AppContext);
+  const { recoverWallet, resetWallet, setModal } = useContext(AppContext);
 
   const [lastWalletId, setLastWalletId] = useState('');
 
@@ -28,12 +30,16 @@ const HomeContainer = ({ navigate, path }) => {
   }
 
   async function openLastWallet() {
-    const { privateKey, mnemonic } = await window._amoveoWallet.openWallet(
-      lastWalletId,
-    );
+    const { hasPassword } = await window._amoveoWallet.openWallet(lastWalletId);
 
-    if (privateKey) {
-      createWallet({ privateKey, mnemonic });
+    if (hasPassword) {
+      setModal(
+        <RecoverPasswordModal walletId={lastWalletId} navigate={navigate} />,
+      );
+
+      return;
+    } else {
+      await recoverWallet({ walletId: lastWalletId, password: '' });
 
       navigate('/dashboard/');
     }
