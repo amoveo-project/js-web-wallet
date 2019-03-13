@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { Modal } from 'shared/components/Modal/Modal';
 import { ModalText } from 'shared/components/Modal/ModalText';
 import { Buttons } from 'shared/components/Modal/ModalButtons';
+
+import AppContext from 'shared/contexts/AppContext';
 
 const ModalForm = styled.form`
   margin: 0;
@@ -40,21 +42,57 @@ const Button = styled.button`
 const PrimaryButton = styled(Button)`
   background: ${props => props.theme.color.blue};
   color: #fff;
+
+  &[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 `;
 
-const PasswordModal = () => {
+const SetPasswordModal = () => {
+  const { setModal, storeWallet } = useContext(AppContext);
+
+  const [password, setPassword] = useState('');
+
+  function handlePasswordChange(e) {
+    setPassword(e.target.value);
+  }
+
+  function handleCancel() {
+    storeWallet({
+      password: '',
+    });
+    setModal(null);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    storeWallet({
+      password,
+    });
+    setModal(null);
+  }
+
   return (
     <Modal padding="30px">
-      <ModalText size="40px">Wallet password</ModalText>
-      <ModalForm>
-        <ModalInput placeholder="Enter wallet password" />
+      <ModalText size="40px">Set wallet password</ModalText>
+      <ModalForm onSubmit={handleSubmit}>
+        <ModalInput
+          placeholder="Enter wallet password"
+          onChange={handlePasswordChange}
+          type="password"
+          value={password}
+          autoFocus
+        />
         <Buttons>
-          <Button>Cancel</Button>
-          <PrimaryButton>Submits</PrimaryButton>
+          <Button onClick={handleCancel}>Cancel (insecure!)</Button>
+          <PrimaryButton disabled={password.length < 4}>
+            Set password
+          </PrimaryButton>
         </Buttons>
       </ModalForm>
     </Modal>
   );
 };
 
-export default PasswordModal;
+export default SetPasswordModal;

@@ -8,6 +8,7 @@ import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
 import { ReactComponent as SvgPrev } from 'shared/assets/icon-prev.svg';
 
 import GoBack from 'shared/components/GoBack.js';
+import SetPasswordModal from 'shared/components/SetPasswordModal';
 
 import AppContext from 'shared/contexts/AppContext';
 
@@ -123,7 +124,9 @@ const SupportLink = styled(FooterExternalLink)`
 const GithubLink = styled(FooterExternalLink)``;
 
 const App = ({ children, path }) => {
-  const { isWalletCreated } = useContext(AppContext);
+  const { isWalletCreated, password, setModal, storeWallet } = useContext(
+    AppContext,
+  );
 
   const isRestore = path && path.startsWith('/restore');
 
@@ -163,7 +166,15 @@ const App = ({ children, path }) => {
                   </GithubLink>
                 ) : null}
               </FooterExternalLinks>
-              <FooterLink to="/dashboard/" disabled={!isWalletCreated}>
+              <FooterLink
+                to="/dashboard/"
+                disabled={!isWalletCreated}
+                onClick={() => {
+                  if (window._isElectron) {
+                    setModal(<SetPasswordModal />);
+                  }
+                }}
+              >
                 <span>{isRestore ? 'Restore' : 'Create'} wallet</span>
                 <IconNext />
               </FooterLink>

@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import Recent from './components/Recent';
 
+import RecoverPasswordModal from 'shared/components/RecoverPasswordModal';
+
 import AppContext from 'shared/contexts/AppContext';
 import RecentContext from 'shared/contexts/RecentContext';
 
 const RecentContainer = ({ navigate }) => {
-  const { createWallet } = useContext(AppContext);
+  const { recoverWallet, setModal } = useContext(AppContext);
 
   const [wallets, setWallets] = useState([]);
 
@@ -20,12 +22,16 @@ const RecentContainer = ({ navigate }) => {
   }
 
   async function openWallet(walletId) {
-    const { privateKey, mnemonic } = await window._amoveoWallet.openWallet(
-      walletId,
-    );
+    const { hasPassword } = await window._amoveoWallet.openWallet(walletId);
 
-    if (privateKey) {
-      createWallet({ privateKey, mnemonic });
+    if (hasPassword) {
+      setModal(
+        <RecoverPasswordModal walletId={walletId} navigate={navigate} />,
+      );
+
+      return;
+    } else {
+      await recoverWallet({ walletId, password: '' });
 
       navigate('/dashboard/');
     }
