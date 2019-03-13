@@ -1,4 +1,5 @@
 const electron = require("electron");
+const crypto = require("crypto");
 const { promisify } = require("util");
 const { mkdir, readFile, stat, writeFile } = require("fs");
 const { join } = require("path");
@@ -7,6 +8,12 @@ const readFileAsync = promisify(readFile);
 const writeFileAsync = promisify(writeFile);
 const statAsync = promisify(stat);
 const mkdirAsync = promisify(mkdir);
+
+const ENCRYPTION_ALGORITHM = "aes-256-cbc";
+const ENCRYPTION_DEFAULT_PASSWORD = "0000000000000000";
+const ENCRYPTION_IV_LENGTH = 16;
+const ENCRYPTION_KEY_LENGTH = 32;
+const ENCRYPTION_SALT = "Amoveo Wallet";
 
 const CURRENT_CONFIG_VERSION = 1;
 const CURRENT_WALLET_VERSION = 1;
@@ -18,10 +25,11 @@ const defaultConfig = {
 };
 
 const defaultWallet = {
-  publicKey: "",
+  hasPassword: false,
+  ivHex: "",
   mnemonicEncrypted: "",
   privateKeyEncrypted: "",
-  hasPassword: false,
+  publicKey: "",
   version: CURRENT_WALLET_VERSION
 };
 
@@ -29,6 +37,38 @@ const BASE_PATH = (electron.app || electron.remote.app).getPath("userData");
 
 const CONFIG_FILE_NAME = "wallets.json";
 const CONFIG_FILE = join(BASE_PATH, CONFIG_FILE_NAME);
+
+function encryptText(text, password, ivHex) {
+  const key = crypto.scryptSync(
+    password,
+    ENCRYPTION_SALT,
+    ENCRYPTION_KEY_LENGTH
+  );
+
+  const iv = Buffer.from(ivHex, "hex");
+
+  const cipher = crypto.createCipheriv(ENCRYPTION_ALGORITHM, key, iv);
+  let encrypted = cipher.update(text, "utf8", "hex");
+  encrypted += cipher.final("hex");
+
+  return encrypted.toString("hex");
+}
+
+function decryptText(text, password, ivHex) {
+  const key = crypto.scryptSync(
+    password,
+    ENCRYPTION_SALT,
+    ENCRYPTION_KEY_LENGTH
+  );
+
+  const iv = Buffer.from(ivHex, "hex");
+
+  const decipher = crypto.createDecipheriv(ENCRYPTION_ALGORITHM, key, iv);
+  let decrypted = decipher.update(text, "hex", "utf8");
+  decrypted += decipher.final("utf8");
+
+  return decrypted.toString("hex");
+}
 
 function tryParseConfigJson(stringJson) {
   let object;
@@ -78,13 +118,18 @@ function openConfig() {
 
 function addWallet({ mnemonic, password, privateKey, publicKey }) {
   const hasPassword = Boolean(password);
+  password = hasPassword ? password : ENCRYPTION_DEFAULT_PASSWORD;
 
-  const mnemonicEncrypted = mnemonic;
-  const privateKeyEncrypted = privateKey;
+  const iv = crypto.randomBytes(ENCRYPTION_IV_LENGTH);
+  const ivHex = iv.toString("hex");
+
+  const mnemonicEncrypted = encryptText(mnemonic, password, ivHex);
+  const privateKeyEncrypted = encryptText(privateKey, password, ivHex);
 
   const wallet = {
     ...defaultWallet,
     hasPassword,
+    ivHex,
     mnemonicEncrypted,
     privateKeyEncrypted,
     publicKey
@@ -110,12 +155,25 @@ function setLastId(walletId) {
   });
 }
 
-function openWallet(walletId) {
+function openWallet(walletId, password) {
   return openConfig().then(configObj => {
     const wallet = configObj.wallets.find(item => item.publicKey === walletId);
 
     if (wallet) {
-      return wallet;
+      const {
+        ivHex,
+        hasPassword,
+        mnemonicEncrypted,
+        privateKeyEncrypted
+      } = wallet;
+
+      password = hasPassword ? password : ENCRYPTION_DEFAULT_PASSWORD;
+
+      return {
+        ...wallet,
+        mnemonic: decryptText(mnemonicEncrypted, password, ivHex),
+        privateKey: decryptText(privateKeyEncrypted, password, ivHex)
+      };
     } else {
       throw new Error("Wallet not found");
     }
