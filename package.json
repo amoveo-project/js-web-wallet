@@ -12,7 +12,6 @@
     "date-fns": "2.0.0-alpha.25",
     "decimal.js-light": "^2.5.0",
     "electron-is-dev": "1.0.1",
-    "electron-store": "2.0.0",
     "ethers": "^4.0.26",
     "hw-app-veo": "0.3.2",
     "lodash": "4.17.11",
