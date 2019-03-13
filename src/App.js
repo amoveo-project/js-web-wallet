@@ -122,17 +122,6 @@ const App = () => {
       window.addEventListener('beforeunload', beforeunloadListener);
     }
 
-    /* if (window._isElectron) {
-      const privateKey = window._amoveoWallet.getConfigPrivateKey();
-      const mnemonic = window._amoveoWallet.getConfigPassphrase();
-
-      if (privateKey) {
-        createWallet({ privateKey, mnemonic });
-
-        routerHistory.navigate('/dashboard/');
-      }
-    } */
-
     if (!window._isElectron && process.env.REACT_APP_DEBUG_PRIVATE_KEY) {
       createWallet({ privateKey: process.env.REACT_APP_DEBUG_PRIVATE_KEY });
 
@@ -216,9 +205,6 @@ const App = () => {
         mnemonic,
       });
       await window._amoveoWallet.setLastId(keyPair.public);
-
-      window._amoveoWallet.setConfigPrivateKey(keyPair.private);
-      window._amoveoWallet.setConfigPassphrase(mnemonic);
     }
 
     if (!mnemonic) {
@@ -243,11 +229,6 @@ const App = () => {
     setPassphrase('');
     setBalance(0);
     setUnusedActions([DOWNLOAD_PASSPHRASE, DOWNLOAD_PRIVATE_KEY]);
-
-    if (window._isElectron) {
-      window._amoveoWallet.setConfigPrivateKey('');
-      window._amoveoWallet.setConfigPassphrase('');
-    }
   };
 
   const enterLedger = async () => {
@@ -276,11 +257,6 @@ const App = () => {
       setPassphrase('');
       setBalance(0);
       setUnusedActions([DOWNLOAD_PASSPHRASE, DOWNLOAD_PRIVATE_KEY]);
-
-      if (window._isElectron) {
-        window._amoveoWallet.setConfigPrivateKey('');
-        window._amoveoWallet.setConfigPassphrase('');
-      }
 
       setModal(null);
       routerHistory.navigate('/dashboard/');
