@@ -98,27 +98,49 @@ const Home = () => {
         anywhere and any time.
       </Subtitle>
 
-      <Buttons>
-        {window._isElectron && isLastWallet && (
-          <MainButton onClick={openLastWallet} as="div">
+      {!window._isElectron ? (
+        <Buttons>
+          <MainButton to="/create/" as={Link}>
             <IconWallet />
-            <span>Last</span> wallet
+            <span>Create</span> wallet
           </MainButton>
-        )}
-        <MainButton to="/create/" as={Link}>
-          <SvgRestore2 />
-          <span>Create</span> wallet
-        </MainButton>
-      </Buttons>
-      <WalletsLinks>
-        {window._isElectron && (
-          <WalletsLink to="/recent/">Recent wallets</WalletsLink>
-        )}
-        <WalletsLink to="/restore/">Restore wallet</WalletsLink>
-        {u2fSupport ? (
-          <HardwareLink onClick={enterLedger}>Use hardware wallet</HardwareLink>
-        ) : null}
-      </WalletsLinks>
+          <MainButton to="/restore/" as={Link}>
+            <SvgRestore2 />
+            <span>Restore</span> wallet
+          </MainButton>
+        </Buttons>
+      ) : null}
+
+      {window._isElectron ? (
+        <Buttons>
+          {isLastWallet ? (
+            <MainButton onClick={openLastWallet} as="div">
+              <IconWallet />
+              <span>Last</span> wallet
+            </MainButton>
+          ) : null}
+          <MainButton to="/create/" as={Link}>
+            <SvgRestore2 />
+            <span>Create</span> wallet
+          </MainButton>
+        </Buttons>
+      ) : null}
+
+      {window._isElectron || u2fSupport ? (
+        <WalletsLinks>
+          {window._isElectron ? (
+            <Fragment>
+              <WalletsLink to="/recent/">Recent wallets</WalletsLink>
+              <WalletsLink to="/restore/">Restore wallet</WalletsLink>
+            </Fragment>
+          ) : null}
+          {u2fSupport ? (
+            <HardwareLink onClick={enterLedger}>
+              Use hardware wallet
+            </HardwareLink>
+          ) : null}
+        </WalletsLinks>
+      ) : null}
     </Fragment>
   );
 };
