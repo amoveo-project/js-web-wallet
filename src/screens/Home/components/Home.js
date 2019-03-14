@@ -46,15 +46,12 @@ const MainButton = styled(Button)`
   cursor: pointer;
 
   &:first-child {
+    margin-right: 30px;
     background: ${props => props.theme.color.yellow};
 
     svg {
       fill: ${props => props.theme.color.yellow};
     }
-  }
-
-  &:not(:first-child) {
-    margin-left: 30px;
   }
 `;
 const WalletsLinks = styled.div`
