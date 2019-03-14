@@ -101,7 +101,10 @@ const ToplineBalance = () => {
         ) : null}
         <Balance>
           {new Decimal(balance).mul(1e-8).val() | 0}
-          <span>.{balance % 10 ** 8}</span> VEO
+          <span>
+            .{balance === 0 ? '00' : String(balance % 10 ** 8).padStart(8, '0')}
+          </span>{' '}
+          VEO
         </Balance>
       </BalanceRow>
       {pendingTransactions.length > 0 && (
