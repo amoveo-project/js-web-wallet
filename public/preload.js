@@ -2,6 +2,7 @@ const {
   addWallet,
   decryptWallet,
   getLastId,
+  getRecentWallets,
   getWallets,
   openWallet,
   setLastId
@@ -13,6 +14,7 @@ window._amoveoWallet = {
   addWallet,
   decryptWallet,
   getLastId,
+  getRecentWallets,
   getWallets,
   setLastId,
   openWallet

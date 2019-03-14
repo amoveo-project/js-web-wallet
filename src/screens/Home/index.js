@@ -11,6 +11,7 @@ const HomeContainer = ({ navigate, path }) => {
   const { recoverWallet, resetWallet, setModal } = useContext(AppContext);
 
   const [lastWalletId, setLastWalletId] = useState('');
+  const [recentWallets, setRecentWallets] = useState([]);
 
   useEffect(() => {
     const isLogout = path && path.startsWith('/logout');
@@ -21,12 +22,18 @@ const HomeContainer = ({ navigate, path }) => {
 
     if (window._isElectron) {
       getLastWalletId();
+      getRecentWallets();
     }
   }, []);
 
   async function getLastWalletId() {
-    const lastWalletId = await window._amoveoWallet.getLastId();
-    setLastWalletId(lastWalletId);
+    const walletId = await window._amoveoWallet.getLastId();
+    setLastWalletId(walletId);
+  }
+
+  async function getRecentWallets() {
+    const wallets = await window._amoveoWallet.getRecentWallets();
+    setRecentWallets(wallets);
   }
 
   async function openLastWallet() {
@@ -48,6 +55,7 @@ const HomeContainer = ({ navigate, path }) => {
   const homeState = {
     lastWalletId,
     openLastWallet,
+    recentWallets,
   };
 
   return (
