@@ -118,7 +118,7 @@ const HomeTemplate = ({ children }) => {
         <Footer>
           <Container>
             <SupportLink
-              href="https://t.me/amoveo"
+              href="tg://resolve?domain=amoveo"
               target="_blank"
               rel="noopener noreferrer"
             >
