@@ -8,7 +8,9 @@ import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
 import { ReactComponent as SvgPrev } from 'shared/assets/icon-prev.svg';
 
 import GoBack from 'shared/components/GoBack.js';
+import ConfirmationModal from 'shared/components/ConfirmationModal';
 
+import AppContext from 'shared/contexts/AppContext';
 import RecentContext from 'shared/contexts/RecentContext';
 
 const Main = styled.div`
@@ -130,6 +132,8 @@ const Name = styled.p`
   }
 `;
 const Delete = styled.button`
+  opacity: 0;
+  pointer-events: none;
   font-size: 18px;
   color: ${props => props.theme.color.yellow};
   text-transform: uppercase;
@@ -137,10 +141,17 @@ const Delete = styled.button`
   background: 0;
   border: 0;
   padding: 0;
+
+  ${Wallet}:hover & {
+    opacity: 1;
+    pointer-events: auto;
+    cursor: pointer;
+  }
 `;
 
 const Restore = () => {
-  const { openWallet, wallets } = useContext(RecentContext);
+  const { setModal } = useContext(AppContext);
+  const { openWallet, removeWallet, wallets } = useContext(RecentContext);
 
   return (
     <Fragment>
@@ -159,19 +170,31 @@ const Restore = () => {
               <Wallets>
                 {wallets
                   .map(wallet => (
-                    <Wallet
-                      key={wallet.publicKey}
-                      onClick={() => {
-                        openWallet(wallet.publicKey);
-                      }}
-                    >
+                    <Wallet key={wallet.publicKey}>
                       {/* <Used>Used 10.02.2019</Used> */}
-                      <Name>
+                      <Name
+                        onClick={() => {
+                          openWallet(wallet.publicKey);
+                        }}
+                      >
                         {Buffer.from(wallet.publicKey, 'hex').toString(
                           'base64',
                         )}
                       </Name>
-                      {/* <Delete>Delete wallet</Delete> */}
+                      <Delete
+                        onClick={() => {
+                          setModal(
+                            <ConfirmationModal
+                              title="Are you sure?"
+                              text="You will delete this wallet from a recent list"
+                              onCancel={() => setModal(null)}
+                              onSubmit={() => removeWallet(wallet.publicKey)}
+                            />,
+                          );
+                        }}
+                      >
+                        Delete wallet
+                      </Delete>
                     </Wallet>
                   ))
                   .reverse()}
