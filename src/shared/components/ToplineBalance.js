@@ -102,7 +102,12 @@ const ToplineBalance = () => {
         <Balance>
           {new Decimal(balance).mul(1e-8).val() | 0}
           <span>
-            .{balance === 0 ? '00' : String(balance % 10 ** 8).padStart(8, '0')}
+            .
+            {balance === 0
+              ? '00'
+              : String(balance % 10 ** 8)
+                  .padStart(8, '0')
+                  .replace(/0+$/, '')}
           </span>{' '}
           VEO
         </Balance>
