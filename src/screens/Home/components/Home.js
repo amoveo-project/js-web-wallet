@@ -83,9 +83,12 @@ const SvgRestore2 = styled(SvgRestore)`
 
 const Home = () => {
   const { enterLedger, u2fSupport } = useContext(AppContext);
-  const { lastWalletId, openLastWallet } = useContext(HomeContext);
+  const { lastWalletId, openLastWallet, recentWallets } = useContext(
+    HomeContext,
+  );
 
   const isLastWallet = Boolean(lastWalletId);
+  const isRecentWallets = recentWallets.length > 0;
 
   return (
     <Fragment>
@@ -130,7 +133,9 @@ const Home = () => {
         <WalletsLinks>
           {window._isElectron ? (
             <Fragment>
-              <WalletsLink to="/recent/">Recent wallets</WalletsLink>
+              {isRecentWallets ? (
+                <WalletsLink to="/recent/">Recent wallets</WalletsLink>
+              ) : null}
               <WalletsLink to="/restore/">Restore wallet</WalletsLink>
             </Fragment>
           ) : null}

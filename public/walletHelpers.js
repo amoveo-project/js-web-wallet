@@ -138,6 +138,12 @@ function addWallet({ mnemonic, password, privateKey, publicKey }) {
   return addWalletToConfig(wallet).then(() => wallet);
 }
 
+function getRecentWallets() {
+  return openConfig().then(configObj => {
+    return Array.isArray(configObj.wallets) ? configObj.wallets : [];
+  });
+}
+
 function getLastId() {
   return openConfig().then(configObj => {
     const isCorrectId = configObj.wallets.find(
@@ -207,6 +213,7 @@ module.exports = {
   addWallet,
   decryptWallet,
   getLastId,
+  getRecentWallets,
   getWallets,
   openConfig,
   openWallet,
