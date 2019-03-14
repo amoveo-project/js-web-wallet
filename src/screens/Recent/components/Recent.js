@@ -165,7 +165,9 @@ const Restore = () => {
                     }}
                   >
                     {/* <Used>Used 10.02.2019</Used> */}
-                    <Name>{wallet.publicKey}</Name>
+                    <Name>
+                      {Buffer.from(wallet.publicKey, 'hex').toString('base64')}
+                    </Name>
                     {/* <Delete>Delete wallet</Delete> */}
                   </Wallet>
                 ))}
