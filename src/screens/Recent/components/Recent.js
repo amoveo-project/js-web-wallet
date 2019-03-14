@@ -157,20 +157,24 @@ const Restore = () => {
             <Container>
               <Title>Recent wallets</Title>
               <Wallets>
-                {wallets.map(wallet => (
-                  <Wallet
-                    key={wallet.publicKey}
-                    onClick={() => {
-                      openWallet(wallet.publicKey);
-                    }}
-                  >
-                    {/* <Used>Used 10.02.2019</Used> */}
-                    <Name>
-                      {Buffer.from(wallet.publicKey, 'hex').toString('base64')}
-                    </Name>
-                    {/* <Delete>Delete wallet</Delete> */}
-                  </Wallet>
-                ))}
+                {wallets
+                  .map(wallet => (
+                    <Wallet
+                      key={wallet.publicKey}
+                      onClick={() => {
+                        openWallet(wallet.publicKey);
+                      }}
+                    >
+                      {/* <Used>Used 10.02.2019</Used> */}
+                      <Name>
+                        {Buffer.from(wallet.publicKey, 'hex').toString(
+                          'base64',
+                        )}
+                      </Name>
+                      {/* <Delete>Delete wallet</Delete> */}
+                    </Wallet>
+                  ))
+                  .reverse()}
               </Wallets>
             </Container>
           </Body>
