@@ -123,6 +123,11 @@ const Name = styled.p`
   font-family: 'OCRAExtended';
   margin: 0;
   word-break: break-all;
+
+  ${Wallet}:hover & {
+    color: ${props => props.theme.color.yellow};
+    cursor: pointer;
+  }
 `;
 const Delete = styled.button`
   font-size: 18px;
