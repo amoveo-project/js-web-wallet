@@ -5,6 +5,7 @@ const {
   getRecentWallets,
   getWallets,
   openWallet,
+  removeWallet,
   setLastId
 } = require("./walletHelpers");
 
@@ -16,6 +17,7 @@ window._amoveoWallet = {
   getLastId,
   getRecentWallets,
   getWallets,
-  setLastId,
-  openWallet
+  openWallet,
+  removeWallet,
+  setLastId
 };

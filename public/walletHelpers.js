@@ -161,6 +161,25 @@ function setLastId(walletId) {
   });
 }
 
+function removeWallet(walletId) {
+  return openConfig().then(configObj => {
+    const walletIndex = configObj.wallets.findIndex(
+      item => item.publicKey === walletId
+    );
+
+    const isFound = walletIndex > -1;
+
+    if (isFound) {
+      configObj.wallets = configObj.wallets.filter(
+        item => item.publicKey !== walletId
+      );
+      return createConfigFile(configObj);
+    } else {
+      throw new Error("Wallet not found");
+    }
+  });
+}
+
 function openWallet(walletId) {
   return openConfig().then(configObj => {
     const wallet = configObj.wallets.find(item => item.publicKey === walletId);
@@ -217,38 +236,6 @@ module.exports = {
   getWallets,
   openConfig,
   openWallet,
+  removeWallet,
   setLastId
 };
-
-/*
-
-function recoveryWallet({ name, type = 0, color = 0, mnemonic }) {
-  return createDirIfNotExist(WALLETS_PATH)
-    .then(() => {
-      return recoveryWalletFs({
-        mnemonic,
-        path: join(WALLETS_PATH, name),
-        password: PASSWORD,
-        daemonAddress: DAEMON_ADDRESS,
-        restoreHeight: 1608000
-      });
-    })
-    .then(wallet => {
-      return addWalletToConfig({ name, type, color, uuid: name }).then(
-        () => wallet
-      );
-    });
-}
-
-function openWallet({ uuid, password }) {
-  return openWalletFs({
-    password,
-    path: join(WALLETS_PATH, uuid),
-    daemonAddress: DAEMON_ADDRESS
-  });
-}
-
-module.exports = {
-  openWallet
-};
-*/

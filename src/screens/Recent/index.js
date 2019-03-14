@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import Recent from './components/Recent';
 
+import ErrorModal from 'shared/components/ErrorModal';
 import RecoverPasswordModal from 'shared/components/RecoverPasswordModal';
 
 import AppContext from 'shared/contexts/AppContext';
@@ -37,8 +38,36 @@ const RecentContainer = ({ navigate }) => {
     }
   }
 
+  async function removeWallet(walletId) {
+    try {
+      await window._amoveoWallet.removeWallet(walletId);
+
+      setWallets(wallets => {
+        const filteredWallets = wallets.filter(
+          item => item.publicKey !== walletId,
+        );
+
+        if (filteredWallets.length === 0) {
+          navigate('/dashboard/');
+        }
+
+        setModal(null);
+
+        return filteredWallets;
+      });
+    } catch (e) {
+      setModal(
+        <ErrorModal
+          text="Can't remove this wallet"
+          onClick={() => setModal(null)}
+        />,
+      );
+    }
+  }
+
   const recentState = {
     openWallet,
+    removeWallet,
     wallets,
   };
 
