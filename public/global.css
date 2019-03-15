@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'OCRAExtended';
+  src:  url('assets/fonts/OCRAExtended/OCRAExtended.eot?#iefix') format('embedded-opentype'),
+        url('assets/fonts/OCRAExtended/OCRAExtended.woff') format('woff'),
+        url('assets/fonts/OCRAExtended/OCRAExtended.woff2') format('woff2');
+}
