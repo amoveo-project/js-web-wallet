@@ -90,7 +90,9 @@ const RecoverPasswordModal = ({ navigate, walletId }) => {
           autoFocus
         />
         <Buttons>
-          <Button onClick={handleCancel}>Cancel</Button>
+          <Button type="button" onClick={handleCancel}>
+            Cancel
+          </Button>
           <PrimaryButton>Submit</PrimaryButton>
         </Buttons>
         <ErrorText>{error}</ErrorText>

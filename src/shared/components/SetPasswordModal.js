@@ -85,7 +85,9 @@ const SetPasswordModal = () => {
           autoFocus
         />
         <Buttons>
-          <Button onClick={handleCancel}>Cancel (insecure!)</Button>
+          <Button type="button" onClick={handleCancel}>
+            Cancel (insecure!)
+          </Button>
           <PrimaryButton disabled={password.length < 4}>
             Set password
           </PrimaryButton>
