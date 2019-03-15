@@ -127,7 +127,6 @@ const Name = styled.p`
   word-break: break-all;
 
   ${Wallet}:hover & {
-    color: ${props => props.theme.color.yellow};
     cursor: pointer;
   }
 `;
