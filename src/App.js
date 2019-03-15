@@ -186,18 +186,26 @@ const App = () => {
   }, [headerId, isWalletCreated]);
 
   const storeWallet = async ({ password }) => {
+    if (!window._isElectron) {
+      return;
+    }
+
     const keyPair = veo.keys.getKeyPair();
     const mnemonic = passphrase;
 
-    if (window._isElectron) {
-      await window._amoveoWallet.addWallet({
-        publicKey: keyPair.public,
-        privateKey: keyPair.private,
-        password,
-        mnemonic,
-      });
-      await window._amoveoWallet.setLastId(keyPair.public);
+    try {
+      await window._amoveoWallet.removeWallet(keyPair.public);
+    } catch (e) {
+      // no actions
     }
+
+    await window._amoveoWallet.addWallet({
+      publicKey: keyPair.public,
+      privateKey: keyPair.private,
+      password,
+      mnemonic,
+    });
+    await window._amoveoWallet.setLastId(keyPair.public);
   };
 
   const recoverWallet = async ({ walletId, password }) => {
