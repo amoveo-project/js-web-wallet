@@ -47,7 +47,9 @@ const RecoverPasswordModal = ({ onCancel, onSubmit, text, title }) => {
         }}
       >
         <Buttons textAlign="center">
-          <Button onClick={onCancel}>Cancel</Button>
+          <Button type="button" onClick={onCancel}>
+            Cancel
+          </Button>
           <PrimaryButton>Ok</PrimaryButton>
         </Buttons>
       </ModalForm>
