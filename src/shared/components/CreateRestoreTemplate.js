@@ -124,9 +124,7 @@ const SupportLink = styled(FooterExternalLink)`
 const GithubLink = styled(FooterExternalLink)``;
 
 const App = ({ children, path }) => {
-  const { isWalletCreated, password, setModal, storeWallet } = useContext(
-    AppContext,
-  );
+  const { isWalletCreated, setModal } = useContext(AppContext);
 
   const isRestore = path && path.startsWith('/restore');
 
