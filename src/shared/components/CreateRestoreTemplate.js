@@ -160,7 +160,7 @@ const App = ({ children, path }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Download
+                    Github
                   </GithubLink>
                 ) : null}
               </FooterExternalLinks>
