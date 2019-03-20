@@ -118,7 +118,7 @@ const HomeTemplate = ({ children }) => {
         <Footer>
           <Container>
             <SupportLink
-              href="https://t.me/amoveo_wallet"
+              href="https://tlg.name/amoveo_wallet"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -130,7 +130,7 @@ const HomeTemplate = ({ children }) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Github
+                GitHub
               </GithubLink>
             ) : null}
           </Container>

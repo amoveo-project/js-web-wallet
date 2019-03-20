@@ -148,7 +148,7 @@ const App = ({ children, path }) => {
             <FooterWrap>
               <FooterExternalLinks>
                 <SupportLink
-                  href="https://t.me/amoveo_wallet"
+                  href="https://tlg.name/amoveo_wallet"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -160,7 +160,7 @@ const App = ({ children, path }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Github
+                    GitHub
                   </GithubLink>
                 ) : null}
               </FooterExternalLinks>
