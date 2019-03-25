@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 import Device from 'device';
@@ -61,6 +61,7 @@ const Close = styled(SvgClose)`
   z-index: 4;
   transform: scale(1);
   transition: all 0.4s;
+  cursor: pointer;
 
   &:active {
     transform: scale(0.5);
@@ -110,6 +111,7 @@ const MenuHamburger = styled.div`
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
 
   @media ${Device.laptop} {
     display: none;
@@ -403,6 +405,12 @@ const Header = () => {
     veo,
   } = useContext(AppContext);
 
+  const [isOpened, setIsOpened] = useState(false);
+
+  const handleToggleMenu = () => {
+    setIsOpened(isOpened === false ? true : false);
+  };
+
   const downloadPassphrase = () => {
     downloadFile(passphrase, 'passphrase', 'text/plain');
 
@@ -428,7 +436,7 @@ const Header = () => {
           <LogoLink to={isWalletCreated ? '/dashboard/' : '/'}>
             <Logo />
           </LogoLink>
-          <Menu className="active">
+          <Menu className={isOpened ? 'active' : ''}>
             <MainNav>
               <MenuItem to="/dashboard/">Dashboard</MenuItem>
               <MenuItem to="/send/">Send</MenuItem>
@@ -486,9 +494,9 @@ const Header = () => {
               </Settings>
               <LogOut to="/logout">Log out</LogOut>
             </UserMenu>
-            <Close />
+            <Close onClick={handleToggleMenu} />
           </Menu>
-          <MenuHamburger>
+          <MenuHamburger onClick={handleToggleMenu}>
             <span />
             <span />
             <span />
