@@ -13,8 +13,8 @@ import HomeContext from 'shared/contexts/HomeContext';
 
 const Title = styled.h1`
   font-weight: 500;
-  font-size: 40px;
-  margin: 0 0 30px 0;
+  font-size: 30px;
+  margin: 0 0 20px 0;
   max-width: 500px;
 
   @media ${Device.laptopM} {
@@ -37,21 +37,31 @@ const Buttons = styled.div`
   margin: 40px 0 0 0;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   @media ${Device.laptop} {
     justify-content: flex-start;
+    flex-wrap: nowrap;
   }
 `;
 const MainButton = styled(Button)`
   cursor: pointer;
+  width: 100%;
 
   &:first-child {
-    margin-right: 30px;
     background: ${props => props.theme.color.yellow};
+
+    @media ${Device.laptop} {
+      margin-right: 30px;
+    }
 
     svg {
       fill: ${props => props.theme.color.yellow};
     }
+  }
+
+  @media ${Device.laptop} {
+    width: auto;
   }
 `;
 const WalletsLinks = styled.div`

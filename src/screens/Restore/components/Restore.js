@@ -18,19 +18,27 @@ const Title = styled.h1`
   span {
     color: ${props => props.theme.color.yellow};
     cursor: pointer;
-  }
-  .active {
-    position: relative;
-    cursor: default;
 
-    &:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -8px;
-      height: 4px;
-      background: ${props => props.theme.color.yellow};
+    &.active {
+      position: relative;
+      cursor: default;
+      text-decoration: underline;
+
+      @media ${Device.laptop} {
+        text-decoration: none;
+      }
+
+      &:after {
+        @media ${Device.laptop} {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -8px;
+          height: 4px;
+          background: ${props => props.theme.color.yellow};
+        }
+      }
     }
   }
 `;

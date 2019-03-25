@@ -4,10 +4,10 @@ import Device from 'device';
 
 const Button = styled(Link)`
   display: inline-block;
-  margin: 0 20px 0 0;
-  padding: 20px;
+  margin: 0 0 20px 0;
+  padding: 10px;
   line-height: 40px;
-  border-radius: 10px;
+  border-radius: 5px;
   text-decoration: none;
   font-size: 18px;
   color: ${props => props.theme.color.blue};
@@ -26,6 +26,7 @@ const Button = styled(Link)`
     line-height: 50px;
     padding: 20px;
     margin: 0 20px 0 0;
+    border-radius: 10px;
   }
   @media ${Device.laptopM} {
     min-width: 290px;

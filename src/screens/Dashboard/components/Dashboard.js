@@ -39,18 +39,18 @@ const Container = styled.div`
   width: 100%;
   max-width: 1230px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 20px;
 
   @media ${Device.laptopM} {
     padding: 0 50px;
   }
   @media ${Device.laptopL} {
-    padding: 0 15px;
+    padding: 0 20px;
   }
 `;
 const FlexContainer = styled(Container)`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
 
@@ -103,12 +103,72 @@ const TransactionsLabel = styled.h3`
   font-weight: 300;
   opacity: 0.5;
 `;
-const SendButton = styled(Button)`
+const Label = styled.div`
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 5px 0;
+
+  @media ${Device.laptop} {
+    display: none;
+  }
+`;
+const MainButton = styled(Button)`
+  padding: 0;
+  margin: 0 20px 0 0;
+  float: left;
+  text-align: left;
+  width: auto;
+  min-width: auto !important;
+  height: auto;
+  line-height: normal;
+
+  @media ${Device.laptop} {
+    padding: 30px;
+    text-align: center;
+    width: 100%;
+    max-width: 270px;
+  }
+
+  svg {
+    position: static;
+    width: 60px;
+    height: 60px;
+    padding: 20px;
+    margin: 0;
+    top: auto;
+    fill: ${props => props.theme.color.blue};
+
+    @media ${Device.laptop} {
+      fill: #fff;
+      padding: 0;
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      left: 15px;
+      margin-top: -10px;
+    }
+  }
+  &:after {
+    display: none;
+    @media ${Device.laptop} {
+      display: inline-block;
+    }
+  }
+  span {
+    display: none;
+    @media ${Device.laptop} {
+      display: inline-block;
+    }
+  }
+`;
+const SendButton = styled(MainButton)`
   background: #fff;
   min-width: 270px;
   font-weight: 500;
 `;
-const ReceiveButton = styled(Button)`
+const ReceiveButton = styled(MainButton)`
   background: ${props => props.theme.color.yellow};
   min-width: 270px;
   font-weight: 500;
@@ -146,17 +206,32 @@ const TransactionsPlaceholder = styled.p`
 `;
 const Transaction = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: stretch;
   width: 100%;
-  padding: 10px;
+  padding: 20px 10px;
   position: relative;
+
+  @media ${Device.laptop} {
+    flex-wrap: nowrap;
+    padding: 10px;
+  }
 
   &:nth-child(2n) {
     background: rgba(0, 0, 0, 0.15);
   }
   &:first-child {
-    font-weight: 500;
+    display: none;
+
+    div {
+      padding-left: 0;
+    }
+
+    @media ${Device.laptop} {
+      display: flex;
+      font-weight: 500;
+    }
   }
 `;
 const TransactionNav = styled(Transaction)`
@@ -168,10 +243,14 @@ const TransactionsCol = styled.div`
   width: 100%;
   line-height: 18px;
   font-size: 14px;
+  padding: 10px 0;
+  margin: 0 0 10px 0;
 
   @media ${Device.laptopM} {
     font-size: 16px;
     line-height: 20px;
+    padding: 0;
+    margin: 0;
   }
 
   svg {
@@ -188,9 +267,7 @@ const TransactionsCol = styled.div`
   }
 `;
 const Value = styled(TransactionsCol)`
-  max-width: 15%;
-
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     max-width: 160px;
   }
 
@@ -199,32 +276,43 @@ const Value = styled(TransactionsCol)`
   }
 `;
 const Date = styled(TransactionsCol)`
-  max-width: 15%;
-
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     max-width: 150px;
   }
 `;
 const Fee = styled(TransactionsCol)`
-  max-width: 15%;
-
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     max-width: 150px;
   }
 `;
 const Type = styled(TransactionsCol)`
-  max-width: 20px;
-  text-align: center;
+  position: absolute;
+  top: 22px;
+  left: 0;
+
+  @media ${Device.laptop} {
+    top: 0;
+    max-width: 20px;
+    text-align: center;
+  }
 `;
 const Address = styled.div`
   flex: 1;
   position: relative;
   word-break: break-all;
   font-size: 14px;
-  padding-left: 3px;
+  padding-left: 0;
 
   @media ${Device.laptopM} {
     font-size: 16px;
+    padding-left: 24px;
+  }
+`;
+const AddressID = styled.div`
+  padding: 0 0 0 30px;
+
+  @media ${Device.laptopM} {
+    padding: 0;
   }
 `;
 const TransactionLink = styled(Link)`
@@ -301,11 +389,11 @@ const Dashboard = ({ children }) => {
             <FlexContainer>
               <SendButton to="/send/">
                 <IconSend />
-                Send
+                <span>Send</span>
               </SendButton>
               <ReceiveButton to="/receive/">
                 <IconReceive />
-                Receive
+                <span>Receive</span>
               </ReceiveButton>
               <Wallet>
                 <YourWalletText>
@@ -324,7 +412,6 @@ const Dashboard = ({ children }) => {
                     <Value>Value</Value>
                     <Date>Date</Date>
                     <Fee>Fee</Fee>
-                    <Type />
                     <Address>Address</Address>
                   </Transaction>
                 ) : (
@@ -336,27 +423,36 @@ const Dashboard = ({ children }) => {
                 {visibleTransactions.map(transaction => (
                   <Transaction key={transaction.hash}>
                     <Value>
+                      <Label>Value</Label>
                       {transaction._isPending ? <IconPending /> : null}
                       {new Decimal(transaction.amount).mul(1e-8).val()}
                     </Value>
                     <Date>
+                      <Label>Date</Label>
                       {format(
                         fromUnixTime(transaction.timestamp),
                         'dd.MM.yyyy HH:mm',
                       )}
                     </Date>
-                    <Fee>{new Decimal(transaction.fee).mul(1e-8).val()}</Fee>
-                    <Type>
-                      {transaction.from === keys.public ? (
-                        <IconSend />
-                      ) : (
-                        <IconReceive />
-                      )}
-                    </Type>
+                    <Fee>
+                      <Label>Fee</Label>
+                      {new Decimal(transaction.fee).mul(1e-8).val()}
+                    </Fee>
+
                     <Address>
-                      {transaction.from === keys.public
-                        ? transaction.to
-                        : transaction.from}
+                      <Label>Transaction ID</Label>
+                      <Type>
+                        {transaction.from === keys.public ? (
+                          <IconSend />
+                        ) : (
+                          <IconReceive />
+                        )}
+                      </Type>
+                      <AddressID>
+                        {transaction.from === keys.public
+                          ? transaction.to
+                          : transaction.from}
+                      </AddressID>
                     </Address>
                     <TransactionLink
                       to={`/dashboard/${encodeURIComponent(transaction.hash)}`}

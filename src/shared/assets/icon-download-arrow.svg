@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="960" viewBox="0 0 960 960">
+  <defs>
+    <style>
+      .icon-download-arrow-1 {
+        fill: rgba(0,0,0,0.15);
+      }
+      .icon-download-arrow-2 {
+        opacity: 0.15;
+      }
+      .icon-download-arrow-3 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g transform="translate(-86.341 1406.915)">
+    <path class="icon-download-arrow-1" d="M566.341-1406.915c-265.095,0-480,214.9-480,480s214.905,480,480,480,480-214.9,480-480S831.438-1406.915,566.341-1406.915Zm0,880c-220.912,0-400-179.086-400-400s179.088-400,400-400,400,179.086,400,400S787.255-526.915,566.341-526.915Z" transform="translate(0 0)"/>
+    <g class="icon-download-arrow-2" transform="translate(343.485 -1200.955)">
+      <rect class="icon-download-arrow-3" width="445.714" height="80" transform="translate(0 422.366)"/>
+      <path class="icon-download-arrow-3" d="M439.2-1157.3v-159.509h-80V-1157.3H216.341L399.2-974.442,582.056-1157.3Z" transform="translate(-176.341 1316.807)"/>
+    </g>
+  </g>
+</svg>
