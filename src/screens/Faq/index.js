@@ -85,7 +85,6 @@ const FaqItem = styled.div`
   @media ${Device.laptop} {
     margin: 0 0 60px 0;
   }
-
   &.active {
     &:after {
       opacity: 1;

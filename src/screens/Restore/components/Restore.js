@@ -27,7 +27,6 @@ const Title = styled.h1`
       @media ${Device.laptop} {
         text-decoration: none;
       }
-
       &:after {
         @media ${Device.laptop} {
           content: '';

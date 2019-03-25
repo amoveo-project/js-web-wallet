@@ -60,7 +60,6 @@ const MainWrap = styled.div`
   @media ${Device.laptop} {
     flex-wrap: nowrap;
   }
-
   &:after {
     @media ${Device.laptop} {
       content: '';

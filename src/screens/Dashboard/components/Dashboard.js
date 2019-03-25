@@ -270,7 +270,6 @@ const Value = styled(TransactionsCol)`
   @media ${Device.laptop} {
     max-width: 160px;
   }
-
   svg {
     margin: 0 5px 0 0;
   }
@@ -289,7 +288,6 @@ const Type = styled(TransactionsCol)`
   position: absolute;
   top: 22px;
   left: 0;
-
   @media ${Device.laptop} {
     top: 0;
     max-width: 20px;
@@ -302,7 +300,6 @@ const Address = styled.div`
   word-break: break-all;
   font-size: 14px;
   padding-left: 0;
-
   @media ${Device.laptopM} {
     font-size: 16px;
     padding-left: 24px;

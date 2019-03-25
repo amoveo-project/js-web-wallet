@@ -264,7 +264,6 @@ const SettingsToggle = styled.div`
     height: 30px;
     padding: 5px;
   }
-
   &:hover {
     @media ${Device.laptop} {
       opacity: 1;
