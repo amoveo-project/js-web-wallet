@@ -406,7 +406,7 @@ const Header = () => {
           <LogoLink to={isWalletCreated ? '/dashboard/' : '/'}>
             <Logo />
           </LogoLink>
-          <Menu className="">
+          <Menu className="active">
             <MainNav>
               <MenuItem to="/dashboard/">Dashboard</MenuItem>
               <MenuItem to="/send/">Send</MenuItem>
