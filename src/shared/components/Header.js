@@ -212,6 +212,7 @@ const UserMenu = styled.div`
     width: auto;
     margin-top: 0;
     flex-direction: row;
+    justify-content: flex-end;
   }
 `;
 const Settings = styled.div`
