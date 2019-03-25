@@ -188,6 +188,27 @@ const MenuItem = styled(PartialNavLink)`
     pointer-events: none;
   }
 `;
+const SupportLink = styled.a`
+  font-size: 18px;
+  transition: all 0.4s;
+  font-weight: 500;
+  float: left;
+  margin: 0;
+  padding: 5px 0;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  line-height: 30px;
+  width: 100%;
+
+  @media ${Device.laptop} {
+    font-size: 16px;
+    width: auto;
+    opacity: 0.5;
+    padding: 0;
+    margin: 0 30px 0 0;
+  }
+`;
 const IconGear = styled(SvgGear)`
   width: 20px;
   height: 20px;
@@ -421,9 +442,14 @@ const Header = () => {
               <MenuItem to="/faq" className="mobileonly">
                 Faq
               </MenuItem>
-              <MenuItem to="/faq" className="mobileonly">
+              <SupportLink
+                href="https://tlg.name/amoveo_wallet"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mobileonly"
+              >
                 Support
-              </MenuItem>
+              </SupportLink>
             </MainNav>
             <UserMenu>
               <Settings className={unusedActions.length > 0 ? 'notice' : null}>
