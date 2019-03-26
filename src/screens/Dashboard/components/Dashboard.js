@@ -177,7 +177,8 @@ const IconSend = styled(SvgSend)`
   fill: #fff;
 `;
 const IconReceive = styled(SvgReceive)`
-  fill: ${props => props.theme.color.yellow} @media ${Device.laptop} {
+  fill: ${props => props.theme.color.yellow};
+  @media ${Device.laptop} {
     fill: ${props => props.theme.color.yellow} !important;
   }
 `;
