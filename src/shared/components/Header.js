@@ -67,7 +67,7 @@ const Close = styled(SvgClose)`
     transform: scale(0.5);
   }
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     display: none;
   }
 `;
@@ -96,12 +96,15 @@ const Menu = styled.div`
     visibility: visible;
   }
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     display: flex;
     flex-direction: row;
     position: static;
     background: none;
     padding: 0;
+    opacity: 1;
+    transform: translateX(0);
+    visibility: visible;
   }
 `;
 const MenuHamburger = styled.div`
@@ -113,7 +116,7 @@ const MenuHamburger = styled.div`
   justify-content: space-between;
   cursor: pointer;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     display: none;
   }
 
@@ -141,7 +144,7 @@ const MenuItem = styled(PartialNavLink)`
   line-height: 30px;
   width: 100%;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     font-size: 16px;
     width: auto;
     opacity: 0.5;
@@ -150,14 +153,14 @@ const MenuItem = styled(PartialNavLink)`
   }
 
   &.mobileonly {
-    @media ${Device.laptop} {
+    @media ${Device.tablet} {
       display: none;
     }
   }
   &.separate {
     margin-top: 40px;
 
-    @media ${Device.laptop} {
+    @media ${Device.tablet} {
       margin-top: 0;
     }
   }
@@ -166,12 +169,12 @@ const MenuItem = styled(PartialNavLink)`
     opacity: 1;
     color: ${props => props.theme.color.yellow};
 
-    @media ${Device.laptop} {
+    @media ${Device.tablet} {
       color: #fff;
     }
 
     &:after {
-      @media ${Device.laptop} {
+      @media ${Device.tablet} {
         content: '';
         position: absolute;
         left: 0;
@@ -203,7 +206,13 @@ const SupportLink = styled.a`
   line-height: 30px;
   width: 100%;
 
-  @media ${Device.laptop} {
+  &.mobileonly {
+    @media ${Device.tablet} {
+      display: none;
+    }
+  }
+
+  @media ${Device.tablet} {
     font-size: 16px;
     width: auto;
     opacity: 0.5;
@@ -219,7 +228,7 @@ const IconGear = styled(SvgGear)`
   fill: currentColor;
   display: none;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     display: inline-block;
   }
 `;
@@ -231,7 +240,7 @@ const UserMenu = styled.div`
   justify-content: space-between;
   margin-top: 40px;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     width: auto;
     margin-top: 0;
     flex-direction: row;
@@ -243,7 +252,7 @@ const Settings = styled.div`
   position: relative;
 
   &:after {
-    @media ${Device.laptop} {
+    @media ${Device.tablet} {
       content: '';
       position: absolute;
       top: 0;
@@ -282,14 +291,14 @@ const SettingsToggle = styled.div`
   transition: all 0.4s;
   opacity: 1;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     opacity: 0.5;
     width: 30px;
     height: 30px;
     padding: 5px;
   }
   &:hover {
-    @media ${Device.laptop} {
+    @media ${Device.tablet} {
       opacity: 1;
       transform: rotate(90deg);
     }
@@ -299,7 +308,7 @@ const SettingsToggle = styled.div`
     font-weight: 500;
     font-size: 18px;
 
-    @media ${Device.laptop} {
+    @media ${Device.tablet} {
       display: none;
     }
   }
@@ -314,7 +323,7 @@ const SettingsDropdownItem = styled.div`
   text-decoration: none;
   position: relative;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     font-size: 16px;
     font-weight: 300;
   }
@@ -354,7 +363,7 @@ const SettingsDropdown = styled.div`
   transform-origin: top center;
   transform: scaleY(0);
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     width: 240px;
     right: 5px;
     left: auto;
@@ -369,7 +378,7 @@ const SettingsDropdown = styled.div`
     width: 20px;
     background: ${props => props.theme.color.yellow};
 
-    @media ${Device.laptop} {
+    @media ${Device.tablet} {
       right: 0;
       left: auto;
     }
@@ -390,7 +399,7 @@ const LogOut = styled(Link)`
     opacity: 1;
   }
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     margin: 0 0 0 25px;
     font-size: 16px;
   }
