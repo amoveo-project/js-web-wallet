@@ -8,6 +8,5 @@
 /dist
 
 package-lock.json
-*.js.rej
 
 /package/*.deb
