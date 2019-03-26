@@ -72,7 +72,7 @@ const questionGroups = [
 ];
 
 const FaqContainer = () => {
-  const [openedQuestions, setOpenedQuestions] = useState([]);
+  const [openedQuestions, setOpenedQuestions] = useState([1]);
 
   function handleToggleQuestion(questionId) {
     const arr = openedQuestions.includes(questionId)
