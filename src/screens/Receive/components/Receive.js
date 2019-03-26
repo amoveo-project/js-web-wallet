@@ -221,8 +221,10 @@ const QrCodeWrap = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
 
-  @media ${Device.laptop} {
+  @media ${Device.mobileL} {
     display: inline-block;
+  }
+  @media ${Device.laptop} {
     max-width: 70%;
     padding: 0 20px 0 0;
     border-right: solid 2px rgba(22, 26, 46, 0.3);
@@ -238,13 +240,13 @@ const QrCode = styled.img`
   height: 120px;
   min-width: 120px;
   margin: 0 20px 0 0;
+  float: left;
 
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     width: 170px;
     height: 170px;
     min-width: 170px;
     margin: 0 30px 0 0;
-    float: left;
   }
 `;
 const QrCodeTitle = styled.h3`
@@ -253,7 +255,7 @@ const QrCodeTitle = styled.h3`
   margin: 0;
   flex: 1;
 
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     font-size: 20px;
   }
 `;
@@ -264,7 +266,7 @@ const QrCodeAddress = styled.p`
   margin: 20px 0;
   word-break: break-all;
 
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     font-size: 16px;
     line-height: 24px;
     margin: 30px 0 0 0;

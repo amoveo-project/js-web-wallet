@@ -39,7 +39,7 @@ const Buttons = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
 
-  @media ${Device.tablet} {
+  @media ${Device.mobileL} {
     justify-content: flex-start;
     flex-wrap: nowrap;
   }
@@ -47,12 +47,16 @@ const Buttons = styled.div`
 const MainButton = styled(Button)`
   cursor: pointer;
   width: 100%;
+  margin: 0 0 20px 0;
 
   &:first-child {
     background: ${props => props.theme.color.yellow};
 
+    @media ${Device.mobileL} {
+      margin-right: 15px;
+    }
     @media ${Device.tablet} {
-      margin-right: 30px;
+      margin: 0 30px 0 0;
     }
 
     svg {

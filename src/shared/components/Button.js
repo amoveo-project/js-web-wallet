@@ -37,10 +37,6 @@ const Button = styled(Link)`
     margin: 0 30px 0 0;
   }
 
-  &:last-of-type {
-    margin: 0;
-  }
-
   &:after {
     content: '';
     position: absolute;

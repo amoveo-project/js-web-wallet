@@ -151,7 +151,9 @@ const App = ({ children, path }) => {
           <Container>
             <FooterWrap>
               <FooterExternalLinks>
-                <BottomLink to="/download">Download</BottomLink>
+                {!window._isElectron ? (
+                  <BottomLink to="/download">Download</BottomLink>
+                ) : null}
                 <BottomLink to="/faq">FAQ</BottomLink>
                 <SupportLink
                   href="https://tlg.name/amoveo_wallet"

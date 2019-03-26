@@ -453,12 +453,14 @@ const Header = () => {
               <MenuItem to="/exchange/" disabled>
                 Exchange
               </MenuItem>
-              <MenuItem to="/download" className="mobileonly separate">
-                Download
-              </MenuItem>
-              <MenuItem to="/faq" className="mobileonly">
+              <MenuItem to="/faq" className="mobileonly separate">
                 Faq
               </MenuItem>
+              {!window._isElectron ? (
+                <MenuItem to="/download" className="mobileonly">
+                  Download
+                </MenuItem>
+              ) : null}
               <SupportLink
                 href="https://tlg.name/amoveo_wallet"
                 target="_blank"
