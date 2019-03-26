@@ -21,7 +21,7 @@ const Main = styled.div`
   background: ${props => props.theme.color.blue};
   color: #fff;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     justify-content: center;
   }
 `;
@@ -110,7 +110,7 @@ const DeviceButtons = styled.div`
   display: flex;
   margin: 30px 0 0 0;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     margin: 42px 0 0 0;
   }
 `;
@@ -129,18 +129,18 @@ const DownloadApp = styled.a`
   font-weight: 500;
   font-size: 18px;
 
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     width: auto;
     min-width: 270px;
-    margin: 0 30px 0 0;
-    padding: 40px 20px;
+    margin: 0 30px 30px 0;
+    padding: 30px 10px;
     border-radius: 10px;
     justify-content: flex-start;
     font-size: 20px;
+  }
+  @media ${Device.laptopM} {
+    margin: 0 30px 0 0;
+    padding: 40px 20px;
   }
 
   svg {
@@ -154,7 +154,7 @@ const DownloadApp = styled.a`
     left: 20px;
     margin-top: -10px;
 
-    @media ${Device.laptop} {
+    @media ${Device.tablet} {
       position: static;
       height: 40px;
       margin-top: 0;
@@ -177,7 +177,7 @@ const DownloadDeviceApp = styled.a`
   align-items: center;
   text-decoration: none;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     font-size: 20px;
   }
 

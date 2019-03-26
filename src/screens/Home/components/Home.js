@@ -39,7 +39,7 @@ const Buttons = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     justify-content: flex-start;
     flex-wrap: nowrap;
   }
@@ -51,7 +51,7 @@ const MainButton = styled(Button)`
   &:first-child {
     background: ${props => props.theme.color.yellow};
 
-    @media ${Device.laptop} {
+    @media ${Device.tablet} {
       margin-right: 30px;
     }
 
@@ -60,7 +60,7 @@ const MainButton = styled(Button)`
     }
   }
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     width: auto;
   }
 `;

@@ -54,7 +54,7 @@ const FlexContainer = styled(Container)`
   align-items: center;
   flex-wrap: wrap;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     justify-content: flex-start;
   }
   @media ${Device.laptopM} {
@@ -69,7 +69,7 @@ const Wallet = styled.div`
   width: 100%;
   margin: 30px 0 0 0;
 
-  @media ${Device.laptop} {
+  @media ${Device.mobileM} {
     flex: 1;
     width: auto;
     margin: 0 0 0 30px;
@@ -108,7 +108,7 @@ const Label = styled.div`
   font-weight: 500;
   margin: 0 0 5px 0;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     display: none;
   }
 `;
@@ -177,7 +177,9 @@ const IconSend = styled(SvgSend)`
   fill: #fff;
 `;
 const IconReceive = styled(SvgReceive)`
-  fill: ${props => props.theme.color.yellow};
+  fill: ${props => props.theme.color.yellow} @media ${Device.laptop} {
+    fill: ${props => props.theme.color.yellow} !important;
+  }
 `;
 const IconPending = styled(SvgPending)`
   fill: #fff;
@@ -213,7 +215,7 @@ const Transaction = styled.div`
   padding: 20px 10px;
   position: relative;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     flex-wrap: nowrap;
     padding: 10px;
   }
@@ -228,7 +230,7 @@ const Transaction = styled.div`
       padding-left: 0;
     }
 
-    @media ${Device.laptop} {
+    @media ${Device.tablet} {
       display: flex;
       font-weight: 500;
     }
@@ -267,7 +269,7 @@ const TransactionsCol = styled.div`
   }
 `;
 const Value = styled(TransactionsCol)`
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     max-width: 160px;
   }
   svg {
@@ -275,12 +277,12 @@ const Value = styled(TransactionsCol)`
   }
 `;
 const Date = styled(TransactionsCol)`
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     max-width: 150px;
   }
 `;
 const Fee = styled(TransactionsCol)`
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     max-width: 150px;
   }
 `;
@@ -288,7 +290,7 @@ const Type = styled(TransactionsCol)`
   position: absolute;
   top: 22px;
   left: 0;
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     top: 0;
     max-width: 20px;
     text-align: center;

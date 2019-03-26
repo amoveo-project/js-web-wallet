@@ -19,7 +19,7 @@ const Button = styled(Link)`
   width: 46%;
   user-select: none;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     min-width: 270px;
     max-width: 270px;
     font-size: 18px;
