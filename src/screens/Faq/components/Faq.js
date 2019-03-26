@@ -1,10 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import styled from 'styled-components';
 import Device from 'device';
 
 import { ReactComponent as SvgPrev } from 'shared/assets/icon-prev.svg';
 
 import GoBack from 'shared/components/GoBack.js';
+
+import FaqContext from 'shared/contexts/FaqContext';
 
 const Main = styled.div`
   width: 100%;
@@ -80,7 +82,6 @@ const FaqItem = styled.div`
   padding: 0 0 0 20px;
   margin: 0 0 30px 0;
   position: relative;
-  cursor: pointer;
 
   @media ${Device.laptop} {
     margin: 0 0 60px 0;
@@ -115,6 +116,8 @@ const Question = styled.h3`
   margin: 0;
   font-size: 18px;
   line-height: 21px;
+  user-select: none;
+  cursor: pointer;
 
   @media ${Device.laptop} {
     font-size: 20px;
@@ -139,6 +142,8 @@ const Answer = styled.div`
 `;
 
 const Faq = ({ questionGroups }) => {
+  const { openedQuestions, handleToggleQuestion } = useContext(FaqContext);
+
   return (
     <Fragment>
       <Main>
@@ -154,10 +159,16 @@ const Faq = ({ questionGroups }) => {
                       <FaqItem
                         key={item.id}
                         className={
-                          groupIndex === 0 && index === 0 ? 'active' : ''
+                          openedQuestions.includes(item.id) ? 'active' : ''
                         }
                       >
-                        <Question>{item.question}</Question>
+                        <Question
+                          onClick={() => {
+                            handleToggleQuestion(item.id);
+                          }}
+                        >
+                          {item.question}
+                        </Question>
                         <Answer>{item.answer}</Answer>
                       </FaqItem>
                     ))}

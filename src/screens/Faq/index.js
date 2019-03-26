@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+
+import FaqContext from 'shared/contexts/FaqContext';
 
 import Faq from './components/Faq';
 
@@ -11,27 +13,27 @@ const questionGroups = [
         question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit?',
         answer:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        id: '1',
+        id: 1,
       },
       {
         question:
           'Ssed do eiusmod tempor incididunt ut labore et dolore magna aliqua?',
         answer:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        id: '2',
+        id: 2,
       },
       {
         question:
           'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat?',
         answer:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        id: '3',
+        id: 3,
       },
       {
         question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit?',
         answer:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        id: '4',
+        id: 4,
       },
     ],
   },
@@ -43,32 +45,53 @@ const questionGroups = [
         question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit?',
         answer:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        id: '1',
+        id: 5,
       },
       {
         question:
           'Ssed do eiusmod tempor incididunt ut labore et dolore magna aliqua?',
         answer:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        id: '2',
+        id: 6,
       },
       {
         question:
           'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat?',
         answer:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        id: '3',
+        id: 7,
       },
       {
         question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit?',
         answer:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        id: '4',
+        id: 8,
       },
     ],
   },
 ];
 
-const FaqContainer = () => <Faq questionGroups={questionGroups} />;
+const FaqContainer = () => {
+  const [openedQuestions, setOpenedQuestions] = useState([]);
+
+  function handleToggleQuestion(questionId) {
+    const arr = openedQuestions.includes(questionId)
+      ? openedQuestions.filter(id => id !== questionId)
+      : [...openedQuestions, questionId];
+
+    setOpenedQuestions(arr);
+  }
+
+  const faqState = {
+    handleToggleQuestion,
+    openedQuestions,
+  };
+
+  return (
+    <FaqContext.Provider value={faqState}>
+      <Faq questionGroups={questionGroups} />
+    </FaqContext.Provider>
+  );
+};
 
 export default FaqContainer;
