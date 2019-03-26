@@ -72,10 +72,14 @@ const questionGroups = [
 ];
 
 const FaqContainer = () => {
-  const [openedQuestions, setOpenedQuestions] = useState([1]);
+  const [openedQuestions, setOpenedQuestions] = useState([]);
 
   function handleToggleQuestion(questionId) {
-    setOpenedQuestions([questionId]);
+    const arr = openedQuestions.includes(questionId)
+      ? openedQuestions.filter(id => id !== questionId)
+      : [questionId];
+
+    setOpenedQuestions(arr);
   }
 
   const faqState = {

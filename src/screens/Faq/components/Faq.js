@@ -82,6 +82,7 @@ const FaqItem = styled.div`
   padding: 0 0 0 20px;
   margin: 0 0 30px 0;
   position: relative;
+  cursor: pointer;
 
   @media ${Device.laptop} {
     margin: 0 0 60px 0;
@@ -117,7 +118,6 @@ const Question = styled.h3`
   font-size: 18px;
   line-height: 21px;
   user-select: none;
-  cursor: pointer;
 
   @media ${Device.laptop} {
     font-size: 20px;
@@ -161,14 +161,11 @@ const Faq = ({ questionGroups }) => {
                         className={
                           openedQuestions.includes(item.id) ? 'active' : ''
                         }
+                        onClick={() => {
+                          handleToggleQuestion(item.id);
+                        }}
                       >
-                        <Question
-                          onClick={() => {
-                            handleToggleQuestion(item.id);
-                          }}
-                        >
-                          {item.question}
-                        </Question>
+                        <Question>{item.question}</Question>
                         <Answer>{item.answer}</Answer>
                       </FaqItem>
                     ))}
