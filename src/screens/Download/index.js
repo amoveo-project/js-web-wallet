@@ -9,6 +9,9 @@ import { ReactComponent as SvgOsx } from 'shared/assets/icon-osx.svg';
 import { ReactComponent as SvgLinux } from 'shared/assets/icon-linux.svg';
 import { ReactComponent as SvgAndroid } from 'shared/assets/icon-android.svg';
 import { ReactComponent as SvgIos } from 'shared/assets/icon-ios.svg';
+import { ReactComponent as SvgGit } from 'shared/assets/icon-github.svg';
+
+import ExternalLink from 'shared/components/ExternalLink';
 
 import GoBack from 'shared/components/GoBack.js';
 
@@ -108,13 +111,14 @@ const Buttons = styled.div`
 `;
 const DeviceButtons = styled.div`
   display: flex;
+  flex-wrap: wrap;
   margin: 30px 0 0 0;
 
   @media ${Device.tablet} {
     margin: 42px 0 0 0;
   }
 `;
-const DownloadApp = styled.a`
+const DownloadApp = styled(ExternalLink)`
   display: flex;
   background: ${props => props.theme.color.yellow};
   color: ${props => props.theme.color.blue};
@@ -166,24 +170,28 @@ const DownloadApp = styled.a`
     }
   }
 `;
-const DownloadDeviceApp = styled.a`
+const DownloadDeviceApp = styled(ExternalLink)`
   font-size: 18px;
   font-weight: 500;
   line-height: 1.5;
   display: flex;
   color: #fff;
   padding: 0;
-  margin: 0 60px 0 0;
+  margin: 0 30px 15px 0;
   align-items: center;
   text-decoration: none;
+  width: 100%;
 
   @media ${Device.tablet} {
     font-size: 20px;
+    margin: 0 60px 0 0;
+    width: auto;
   }
 
   svg {
     fill: #fff;
     height: 20px;
+    min-width: 20px;
     margin: 0 20px 0 0;
     transition: all 0.4s;
     opacity: 0.5;
@@ -227,6 +235,10 @@ const DownloadContainer = () => (
             <DownloadDeviceApp href="#">
               <SvgIos />
               iOS
+            </DownloadDeviceApp>
+            <DownloadDeviceApp href="https://github.com/amoveo-project/js-web-wallet">
+              <SvgGit />
+              Source Code
             </DownloadDeviceApp>
           </DeviceButtons>
         </Container>
