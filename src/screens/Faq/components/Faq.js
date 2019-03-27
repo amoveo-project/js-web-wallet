@@ -83,6 +83,7 @@ const FaqItem = styled.div`
   margin: 0 0 30px 0;
   position: relative;
   cursor: pointer;
+  overflow: hidden;
 
   @media ${Device.laptop} {
     margin: 0 0 60px 0;
