@@ -93,7 +93,12 @@ const FaqItem = styled.div`
     }
     div {
       display: block;
-      opacity: 0.5;
+      animation-name: show;
+      animation-duration: 0.3s;
+      animation-delay: 0.1s;
+      animation-iteration-count: initial;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease-in-out;
     }
   }
 
@@ -127,13 +132,12 @@ const Question = styled.h3`
 `;
 const Answer = styled.div`
   font-size: 16px;
-  opacity: 0.5;
+  opacity: 0;
   font-weight: 300;
   margin: 20px 0 0 0;
   display: none;
-  transition: opacity 0.4s;
-  opacity: 0;
   line-height: 1.4;
+  color: rgba(255, 255, 255, 0.6);
 
   @media ${Device.laptop} {
     font-size: 16px;
