@@ -69,21 +69,35 @@ const MainButton = styled(Button)`
   }
 `;
 const WalletsLinks = styled.div`
-  margin: 40px 0 0 0;
+  margin: 30px 0 0 0;
 `;
 const WalletsLink = styled(Link)`
   color: #fff;
   font-size: 20px;
   font-weight: 500;
-  margin: 0 40px 0 0;
+  margin: 0 40px 15px 0;
+  white-space: nowrap;
+  display: block;
+
+  @media ${Device.tablet} {
+    margin: 0 40px 0 0;
+    display: inline-block;
+  }
 `;
 const HardwareLink = styled.a`
   opacity: 0.5;
   color: #fff;
   font-size: 20px;
   font-weight: 500;
-  margin: 0 40px 0 0;
+  margin: 0 40px 15px 0;
   text-decoration: underline;
+  white-space: nowrap;
+  display: block;
+
+  @media ${Device.tablet} {
+    margin: 0 40px 0 0;
+    display: inline-block;
+  }
 `;
 // const HardwareLink = styled(WalletsLink)`
 //   opacity: 0.5;

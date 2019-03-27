@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Modal } from 'shared/components/Modal/Modal';
 import { ModalText } from 'shared/components/Modal/ModalText';
 import { Buttons } from 'shared/components/Modal/ModalButtons';
+import Device from 'device';
 
 import AppContext from 'shared/contexts/AppContext';
 
@@ -20,18 +21,24 @@ const ModalInput = styled.input`
   width: 100%;
 `;
 const Button = styled.button`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   padding: 18px 20px;
-  margin: 0 15px;
+  margin: 0 15px 15px 0;
   display: inline-block;
   line-height: 20px;
   border: 2px solid ${props => props.theme.color.blue};
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
   transition: all 0.4s;
   background: #fff;
   color: #000;
+
+  @media ${Device.laptop} {
+    margin: 0 15px 0 0;
+    font-size: 20px;
+    border-radius: 10px;
+  }
 
   &:hover {
     background: ${props => props.theme.color.yellow};
