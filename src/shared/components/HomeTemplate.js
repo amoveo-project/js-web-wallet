@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from '@reach/router';
 import Device from 'device';
 
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
 import { ReactComponent as LogoCircleSvg } from 'shared/assets/logo-circle.svg';
+
+import ExternalLink from 'shared/components/ExternalLink';
 
 const Main = styled.div`
   width: 100%;
@@ -81,13 +83,14 @@ const Body = styled.div`
 
 const Footer = styled.footer`
   width: 100%;
-  padding: 48px 0;
+  padding: 20px 0;
   font-size: 18px;
   position: relative;
   z-index: 2;
 
   @media ${Device.laptopM} {
     font-size: 20px;
+    padding: 48px 0;
   }
 `;
 const FooterContainer = styled(Container)`
@@ -103,34 +106,38 @@ const FooterContainer = styled(Container)`
 const BottomLinks = styled.div`
   text-align: left;
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 
   @media ${Device.laptop} {
     width: auto;
   }
 `;
-const BottomLink = styled(Link)`
-  font-size: 16px;
+const BottomLinkStyle = css`
+  font-size: 14px;
   color: #fff;
-  margin: 0 40px 0 0;
+  margin: 0 30px 15px 0;
   font-weight: 500;
   opacity: 1;
   transition: opacity 0.4s;
 
+  @media ${Device.laptop} {
+    margin: 0 40px 0 0;
+    font-size: 16px;
+  }
+
   &:hover {
     text-decoration: none;
+  }
+  &:last-child {
+    margin-right: 0;
   }
 `;
-const SupportLink = styled.a`
-  font-size: 16px;
-  color: #fff;
-  margin: 0 40px 0 0;
-  font-weight: 500;
-  opacity: 1;
-  transition: opacity 0.4s;
-
-  &:hover {
-    text-decoration: none;
-  }
+const BottomLink = styled(Link)`
+  ${BottomLinkStyle}
+`;
+const ExtLink = styled(ExternalLink)`
+  ${BottomLinkStyle}
 `;
 const Powered = styled.div`
   font-size: 16px;
@@ -173,17 +180,12 @@ const HomeTemplate = ({ children }) => {
         <Footer>
           <FooterContainer>
             <BottomLinks>
-              {!window._isElectron ? (
-                <BottomLink to="/download">Download</BottomLink>
-              ) : null}
+              <BottomLink to="/download">Download</BottomLink>
               <BottomLink to="/faq">FAQ</BottomLink>
-              <SupportLink
-                href="https://tlg.name/amoveo_wallet"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Support
-              </SupportLink>
+              <ExtLink to="https://tlg.name/amoveo_wallet">Support</ExtLink>
+              <ExtLink to="https://github.com/amoveo-project/js-web-wallet">
+                GitHub
+              </ExtLink>
             </BottomLinks>
             <Powered>
               <span>Powered by</span>{' '}
