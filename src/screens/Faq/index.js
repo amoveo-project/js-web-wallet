@@ -30,13 +30,13 @@ const questionGroups = [
           <Fragment>
             <p>
               To create a wallet, visit{' '}
-              <ExtLink to="http://myveowallet.com">myveowallet.com</ExtLink> and
-              click ‘Create wallet’. The wallet will generate a unique 12-word
-              passphrase. Make sure to either download a .txt file with the
-              passphrase or write it down. In both cases, your passphrase must
-              be kept safe and no one should have access to it but you. This
-              passphrase will be required for you to restore or re-open your
-              wallet.
+              <ExtLink to="https://myveowallet.com">myveowallet.com</ExtLink>{' '}
+              and click ‘Create wallet’. The wallet will generate a unique
+              12-word passphrase. Make sure to either download a .txt file with
+              the passphrase or write it down. In both cases, your passphrase
+              must be kept safe and no one should have access to it but you.
+              This passphrase will be required for you to restore or re-open
+              your wallet.
             </p>
             <p>
               Proceed by clicking ‘Create’ and you will be taken to your
@@ -64,7 +64,7 @@ const questionGroups = [
           <Fragment>
             <p>
               For security reasons, every time you close the{' '}
-              <ExtLink to="http://myveowallet.com">myveowallet.com</ExtLink>{' '}
+              <ExtLink to="https://myveowallet.com">myveowallet.com</ExtLink>{' '}
               website, you will be automatically logged out of your wallet. To
               regain access to it, you will either need your passphrase or your
               private key. Simply click ‘Restore wallet’, select one of the two
