@@ -214,25 +214,25 @@ const DownloadContainer = () => (
           </Title>
           <Choose>Choose your platform</Choose>
           <Buttons>
-            <DownloadApp href="#">
+            <DownloadApp href="https://myveowallet.com/desktop/win/latest">
               <SvgWindows />
               Windows
             </DownloadApp>
-            <DownloadApp href="#">
+            <DownloadApp href="https://myveowallet.com/desktop/osx/latest">
               <SvgOsx />
               MacOS
             </DownloadApp>
-            <DownloadApp href="#">
+            <DownloadApp href="https://myveowallet.com/desktop/linux/latest">
               <SvgLinux />
               Linux
             </DownloadApp>
           </Buttons>
           <DeviceButtons>
-            <DownloadDeviceApp href="#">
+            <DownloadDeviceApp href="https://play.google.com/store/apps/details?id=com.exa.amoveowallet">
               <SvgAndroid />
               Android
             </DownloadDeviceApp>
-            <DownloadDeviceApp href="#">
+            <DownloadDeviceApp href="https://itunes.apple.com/app/veo-wallet/id1439959709">
               <SvgIos />
               iOS
             </DownloadDeviceApp>
