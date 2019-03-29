@@ -13,8 +13,8 @@ import HomeContext from 'shared/contexts/HomeContext';
 
 const Title = styled.h1`
   font-weight: 500;
-  font-size: 40px;
-  margin: 0 0 30px 0;
+  font-size: 30px;
+  margin: 0 0 20px 0;
   max-width: 500px;
 
   @media ${Device.laptopM} {
@@ -37,39 +37,68 @@ const Buttons = styled.div`
   margin: 40px 0 0 0;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 
-  @media ${Device.laptop} {
+  @media ${Device.mobileL} {
     justify-content: flex-start;
+    flex-wrap: nowrap;
   }
 `;
 const MainButton = styled(Button)`
   cursor: pointer;
+  width: 100%;
+  margin: 0 0 20px 0;
 
   &:first-child {
-    margin-right: 30px;
     background: ${props => props.theme.color.yellow};
+
+    @media ${Device.mobileL} {
+      margin-right: 15px;
+    }
+    @media ${Device.tablet} {
+      margin: 0 30px 0 0;
+    }
 
     svg {
       fill: ${props => props.theme.color.yellow};
     }
   }
+
+  @media ${Device.tablet} {
+    width: auto;
+  }
 `;
 const WalletsLinks = styled.div`
-  margin: 40px 0 0 0;
+  margin: 30px 0 0 0;
 `;
 const WalletsLink = styled(Link)`
   color: #fff;
   font-size: 20px;
   font-weight: 500;
-  margin: 0 40px 0 0;
+  margin: 0 40px 15px 0;
+  white-space: nowrap;
+  display: block;
+
+  @media ${Device.tablet} {
+    margin: 0 40px 0 0;
+    display: inline-block;
+  }
 `;
 const HardwareLink = styled.a`
   opacity: 0.5;
   color: #fff;
   font-size: 20px;
   font-weight: 500;
-  margin: 0 40px 0 0;
+  margin: 0 40px 15px 0;
   text-decoration: underline;
+  white-space: nowrap;
+  display: block;
+  cursor: pointer;
+
+  @media ${Device.tablet} {
+    margin: 0 40px 0 0;
+    display: inline-block;
+  }
 `;
 // const HardwareLink = styled(WalletsLink)`
 //   opacity: 0.5;

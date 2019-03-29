@@ -21,6 +21,8 @@ import Dashboard from './screens/Dashboard';
 import Exchange from './screens/Exchange';
 import Home from './screens/Home';
 import NotFound from './screens/NotFound';
+import Download from './screens/Download';
+import Faq from './screens/Faq';
 import Receive from './screens/Receive';
 import Restore from './screens/Restore';
 import Recent from './screens/Recent';
@@ -351,6 +353,8 @@ const App = () => {
             <Receive path="/receive" />
             <Recent path="/recent" />
             <Exchange path="/exchange" />
+            <Download path="/download" />
+            <Faq path="/faq" />
 
             <Test path="/test" />
 

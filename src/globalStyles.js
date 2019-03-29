@@ -48,6 +48,20 @@ const GlobalStyles = createGlobalStyle`
   [data-whatintent='mouse'] *:focus {
     outline: none;
   }
+
+  @keyframes show {
+   0% {
+     opacity:0;
+     transform: translateX(50px);
+   }
+   80% {
+     transform: translateX(-5px);
+   }
+   100% {
+     opacity:1;
+     transform: translateX(0);
+   }
+  }
 `;
 
 export default GlobalStyles;
