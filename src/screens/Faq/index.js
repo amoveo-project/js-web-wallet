@@ -153,9 +153,9 @@ const questionGroups = [
           <Fragment>
             <p>
               Amoveo transaction fees depend on the type of the address you’re
-              sending VEO to and can vary. You will see the transaction fee
-              before on your screen before sending VEO. There are no transaction
-              fees for receiving VEO.
+              sending VEO to and can vary. You will see the transaction fee on
+              your screen before sending VEO. There are no transaction fees for
+              receiving VEO.
             </p>
           </Fragment>
         ),
