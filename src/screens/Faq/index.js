@@ -168,7 +168,7 @@ const questionGroups = [
     id: 2,
     items: [
       {
-        question: 'How to use Ledger Nano with MyVeoWallet',
+        question: 'How to use Ledger Nano S with MyVeoWallet',
         answer: (
           <Fragment>
             <p>
@@ -205,7 +205,7 @@ const questionGroups = [
       },
       {
         question:
-          'How to Install MyVeoWallet on your Ledger Nano S using Ledger Live',
+          'How to Install Amoveo wallet app on your Ledger Nano S using Ledger Live',
         answer: (
           <Fragment>
             <ListOl>
@@ -218,7 +218,7 @@ const questionGroups = [
               </ListLi>
               <ListLi>Find Amoveo in the app catalog.</ListLi>
               <ListLi>
-                Click the <Mark>Instal</Mark> button, an installation window
+                Click the <Mark>Install</Mark> button, an installation window
                 will appear.
               </ListLi>
               <ListLi>
@@ -229,10 +229,10 @@ const questionGroups = [
                 You should see the app icon both on Ledger Live and on your
                 device’s screen.
               </ListLi>
-              <ListLi>
+              {/*              <ListLi>
                 A new wallet will be created for you. You will see your balance
                 and recent transactions on the Amoveo account in Ledger Live.
-              </ListLi>
+              </ListLi> */}
             </ListOl>
           </Fragment>
         ),
@@ -296,7 +296,7 @@ const questionGroups = [
               <ListLi>
                 In MyVeoWallet, click <Mark>Receive.</Mark>
               </ListLi>
-              <ListLi>
+              {/*              <ListLi>
                 Click on <Mark>Verify</Mark> to generate a receive address on
                 your device.
               </ListLi>
@@ -304,7 +304,7 @@ const questionGroups = [
                 Make sure that the address shown on your device’s screen is the
                 same as shown in MyVeoWallet. If the addresses match, press the
                 right button on your Ledger to continue.
-              </ListLi>
+              </ListLi> */}
               <ListLi>
                 Click <Mark>Copy</Mark> to copy your address and send it to
                 whoever is crediting your account.
