@@ -93,6 +93,7 @@ const HardwareLink = styled.a`
   text-decoration: underline;
   white-space: nowrap;
   display: block;
+  cursor: pointer;
 
   @media ${Device.tablet} {
     margin: 0 40px 0 0;
