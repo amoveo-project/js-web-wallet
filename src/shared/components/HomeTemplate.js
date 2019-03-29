@@ -120,6 +120,7 @@ const BottomLinkStyle = css`
   font-weight: 500;
   opacity: 1;
   transition: opacity 0.4s;
+  text-decoration: none;
 
   @media ${Device.laptop} {
     margin: 0 40px 0 0;
@@ -127,7 +128,7 @@ const BottomLinkStyle = css`
   }
 
   &:hover {
-    text-decoration: none;
+    text-decoration: underline;
   }
   &:last-child {
     margin-right: 0;

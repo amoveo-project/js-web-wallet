@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react';
 import { Link } from '@reach/router';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Device from 'device';
 
 import { ReactComponent as SvgWallet } from 'shared/assets/icon-wallet.svg';
@@ -71,38 +71,32 @@ const MainButton = styled(Button)`
 const WalletsLinks = styled.div`
   margin: 30px 0 0 0;
 `;
-const WalletsLink = styled(Link)`
+const WalletsLinkStyle = css`
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   margin: 0 40px 15px 0;
   white-space: nowrap;
   display: block;
-
-  @media ${Device.tablet} {
-    margin: 0 40px 0 0;
-    display: inline-block;
-  }
-`;
-const HardwareLink = styled.a`
-  opacity: 0.5;
-  color: #fff;
-  font-size: 20px;
-  font-weight: 500;
-  margin: 0 40px 15px 0;
-  text-decoration: underline;
-  white-space: nowrap;
-  display: block;
+  text-decoration: none;
   cursor: pointer;
 
+  &:hover {
+    text-decoration: underline;
+  }
+
   @media ${Device.tablet} {
     margin: 0 40px 0 0;
     display: inline-block;
   }
 `;
-// const HardwareLink = styled(WalletsLink)`
-//   opacity: 0.5;
-// `;
+const WalletsLink = styled(Link)`
+  ${WalletsLinkStyle}
+`;
+const HardwareLink = styled.a`
+  ${WalletsLinkStyle}
+  opacity: 0.5;
+`;
 const IconWallet = styled(SvgWallet)`
   fill: #fff;
 `;

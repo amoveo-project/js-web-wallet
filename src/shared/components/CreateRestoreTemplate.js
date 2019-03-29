@@ -99,11 +99,17 @@ const linkStyles = css`
   line-height: 30px;
   color: ${props => props.theme.color.blue};
   display: block;
+  text-decoration: none;
+  cursor: pointer;
 
   @media ${Device.laptopM} {
     line-height: 60px;
     display: inline-block;
     margin: 0 30px 0 0;
+  }
+
+  &:hover {
+    text-decoration: underline;
   }
 
   &[disabled] {
@@ -115,7 +121,6 @@ const linkStyles = css`
 `;
 const FooterLink = styled(Link)`
   ${linkStyles}
-  text-decoration: none;
 `;
 const FooterExternalLink = styled.a`
   ${linkStyles}
