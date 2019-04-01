@@ -321,7 +321,7 @@ const questionGroups = [
             <p>
               If you’re experiencing issues with or have any questions about
               MyVeoWallet, contact our support on{' '}
-              <ExtLink to="https://t.me/amoveo_wallet">Telegram</ExtLink>.
+              <ExtLink to="https://tlg.name/amoveo_wallet">Telegram</ExtLink>.
             </p>
           </Fragment>
         ),
