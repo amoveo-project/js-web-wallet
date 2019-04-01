@@ -407,6 +407,7 @@ const LogOut = styled(Link)`
 
 const Header = () => {
   const {
+    isHardware,
     isWalletCreated,
     passphrase,
     setUnusedActions,
@@ -437,6 +438,8 @@ const Header = () => {
       unusedActions.filter(item => item !== DOWNLOAD_PRIVATE_KEY),
     );
   };
+
+  const isSettingsAvailable = !isHardware;
 
   return (
     <Fragment>
@@ -469,38 +472,42 @@ const Header = () => {
               </SupportLink>
             </MainNav>
             <UserMenu>
-              <Settings className={unusedActions.length > 0 ? 'notice' : null}>
-                <SettingsToggle>
-                  <IconGear className="gear" />
-                  <span>Settings</span>
-                </SettingsToggle>
-                <SettingsDropdown className="settingsdropdown">
-                  <SettingsDropdownItem
-                    onClick={downloadPrivateKey}
-                    className={
-                      unusedActions.length > 0 &&
-                      unusedActions.includes(DOWNLOAD_PRIVATE_KEY)
-                        ? 'active'
-                        : null
-                    }
-                  >
-                    Download private key
-                  </SettingsDropdownItem>
-                  {passphrase ? (
+              {isSettingsAvailable ? (
+                <Settings
+                  className={unusedActions.length > 0 ? 'notice' : null}
+                >
+                  <SettingsToggle>
+                    <IconGear className="gear" />
+                    <span>Settings</span>
+                  </SettingsToggle>
+                  <SettingsDropdown className="settingsdropdown">
                     <SettingsDropdownItem
-                      onClick={downloadPassphrase}
+                      onClick={downloadPrivateKey}
                       className={
                         unusedActions.length > 0 &&
-                        unusedActions.includes(DOWNLOAD_PASSPHRASE)
+                        unusedActions.includes(DOWNLOAD_PRIVATE_KEY)
                           ? 'active'
                           : null
                       }
                     >
-                      Download passphrase file
+                      Download private key
                     </SettingsDropdownItem>
-                  ) : null}
-                </SettingsDropdown>
-              </Settings>
+                    {passphrase ? (
+                      <SettingsDropdownItem
+                        onClick={downloadPassphrase}
+                        className={
+                          unusedActions.length > 0 &&
+                          unusedActions.includes(DOWNLOAD_PASSPHRASE)
+                            ? 'active'
+                            : null
+                        }
+                      >
+                        Download passphrase file
+                      </SettingsDropdownItem>
+                    ) : null}
+                  </SettingsDropdown>
+                </Settings>
+              ) : null}
               <LogOut to="/logout">Log out</LogOut>
             </UserMenu>
             <Close onClick={handleToggleMenu} />

@@ -63,6 +63,7 @@ const App = () => {
   const [headerIdSync, setHeaderIdSync] = useState(0);
   const [headerIdTop, setHeaderIdTop] = useState(0);
   const [isWalletCreated, setIsWalletCreated] = useState(false);
+  const [isHardware, setIsHardware] = useState(false);
   const [keys, setKeys] = useState({ public: '' });
   const [passphrase, setPassphrase] = useState('');
   const [pendingTransactions, setPendingTransactions] = useState([]);
@@ -267,7 +268,7 @@ const App = () => {
 
   const enterLedger = async () => {
     const transport = await Transport.create();
-    transport.setDebugMode(true);
+    // transport.setDebugMode(true);
     const ledger = new Veo(transport);
     const ledgerKeys = new LedgerKeys(ledger);
 
@@ -290,7 +291,9 @@ const App = () => {
 
       setPassphrase('');
       setBalance(0);
-      setUnusedActions([DOWNLOAD_PASSPHRASE, DOWNLOAD_PRIVATE_KEY]);
+      setUnusedActions([]);
+
+      setIsHardware(true);
 
       setModal(null);
       routerHistory.navigate('/dashboard/');
@@ -310,6 +313,7 @@ const App = () => {
     headerId,
     headerIdSync,
     headerIdTop,
+    isHardware,
     isWalletCreated,
     keys,
     passphrase,
