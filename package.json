@@ -7,7 +7,7 @@
   "dependencies": {
     "@ledgerhq/hw-transport-u2f": "^4.35.0",
     "@reach/router": "1.2.1",
-    "amoveo-js-light-node": "0.2.0",
+    "amoveo-js-light-node": "0.3.0",
     "clipboard": "2.0.4",
     "date-fns": "2.0.0-alpha.25",
     "decimal.js-light": "^2.5.0",
