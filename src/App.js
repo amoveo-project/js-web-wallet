@@ -307,6 +307,35 @@ const App = () => {
     }
   };
 
+  const verifyOwnAddress = async () => {
+    let isVerified = false;
+
+    if (!isHardware) {
+      isVerified = true;
+    }
+
+    try {
+      setModal(
+        <LedgerModal
+          text="Please check your ledger wallet"
+          onClick={() => setModal(null)}
+        />,
+      );
+
+      setTimeout(() => {
+        setModal(null);
+      }, 1500);
+
+      const address = await veo.wallet.keys.getVerifiedAddress();
+
+      isVerified = address ? true : false;
+    } catch (e) {
+      isVerified = false;
+    }
+
+    return isVerified;
+  };
+
   const appState = {
     balance,
     createWallet,
@@ -328,6 +357,7 @@ const App = () => {
     transactions,
     unusedActions,
     veo,
+    verifyOwnAddress,
     u2fSupport,
   };
 

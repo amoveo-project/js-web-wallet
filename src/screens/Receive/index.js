@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import Decimal from 'decimal.js-light';
 
 import Receive from './components/Receive';
 
+import LedgerModal from 'shared/components/LedgerModal';
+
+import AppContext from 'shared/contexts/AppContext';
 import ReceiveContext from 'shared/contexts/ReceiveContext';
-import Decimal from 'decimal.js-light';
 
 const ReceiveContainer = () => {
+  const { setModal, verifyOwnAddress } = useContext(AppContext);
+
   const [amount, setAmount] = useState(1000000);
+  const [isAddressVerified, setIsAddressVerified] = useState(false);
 
   const handleAmountInput = e => {
     let value = Number(e.target.value) || 0;
@@ -15,9 +21,26 @@ const ReceiveContainer = () => {
     setAmount(new Decimal(value).mul(1e8).toNumber());
   };
 
+  const verifyLedgerAddress = async () => {
+    const isVerified = await verifyOwnAddress();
+
+    setIsAddressVerified(isVerified);
+
+    if (!isVerified) {
+      setModal(
+        <LedgerModal
+          text="You didn't verify your address. Be careful using it!"
+          onClick={() => setModal(null)}
+        />,
+      );
+    }
+  };
+
   const receiveState = {
     amount,
     handleAmountInput,
+    isAddressVerified,
+    verifyLedgerAddress,
   };
 
   return (

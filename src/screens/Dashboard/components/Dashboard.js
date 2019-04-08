@@ -12,6 +12,7 @@ import { ReactComponent as SvgPending } from 'shared/assets/icon-pending.svg';
 import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg';
 import { ReactComponent as SvgPrev } from 'shared/assets/icon-arrow-left.svg';
 import { ReactComponent as SvgNext } from 'shared/assets/icon-arrow-right.svg';
+import { ReactComponent as SvgLedger } from 'shared/assets/icon-ledger.svg';
 
 import Button from 'shared/components/Button.js';
 import Header from 'shared/components/Header.js';
@@ -96,6 +97,9 @@ const YourWalletText = styled.div`
   span {
     opacity: 0.5;
   }
+`;
+const VerifiedAddress = styled.span`
+  color: ${props => props.theme.color.yellow};
 `;
 const TransactionsLabel = styled.h3`
   margin: 30px 0 20px 0;
@@ -187,6 +191,17 @@ const IconPending = styled(SvgPending)`
   opacity: 0.5;
 `;
 const IconClipboard = styled(SvgClipboard)`
+  width: 16px;
+  height: 16px;
+  margin: 0 0 0 10px;
+  fill: ${props => props.theme.color.yellow};
+  cursor: pointer;
+
+  &:active {
+    transform: scale(0.9);
+  }
+`;
+const IconLedger = styled(SvgLedger)`
   width: 16px;
   height: 16px;
   margin: 0 0 0 10px;
@@ -357,8 +372,15 @@ const IconNext = styled(SvgNext)`
 `;
 
 const Dashboard = ({ children }) => {
-  const { keys, pendingTransactions, transactions } = useContext(AppContext);
-  const { currentPage, handlePageChange } = useContext(DashboardContext);
+  const { isHardware, keys, pendingTransactions, transactions } = useContext(
+    AppContext,
+  );
+  const {
+    currentPage,
+    handlePageChange,
+    isAddressVerified,
+    verifyLedgerAddress,
+  } = useContext(DashboardContext);
 
   useEffect(() => {
     const clipboard = new ClipboardJS('.js-copy-address', {
@@ -397,8 +419,22 @@ const Dashboard = ({ children }) => {
               </ReceiveButton>
               <Wallet>
                 <YourWalletText>
-                  <span>Your wallet address</span>{' '}
-                  <IconClipboard className="js-copy-address" />
+                  <span>
+                    Your wallet address{' '}
+                    {isAddressVerified ? (
+                      <VerifiedAddress>(✓ verified)</VerifiedAddress>
+                    ) : null}
+                  </span>
+                  <IconClipboard
+                    className="js-copy-address"
+                    title="Copy address"
+                  />
+                  {isHardware ? (
+                    <IconLedger
+                      onClick={verifyLedgerAddress}
+                      title="Verify address"
+                    />
+                  ) : null}
                 </YourWalletText>
                 <WalletAddress>{keys.public}</WalletAddress>
               </Wallet>

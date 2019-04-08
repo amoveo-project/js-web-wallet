@@ -6,6 +6,7 @@ import Device from 'device';
 
 import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
 import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg';
+import { ReactComponent as SvgLedger } from 'shared/assets/icon-ledger.svg';
 
 import Header from 'shared/components/Header.js';
 import Topline from 'shared/components/Topline';
@@ -85,6 +86,10 @@ const Label = styled.label`
   @media ${Device.laptopM} {
     font-size: 16px;
   }
+`;
+const VerifiedAddress = styled.span`
+  color: ${props => props.theme.color.yellow};
+  opacity: 0.5;
 `;
 const VeoLabel = styled.div`
   position: absolute;
@@ -197,6 +202,17 @@ const IconClipboard = styled(SvgClipboard)`
     transform: scale(0.9);
   }
 `;
+const IconLedger = styled(SvgLedger)`
+  width: 16px;
+  height: 16px;
+  margin: 0 0 0 10px;
+  fill: ${props => props.theme.color.yellow};
+  cursor: pointer;
+
+  &:active {
+    transform: scale(0.9);
+  }
+`;
 const IconNext = styled(SvgNext)`
   width: 30px;
   height: 30px;
@@ -274,8 +290,13 @@ const QrCodeAddress = styled.p`
 `;
 
 const Receive = () => {
-  const { keys } = useContext(AppContext);
-  const { amount, handleAmountInput } = useContext(ReceiveContext);
+  const { isHardware, keys } = useContext(AppContext);
+  const {
+    amount,
+    handleAmountInput,
+    isAddressVerified,
+    verifyLedgerAddress,
+  } = useContext(ReceiveContext);
 
   useEffect(() => {
     const clipboard = new ClipboardJS('.js-copy-address', {
@@ -303,7 +324,19 @@ const Receive = () => {
                 <Fieldset>
                   <Label>
                     Your wallet address{' '}
-                    <IconClipboard className="js-copy-address" />
+                    {isAddressVerified ? (
+                      <VerifiedAddress>(✓ verified)</VerifiedAddress>
+                    ) : null}
+                    <IconClipboard
+                      className="js-copy-address"
+                      title="Copy address"
+                    />
+                    {isHardware ? (
+                      <IconLedger
+                        onClick={verifyLedgerAddress}
+                        title="Verify address"
+                      />
+                    ) : null}
                   </Label>
                   <Address>{keys.public}</Address>
                 </Fieldset>
