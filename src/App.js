@@ -34,7 +34,7 @@ import AppContext from 'shared/contexts/AppContext';
 import ErrorModal from 'shared/components/ErrorModal';
 import LedgerModal from 'shared/components/LedgerModal';
 
-import Transport from '@ledgerhq/hw-transport-u2f';
+import Transport from './hw-transport';
 import Veo from 'hw-app-veo';
 
 import {
