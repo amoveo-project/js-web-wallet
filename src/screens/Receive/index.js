@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Decimal from 'decimal.js-light';
+import { Helmet } from 'react-helmet';
 
 import Receive from './components/Receive';
 
@@ -45,6 +46,10 @@ const ReceiveContainer = () => {
 
   return (
     <ReceiveContext.Provider value={receiveState}>
+      <Helmet>
+        <title>Receive payments | VEO</title>
+        <meta name="description" content="Receive payments in VEO" />
+      </Helmet>
       <Receive />
     </ReceiveContext.Provider>
   );

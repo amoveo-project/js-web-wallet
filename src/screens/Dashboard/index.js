@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 import Dashboard from './components/Dashboard';
 
@@ -59,6 +60,15 @@ const DashboardContainer = ({ navigate }) => {
 
   return (
     <DashboardContext.Provider value={dashboardState}>
+      <Helmet>
+        <title>
+          Your wallet address | Download private key | Passphase file | VEO
+        </title>
+        <meta
+          name="description"
+          content="Your wallets address, private key and passphrase"
+        />
+      </Helmet>
       <Dashboard />
     </DashboardContext.Provider>
   );

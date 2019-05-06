@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 import Send from './components/Send';
 
@@ -130,6 +131,10 @@ const SendContainer = () => {
 
   return (
     <SendContext.Provider value={sendState}>
+      <Helmet>
+        <title>Send payments | VEO</title>
+        <meta name="description" content="Send VEO anywhere in the world" />
+      </Helmet>
       <Send />
     </SendContext.Provider>
   );

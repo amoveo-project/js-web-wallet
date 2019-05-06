@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { ethers } from 'ethers';
 
 import { downloadFile } from 'shared/utils/browser';
@@ -39,6 +40,10 @@ const CreateContainer = () => {
 
   return (
     <CreateContext.Provider value={createState}>
+      <Helmet>
+        <title>Create Amoveo Wallet | VEO</title>
+        <meta name="description" content="Create your own Amoveo wallet" />
+      </Helmet>
       <Create />
     </CreateContext.Provider>
   );
