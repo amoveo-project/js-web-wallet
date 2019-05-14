@@ -308,7 +308,7 @@ const Receive = () => {
     };
   }, []);
 
-  const receiveUri = `amoveo://${encodeURIComponent(
+  const receiveUri = `amoveo:${encodeURIComponent(
     keys.public,
   )}?amount=${amount}`;
 
@@ -348,7 +348,7 @@ const Receive = () => {
                     min="0"
                     step="0.01"
                     placeholder="0.00"
-                    value={new Decimal(amount).mul(1e-8).val()}
+                    value={new Decimal(amount).toString()}
                     onChange={handleAmountInput}
                   />
                   <VeoLabel>VEO</VeoLabel>

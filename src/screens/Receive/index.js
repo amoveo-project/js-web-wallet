@@ -12,14 +12,14 @@ import ReceiveContext from 'shared/contexts/ReceiveContext';
 const ReceiveContainer = () => {
   const { setModal, verifyOwnAddress } = useContext(AppContext);
 
-  const [amount, setAmount] = useState(1000000);
+  const [amount, setAmount] = useState(0.01);
   const [isAddressVerified, setIsAddressVerified] = useState(false);
 
   const handleAmountInput = e => {
     let value = Number(e.target.value) || 0;
     value = value >= 0 ? value : 0;
 
-    setAmount(new Decimal(value).mul(1e8).toNumber());
+    setAmount(new Decimal(value).toNumber());
   };
 
   const verifyLedgerAddress = async () => {
