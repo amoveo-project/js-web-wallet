@@ -21,7 +21,10 @@ import Topline from 'shared/components/Topline';
 import AppContext from 'shared/contexts/AppContext';
 import DashboardContext from 'shared/contexts/DashboardContext';
 
-import { TRANSACTIONS_PER_PAGE } from '../constants/transactions';
+import {
+  TRANSACTIONS_PER_PAGE,
+  META_DESCRIPTION,
+} from '../constants/transactions';
 
 const Main = styled.div`
   width: 100%;
@@ -461,7 +464,10 @@ const Dashboard = ({ children }) => {
                     <Value>
                       <Label>Value</Label>
                       {transaction._isPending ? <IconPending /> : null}
-                      {new Decimal(transaction.amount).mul(1e-8).val()}
+                      {transaction.amount
+                        ? new Decimal(transaction.amount).mul(1e-8).val()
+                        : META_DESCRIPTION[transaction.type] ||
+                          transaction.type}
                     </Value>
                     <Date>
                       <Label>Date</Label>

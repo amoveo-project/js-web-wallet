@@ -225,7 +225,10 @@ const TransactionReceive = ({ transactionId }) => {
               <BalanceWrap>
                 {isSpend ? <IconSend /> : <IconReceive />}
                 <Balance>
-                  {new Decimal(transaction.amount).mul(1e-8).val()} VEO
+                  {transactions.amount
+                    ? new Decimal(transaction.amount).mul(1e-8).val()
+                    : 0}{' '}
+                  VEO
                   {isPending ? <IconPending /> : null}
                 </Balance>
               </BalanceWrap>
