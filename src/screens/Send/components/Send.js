@@ -103,6 +103,10 @@ const FillMax = styled.label`
   color: ${props => props.theme.color.yellow};
   cursor: pointer;
   user-select: none;
+
+  &[disabled] {
+    color: grey;
+  }
 `;
 const Input = styled.input`
   background: none;
@@ -244,7 +248,11 @@ const Send = () => {
                       <FillMax htmlFor="amount" onClick={handleFillMax}>
                         Send max
                       </FillMax>
-                    ) : null}
+                    ) : (
+                      <FillMax htmlFor="amount" disabled>
+                        Send max
+                      </FillMax>
+                    )}
                   </LabelContainer>
                   <Amount
                     id="amount"
