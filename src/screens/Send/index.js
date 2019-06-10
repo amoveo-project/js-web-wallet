@@ -51,7 +51,7 @@ const SendContainer = () => {
       fee = proposal.fee;
       setFee(fee);
 
-      const isValid = fee > 0 && balance >= amount + fee;
+      const isValid = fee > 0 && balance > amount + fee;
 
       setIsSendEnabled(isValid);
     }
@@ -73,7 +73,7 @@ const SendContainer = () => {
   };
 
   const handleFillMax = () => {
-    let value = balance - fee;
+    let value = balance - fee - 1;
     setAmount(value);
   };
 
