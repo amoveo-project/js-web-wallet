@@ -5,6 +5,7 @@ import Device from 'device';
 
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
 import { ReactComponent as LogoCircleSvg } from 'shared/assets/logo-circle.svg';
+import { ReactComponent as SvgTelegram } from 'shared/assets/icon-telegram.svg';
 
 import ExternalLink from 'shared/components/ExternalLink';
 
@@ -140,6 +141,10 @@ const BottomLink = styled(Link)`
 const ExtLink = styled(ExternalLink)`
   ${BottomLinkStyle}
 `;
+const TelegramLink = styled(ExternalLink)`
+  ${BottomLinkStyle}
+  color: ${props => props.theme.color.yellow};
+`;
 const Powered = styled.div`
   font-size: 16px;
   color: #fff;
@@ -165,6 +170,12 @@ const Powered = styled.div`
     }
   }
 `;
+const IconTelegram = styled(SvgTelegram)`
+  width: 23px;
+  height: 20px;
+  fill: currentColor;
+  margin: 0 10px 0 0;
+`;
 
 const HomeTemplate = ({ children }) => {
   return (
@@ -187,6 +198,10 @@ const HomeTemplate = ({ children }) => {
               <ExtLink to="https://github.com/amoveo-project/js-web-wallet">
                 GitHub
               </ExtLink>
+              <TelegramLink to="http://tlg.name/ExchangeAmoveo_bot">
+                <IconTelegram />
+                Exchange Amoveo with our bot
+              </TelegramLink>
             </BottomLinks>
             <Powered>
               <span>Powered by</span>{' '}

@@ -1,13 +1,15 @@
 import React, { Fragment, useContext, useState } from 'react';
 import { Link } from '@reach/router';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Device from 'device';
 
 import PartialNavLink from 'shared/components/PartialNavLink';
+import ExternalLink from 'shared/components/ExternalLink';
 
 import { downloadFile } from 'shared/utils/browser';
 
 import { ReactComponent as LogoIcon } from 'shared/assets/logo.svg';
+import { ReactComponent as SvgTelegram } from 'shared/assets/icon-telegram.svg';
 import { ReactComponent as SvgGear } from 'shared/assets/icon-gear.svg';
 import { ReactComponent as SvgClose } from 'shared/assets/icon-close.svg';
 
@@ -131,7 +133,8 @@ const MainNav = styled.nav`
   display: inline-block;
   vertical-align: top;
 `;
-const MenuItem = styled(PartialNavLink)`
+
+const menuItemCss = css`
   font-size: 18px;
   transition: all 0.4s;
   font-weight: 500;
@@ -193,6 +196,18 @@ const MenuItem = styled(PartialNavLink)`
     pointer-events: none;
   }
 `;
+const MenuItem = styled(PartialNavLink)`
+  ${menuItemCss}
+`;
+const MenuItemExternal = styled(ExternalLink)`
+  ${menuItemCss}
+  display: inline-flex;
+  align-items: center;
+
+  @media ${Device.tablet} {
+    flex-direction: row-reverse;
+  }
+`;
 const SupportLink = styled.a`
   font-size: 18px;
   transition: all 0.4s;
@@ -218,6 +233,16 @@ const SupportLink = styled.a`
     opacity: 0.5;
     padding: 0;
     margin: 0 30px 0 0;
+  }
+`;
+const IconTelegram = styled(SvgTelegram)`
+  width: 23px;
+  height: 20px;
+  fill: currentColor;
+  margin: 0 0 0 10px;
+
+  @media ${Device.tablet} {
+    margin: 0 10px 0 0;
   }
 `;
 const IconGear = styled(SvgGear)`
@@ -453,9 +478,10 @@ const Header = () => {
               <MenuItem to="/dashboard/">Dashboard</MenuItem>
               <MenuItem to="/send/">Send</MenuItem>
               <MenuItem to="/receive/">Receive</MenuItem>
-              <MenuItem to="/exchange/" disabled>
+              <MenuItemExternal to="http://tlg.name/ExchangeAmoveo_bot">
                 Exchange
-              </MenuItem>
+                <IconTelegram />
+              </MenuItemExternal>
               <MenuItem to="/faq" className="mobileonly separate">
                 Faq
               </MenuItem>
