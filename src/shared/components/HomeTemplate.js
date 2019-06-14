@@ -200,7 +200,7 @@ const HomeTemplate = ({ children }) => {
               </ExtLink>
               <TelegramLink to="http://tlg.name/ExchangeAmoveo_bot">
                 <IconTelegram />
-                Exchange Amoveo with our bot
+                Exchange Amoveo
               </TelegramLink>
             </BottomLinks>
             <Powered>
