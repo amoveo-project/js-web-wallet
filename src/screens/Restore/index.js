@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { ethers } from 'ethers';
 
 import Restore from './components/Restore';
@@ -118,6 +119,10 @@ const RestoreContainer = () => {
 
   return (
     <RestoreContext.Provider value={restoreState}>
+      <Helmet>
+        <title>Restore Amoveo Wallet | VEO</title>
+        <meta name="description" content="Restore your wallet" />
+      </Helmet>
       <Restore />
     </RestoreContext.Provider>
   );

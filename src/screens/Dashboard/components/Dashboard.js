@@ -12,6 +12,7 @@ import { ReactComponent as SvgPending } from 'shared/assets/icon-pending.svg';
 import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg';
 import { ReactComponent as SvgPrev } from 'shared/assets/icon-arrow-left.svg';
 import { ReactComponent as SvgNext } from 'shared/assets/icon-arrow-right.svg';
+import { ReactComponent as SvgLedger } from 'shared/assets/icon-ledger.svg';
 
 import Button from 'shared/components/Button.js';
 import Header from 'shared/components/Header.js';
@@ -20,7 +21,10 @@ import Topline from 'shared/components/Topline';
 import AppContext from 'shared/contexts/AppContext';
 import DashboardContext from 'shared/contexts/DashboardContext';
 
-import { TRANSACTIONS_PER_PAGE } from '../constants/transactions';
+import {
+  TRANSACTIONS_PER_PAGE,
+  META_DESCRIPTION,
+} from '../constants/transactions';
 
 const Main = styled.div`
   width: 100%;
@@ -39,22 +43,22 @@ const Container = styled.div`
   width: 100%;
   max-width: 1230px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 20px;
 
   @media ${Device.laptopM} {
     padding: 0 50px;
   }
   @media ${Device.laptopL} {
-    padding: 0 15px;
+    padding: 0 20px;
   }
 `;
 const FlexContainer = styled(Container)`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     justify-content: flex-start;
   }
   @media ${Device.laptopM} {
@@ -69,7 +73,7 @@ const Wallet = styled.div`
   width: 100%;
   margin: 30px 0 0 0;
 
-  @media ${Device.laptop} {
+  @media ${Device.mobileM} {
     flex: 1;
     width: auto;
     margin: 0 0 0 30px;
@@ -97,18 +101,81 @@ const YourWalletText = styled.div`
     opacity: 0.5;
   }
 `;
+const VerifiedAddress = styled.span`
+  color: ${props => props.theme.color.yellow};
+`;
 const TransactionsLabel = styled.h3`
   margin: 30px 0 20px 0;
   font-size: 16px;
   font-weight: 300;
   opacity: 0.5;
 `;
-const SendButton = styled(Button)`
+const Label = styled.div`
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 5px 0;
+
+  @media ${Device.tablet} {
+    display: none;
+  }
+`;
+const MainButton = styled(Button)`
+  padding: 0;
+  margin: 0 20px 0 0;
+  float: left;
+  text-align: left;
+  width: auto;
+  min-width: auto !important;
+  height: auto;
+  line-height: normal;
+
+  @media ${Device.laptop} {
+    padding: 30px;
+    text-align: center;
+    width: 100%;
+    max-width: 270px;
+  }
+
+  svg {
+    position: static;
+    width: 60px;
+    height: 60px;
+    padding: 20px;
+    margin: 0;
+    top: auto;
+    fill: ${props => props.theme.color.blue};
+
+    @media ${Device.laptop} {
+      fill: #fff;
+      padding: 0;
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      left: 15px;
+      margin-top: -10px;
+    }
+  }
+  &:after {
+    display: none;
+    @media ${Device.laptop} {
+      display: inline-block;
+    }
+  }
+  span {
+    display: none;
+    @media ${Device.laptop} {
+      display: inline-block;
+    }
+  }
+`;
+const SendButton = styled(MainButton)`
   background: #fff;
   min-width: 270px;
   font-weight: 500;
 `;
-const ReceiveButton = styled(Button)`
+const ReceiveButton = styled(MainButton)`
   background: ${props => props.theme.color.yellow};
   min-width: 270px;
   font-weight: 500;
@@ -118,12 +185,26 @@ const IconSend = styled(SvgSend)`
 `;
 const IconReceive = styled(SvgReceive)`
   fill: ${props => props.theme.color.yellow};
+  @media ${Device.laptop} {
+    fill: ${props => props.theme.color.yellow} !important;
+  }
 `;
 const IconPending = styled(SvgPending)`
   fill: #fff;
   opacity: 0.5;
 `;
 const IconClipboard = styled(SvgClipboard)`
+  width: 16px;
+  height: 16px;
+  margin: 0 0 0 10px;
+  fill: ${props => props.theme.color.yellow};
+  cursor: pointer;
+
+  &:active {
+    transform: scale(0.9);
+  }
+`;
+const IconLedger = styled(SvgLedger)`
   width: 16px;
   height: 16px;
   margin: 0 0 0 10px;
@@ -146,17 +227,32 @@ const TransactionsPlaceholder = styled.p`
 `;
 const Transaction = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: stretch;
   width: 100%;
-  padding: 10px;
+  padding: 20px 10px;
   position: relative;
+
+  @media ${Device.tablet} {
+    flex-wrap: nowrap;
+    padding: 10px;
+  }
 
   &:nth-child(2n) {
     background: rgba(0, 0, 0, 0.15);
   }
   &:first-child {
-    font-weight: 500;
+    display: none;
+
+    div {
+      padding-left: 0;
+    }
+
+    @media ${Device.tablet} {
+      display: flex;
+      font-weight: 500;
+    }
   }
 `;
 const TransactionNav = styled(Transaction)`
@@ -168,10 +264,14 @@ const TransactionsCol = styled.div`
   width: 100%;
   line-height: 18px;
   font-size: 14px;
+  padding: 10px 0;
+  margin: 0 0 10px 0;
 
   @media ${Device.laptopM} {
     font-size: 16px;
     line-height: 20px;
+    padding: 0;
+    margin: 0;
   }
 
   svg {
@@ -188,43 +288,49 @@ const TransactionsCol = styled.div`
   }
 `;
 const Value = styled(TransactionsCol)`
-  max-width: 15%;
-
-  @media ${Device.laptopM} {
+  @media ${Device.tablet} {
     max-width: 160px;
   }
-
   svg {
     margin: 0 5px 0 0;
   }
 `;
 const Date = styled(TransactionsCol)`
-  max-width: 15%;
-
-  @media ${Device.laptopM} {
+  @media ${Device.tablet} {
     max-width: 150px;
   }
 `;
 const Fee = styled(TransactionsCol)`
-  max-width: 15%;
-
-  @media ${Device.laptopM} {
+  @media ${Device.tablet} {
     max-width: 150px;
   }
 `;
 const Type = styled(TransactionsCol)`
-  max-width: 20px;
-  text-align: center;
+  position: absolute;
+  top: 22px;
+  left: 0;
+  @media ${Device.tablet} {
+    top: 0;
+    max-width: 20px;
+    text-align: center;
+  }
 `;
 const Address = styled.div`
   flex: 1;
   position: relative;
   word-break: break-all;
   font-size: 14px;
-  padding-left: 3px;
-
+  padding-left: 0;
   @media ${Device.laptopM} {
     font-size: 16px;
+    padding-left: 24px;
+  }
+`;
+const AddressID = styled.div`
+  padding: 0 0 0 30px;
+
+  @media ${Device.laptopM} {
+    padding: 0;
   }
 `;
 const TransactionLink = styled(Link)`
@@ -269,8 +375,15 @@ const IconNext = styled(SvgNext)`
 `;
 
 const Dashboard = ({ children }) => {
-  const { keys, pendingTransactions, transactions } = useContext(AppContext);
-  const { currentPage, handlePageChange } = useContext(DashboardContext);
+  const { isHardware, keys, pendingTransactions, transactions } = useContext(
+    AppContext,
+  );
+  const {
+    currentPage,
+    handlePageChange,
+    isAddressVerified,
+    verifyLedgerAddress,
+  } = useContext(DashboardContext);
 
   useEffect(() => {
     const clipboard = new ClipboardJS('.js-copy-address', {
@@ -301,16 +414,30 @@ const Dashboard = ({ children }) => {
             <FlexContainer>
               <SendButton to="/send/">
                 <IconSend />
-                Send
+                <span>Send</span>
               </SendButton>
               <ReceiveButton to="/receive/">
                 <IconReceive />
-                Receive
+                <span>Receive</span>
               </ReceiveButton>
               <Wallet>
                 <YourWalletText>
-                  <span>Your wallet address</span>{' '}
-                  <IconClipboard className="js-copy-address" />
+                  <span>
+                    Your wallet address{' '}
+                    {isAddressVerified ? (
+                      <VerifiedAddress>(✓ verified)</VerifiedAddress>
+                    ) : null}
+                  </span>
+                  <IconClipboard
+                    className="js-copy-address"
+                    title="Copy address"
+                  />
+                  {isHardware ? (
+                    <IconLedger
+                      onClick={verifyLedgerAddress}
+                      title="Verify address"
+                    />
+                  ) : null}
                 </YourWalletText>
                 <WalletAddress>{keys.public}</WalletAddress>
               </Wallet>
@@ -324,7 +451,6 @@ const Dashboard = ({ children }) => {
                     <Value>Value</Value>
                     <Date>Date</Date>
                     <Fee>Fee</Fee>
-                    <Type />
                     <Address>Address</Address>
                   </Transaction>
                 ) : (
@@ -336,27 +462,39 @@ const Dashboard = ({ children }) => {
                 {visibleTransactions.map(transaction => (
                   <Transaction key={transaction.hash}>
                     <Value>
+                      <Label>Value</Label>
                       {transaction._isPending ? <IconPending /> : null}
-                      {new Decimal(transaction.amount).mul(1e-8).val()}
+                      {transaction.amount
+                        ? new Decimal(transaction.amount).mul(1e-8).val()
+                        : META_DESCRIPTION[transaction.type] ||
+                          transaction.type}
                     </Value>
                     <Date>
+                      <Label>Date</Label>
                       {format(
                         fromUnixTime(transaction.timestamp),
                         'dd.MM.yyyy HH:mm',
                       )}
                     </Date>
-                    <Fee>{new Decimal(transaction.fee).mul(1e-8).val()}</Fee>
-                    <Type>
-                      {transaction.from === keys.public ? (
-                        <IconSend />
-                      ) : (
-                        <IconReceive />
-                      )}
-                    </Type>
+                    <Fee>
+                      <Label>Fee</Label>
+                      {new Decimal(transaction.fee).mul(1e-8).val()}
+                    </Fee>
+
                     <Address>
-                      {transaction.from === keys.public
-                        ? transaction.to
-                        : transaction.from}
+                      <Label>Transaction ID</Label>
+                      <Type>
+                        {transaction.from === keys.public ? (
+                          <IconSend />
+                        ) : (
+                          <IconReceive />
+                        )}
+                      </Type>
+                      <AddressID>
+                        {transaction.from === keys.public
+                          ? transaction.to
+                          : transaction.from}
+                      </AddressID>
                     </Address>
                     <TransactionLink
                       to={`/dashboard/${encodeURIComponent(transaction.hash)}`}

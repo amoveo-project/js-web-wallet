@@ -6,6 +6,7 @@ import Device from 'device';
 
 import { ReactComponent as SvgNext } from 'shared/assets/icon-next.svg';
 import { ReactComponent as SvgClipboard } from 'shared/assets/icon-clipboard.svg';
+import { ReactComponent as SvgLedger } from 'shared/assets/icon-ledger.svg';
 
 import Header from 'shared/components/Header.js';
 import Topline from 'shared/components/Topline';
@@ -26,18 +27,19 @@ const Main = styled.div`
 const MainWrap = styled.div`
   width: 100%;
   flex: 1;
+  z-index: 3;
 `;
 const Container = styled.div`
   width: 100%;
   max-width: 1230px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 20px;
 
   @media ${Device.laptopM} {
     padding: 0 50px;
   }
   @media ${Device.laptopL} {
-    padding: 0 15px;
+    padding: 0 20px;
   }
 `;
 const Body = styled.div`
@@ -66,8 +68,12 @@ const Fieldset = styled.fieldset`
   }
 `;
 const FieldsetCol = styled(Fieldset)`
-  max-width: 48%;
+  width: 100%;
   position: relative;
+
+  @media ${Device.laptop} {
+    max-width: 48%;
+  }
 `;
 const Label = styled.label`
   font-size: 14px;
@@ -80,6 +86,10 @@ const Label = styled.label`
   @media ${Device.laptopM} {
     font-size: 16px;
   }
+`;
+const VerifiedAddress = styled.span`
+  color: ${props => props.theme.color.yellow};
+  opacity: 0.5;
 `;
 const VeoLabel = styled.div`
   position: absolute;
@@ -156,6 +166,7 @@ const FooterWrap = styled.div`
   border-radius: 10px 10px 0 0;
   margin: 40px 0 0 0;
   color: ${props => props.theme.color.blue};
+  flex-wrap: wrap;
 `;
 const FooterLink = styled(Link)`
   font-weight: 500;
@@ -164,10 +175,13 @@ const FooterLink = styled(Link)`
   color: ${props => props.theme.color.blue};
   display: inline-block;
   text-decoration: none;
+  width: 100%;
+  text-align: right;
 
   @media ${Device.laptopM} {
     line-height: 60px;
     font-size: 20px;
+    width: auto;
   }
 
   &[disabled] {
@@ -178,6 +192,17 @@ const FooterLink = styled(Link)`
   }
 `;
 const IconClipboard = styled(SvgClipboard)`
+  width: 16px;
+  height: 16px;
+  margin: 0 0 0 10px;
+  fill: ${props => props.theme.color.yellow};
+  cursor: pointer;
+
+  &:active {
+    transform: scale(0.9);
+  }
+`;
+const IconLedger = styled(SvgLedger)`
   width: 16px;
   height: 16px;
   margin: 0 0 0 10px;
@@ -207,12 +232,19 @@ const IconNext = styled(SvgNext)`
 `;
 const QrCodeWrap = styled.div`
   width: 100%;
-  max-width: 70%;
-  border-right: solid 2px rgba(22, 26, 46, 0.3);
-  padding: 0 20px 0 0;
-
+  padding: 0;
   display: flex;
   justify-content: flex-start;
+  flex-wrap: wrap;
+
+  @media ${Device.mobileL} {
+    display: inline-block;
+  }
+  @media ${Device.laptop} {
+    max-width: 70%;
+    padding: 0 20px 0 0;
+    border-right: solid 2px rgba(22, 26, 46, 0.3);
+  }
 
   @media ${Device.laptopM} {
     padding: 0 30px 0 0;
@@ -224,8 +256,9 @@ const QrCode = styled.img`
   height: 120px;
   min-width: 120px;
   margin: 0 20px 0 0;
+  float: left;
 
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     width: 170px;
     height: 170px;
     min-width: 170px;
@@ -235,29 +268,35 @@ const QrCode = styled.img`
 const QrCodeTitle = styled.h3`
   font-size: 18px;
   font-weight: 500;
-  margin: 0 0 20px 0;
+  margin: 0;
+  flex: 1;
 
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     font-size: 20px;
-    margin: 0 0 30px 0;
   }
 `;
 const QrCodeAddress = styled.p`
   font-size: 14px;
   font-weight: 300;
   line-height: 20px;
-  margin: 0;
+  margin: 20px 0;
   word-break: break-all;
 
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     font-size: 16px;
     line-height: 24px;
+    margin: 30px 0 0 0;
   }
 `;
 
 const Receive = () => {
-  const { keys } = useContext(AppContext);
-  const { amount, handleAmountInput } = useContext(ReceiveContext);
+  const { isHardware, keys } = useContext(AppContext);
+  const {
+    amount,
+    handleAmountInput,
+    isAddressVerified,
+    verifyLedgerAddress,
+  } = useContext(ReceiveContext);
 
   useEffect(() => {
     const clipboard = new ClipboardJS('.js-copy-address', {
@@ -269,7 +308,7 @@ const Receive = () => {
     };
   }, []);
 
-  const receiveUri = `amoveo://${encodeURIComponent(
+  const receiveUri = `amoveo:${encodeURIComponent(
     keys.public,
   )}?amount=${amount}`;
 
@@ -285,7 +324,19 @@ const Receive = () => {
                 <Fieldset>
                   <Label>
                     Your wallet address{' '}
-                    <IconClipboard className="js-copy-address" />
+                    {isAddressVerified ? (
+                      <VerifiedAddress>(✓ verified)</VerifiedAddress>
+                    ) : null}
+                    <IconClipboard
+                      className="js-copy-address"
+                      title="Copy address"
+                    />
+                    {isHardware ? (
+                      <IconLedger
+                        onClick={verifyLedgerAddress}
+                        title="Verify address"
+                      />
+                    ) : null}
                   </Label>
                   <Address>{keys.public}</Address>
                 </Fieldset>
@@ -297,7 +348,7 @@ const Receive = () => {
                     min="0"
                     step="0.01"
                     placeholder="0.00"
-                    value={new Decimal(amount).mul(1e-8).val()}
+                    value={new Decimal(amount).toString()}
                     onChange={handleAmountInput}
                   />
                   <VeoLabel>VEO</VeoLabel>
@@ -316,12 +367,10 @@ const Receive = () => {
                   )}&qzone=1&margin=0&size=400x400&ecc=L`}
                   alt="qr code"
                 />
-                <div>
-                  <QrCodeTitle>
-                    Use this QR code to quickly receive payments
-                  </QrCodeTitle>
-                  <QrCodeAddress>{receiveUri}</QrCodeAddress>
-                </div>
+                <QrCodeTitle>
+                  Use this QR code to quickly receive payments
+                </QrCodeTitle>
+                <QrCodeAddress>{receiveUri}</QrCodeAddress>
               </QrCodeWrap>
               <FooterLink to="/dashboard/">
                 Dashboard <IconNext />

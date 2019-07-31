@@ -26,18 +26,19 @@ const Main = styled.div`
 const MainWrap = styled.div`
   width: 100%;
   flex: 1;
+  z-index: 3;
 `;
 const Container = styled.div`
   width: 100%;
   max-width: 1230px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 20px;
 
   @media ${Device.laptopM} {
     padding: 0 50px;
   }
   @media ${Device.laptopL} {
-    padding: 0 15px;
+    padding: 0 20px;
   }
 `;
 const Body = styled.div`
@@ -58,8 +59,12 @@ const Fieldset = styled.fieldset`
   }
 `;
 const FieldsetCol = styled(Fieldset)`
-  max-width: 48%;
+  width: 100%;
   position: relative;
+
+  @media ${Device.laptop} {
+    max-width: 48%;
+  }
 `;
 const LabelContainer = styled.div`
   display: flex;
@@ -98,6 +103,10 @@ const FillMax = styled.label`
   color: ${props => props.theme.color.yellow};
   cursor: pointer;
   user-select: none;
+
+  &[disabled] {
+    color: grey;
+  }
 `;
 const Input = styled.input`
   background: none;
@@ -239,7 +248,11 @@ const Send = () => {
                       <FillMax htmlFor="amount" onClick={handleFillMax}>
                         Send max
                       </FillMax>
-                    ) : null}
+                    ) : (
+                      <FillMax htmlFor="amount" disabled>
+                        Send max
+                      </FillMax>
+                    )}
                   </LabelContainer>
                   <Amount
                     id="amount"

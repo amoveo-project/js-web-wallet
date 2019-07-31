@@ -34,13 +34,13 @@ const Container = styled.div`
   width: 100%;
   max-width: 1230px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 20px;
 
   @media ${Device.laptopM} {
     padding: 0 50px;
   }
   @media ${Device.laptopL} {
-    padding: 0 15px;
+    padding: 0 20px;
   }
 `;
 const TransactionTopline = styled.section`
@@ -115,6 +115,7 @@ const Body = styled.div`
 `;
 const Form = styled.form`
   width: 100%;
+  max-width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -163,9 +164,13 @@ const Field = styled.div`
     line-height: 45px;
   }
 `;
+const Hash = styled(Field)`
+  word-break: break-all;
+`;
 const To = styled(Field)`
   font-family: 'OCRAExtended';
   word-break: break-all;
+  max-width: 100%;
 `;
 const IconClipboard = styled(SvgClipboard)`
   width: 16px;
@@ -220,7 +225,10 @@ const TransactionReceive = ({ transactionId }) => {
               <BalanceWrap>
                 {isSpend ? <IconSend /> : <IconReceive />}
                 <Balance>
-                  {new Decimal(transaction.amount).mul(1e-8).val()} VEO
+                  {transactions.amount
+                    ? new Decimal(transaction.amount).mul(1e-8).val()
+                    : 0}{' '}
+                  VEO
                   {isPending ? <IconPending /> : null}
                 </Balance>
               </BalanceWrap>
@@ -259,7 +267,7 @@ const TransactionReceive = ({ transactionId }) => {
                     {!isPending ? 'Transaction ID' : 'Pending ID'}&nbsp;
                     <IconClipboard className="js-copy-hash" />
                   </Label>
-                  <Field>{transaction.hash}</Field>
+                  <Hash>{transaction.hash}</Hash>
                 </Fieldset>
                 {!isPending ? (
                   <Fieldset>

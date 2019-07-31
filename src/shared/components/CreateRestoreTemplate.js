@@ -37,13 +37,13 @@ const Container = styled.div`
   width: 100%;
   max-width: 1230px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 20px;
 
   @media ${Device.laptopM} {
     padding: 0 50px;
   }
   @media ${Device.laptopL} {
-    padding: 0 15px;
+    padding: 0 20px;
   }
 `;
 
@@ -98,10 +98,18 @@ const linkStyles = css`
   font-weight: 500;
   line-height: 30px;
   color: ${props => props.theme.color.blue};
-  display: inline-block;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
 
   @media ${Device.laptopM} {
     line-height: 60px;
+    display: inline-block;
+    margin: 0 30px 0 0;
+  }
+
+  &:hover {
+    text-decoration: underline;
   }
 
   &[disabled] {
@@ -113,7 +121,6 @@ const linkStyles = css`
 `;
 const FooterLink = styled(Link)`
   ${linkStyles}
-  text-decoration: none;
 `;
 const FooterExternalLink = styled.a`
   ${linkStyles}
@@ -121,7 +128,9 @@ const FooterExternalLink = styled.a`
 const SupportLink = styled(FooterExternalLink)`
   margin-right: 15px;
 `;
-const GithubLink = styled(FooterExternalLink)``;
+const BottomLink = styled(Link)`
+  ${linkStyles}
+`;
 
 const App = ({ children, path }) => {
   const { isWalletCreated, setModal } = useContext(AppContext);
@@ -147,22 +156,15 @@ const App = ({ children, path }) => {
           <Container>
             <FooterWrap>
               <FooterExternalLinks>
+                <BottomLink to="/download">Download</BottomLink>
+                <BottomLink to="/faq">FAQ</BottomLink>
                 <SupportLink
-                  href="https://t.me/amoveo_wallet"
+                  href="https://tlg.name/amoveo_wallet"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   Support
                 </SupportLink>
-                {!window._isElectron ? (
-                  <GithubLink
-                    href="https://github.com/amoveo-project/js-web-wallet/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Download
-                  </GithubLink>
-                ) : null}
               </FooterExternalLinks>
               <FooterLink
                 to="/dashboard/"

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 import Send from './components/Send';
 
@@ -50,7 +51,7 @@ const SendContainer = () => {
       fee = proposal.fee;
       setFee(fee);
 
-      const isValid = fee > 0 && balance >= amount + fee;
+      const isValid = fee > 0 && balance > amount + fee;
 
       setIsSendEnabled(isValid);
     }
@@ -72,7 +73,7 @@ const SendContainer = () => {
   };
 
   const handleFillMax = () => {
-    let value = balance - fee;
+    let value = balance - fee - 1;
     setAmount(value);
   };
 
@@ -130,6 +131,10 @@ const SendContainer = () => {
 
   return (
     <SendContext.Provider value={sendState}>
+      <Helmet>
+        <title>Send payments | VEO</title>
+        <meta name="description" content="Send VEO anywhere in the world" />
+      </Helmet>
       <Send />
     </SendContext.Provider>
   );

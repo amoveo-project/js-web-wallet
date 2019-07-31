@@ -10,7 +10,7 @@ import CreateContext from 'shared/contexts/CreateContext';
 const Title = styled.h1`
   font-weight: 500;
   font-size: 30px;
-  margin: 0 0 30px 0;
+  margin: 0 0 20px 0;
 
   @media ${Device.laptopM} {
     font-size: 40px;
@@ -23,6 +23,7 @@ const PassPhrase = styled.p`
   font-family: 'OCRAExtended', sans-serif;
   line-height: 1.5;
   font-weight: normal;
+  margin: 0 0 30px;
 `;
 const DownloadTitle = styled.p`
   font-weight: 500;
@@ -30,15 +31,21 @@ const DownloadTitle = styled.p`
   margin: 0 0 30px 0;
   color: ${props => props.theme.color.yellow};
 
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     font-size: 40px;
     margin: 0 0 40px 0;
   }
 `;
 const DownloadText = styled.p`
-  font-size: 20px;
-  margin: 0 0 40px 0;
+  font-size: 18px;
+  margin: 0 20px 0 0;
   font-weight: 300;
+
+  @media ${Device.laptopM} {
+    width: 100%;
+    font-size: 20px;
+    margin: 0 0 40px 0;
+  }
 `;
 const MainWrap = styled.div`
   width: 100%;
@@ -48,34 +55,48 @@ const MainWrap = styled.div`
   display: flex;
   align-items: stretch;
   justify-content: space-between;
+  flex-wrap: wrap;
 
+  @media ${Device.laptop} {
+    flex-wrap: nowrap;
+  }
   &:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 50%;
-    background: rgba(0, 0, 0, 0.15);
-    z-index: 0;
-    pointer-events: none;
+    @media ${Device.laptop} {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 50%;
+      background: rgba(0, 0, 0, 0.15);
+      z-index: 0;
+      pointer-events: none;
+    }
   }
 `;
 const Half = styled.div`
   width: 100%;
-  max-width: 46%;
   padding: 0;
   z-index: 2;
 
   &:nth-child(2n) {
-    @media ${Device.laptopM} {
+    @media ${Device.laptop} {
       padding: 0 30px 0 0;
     }
   }
 
-  @media ${Device.laptopM} {
+  @media ${Device.laptop} {
     max-width: 500px;
     padding: 0 30px 0 0;
+  }
+`;
+const DownloadWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  @media ${Device.laptopM} {
+    flex-wrap: wrap;
   }
 `;
 const Download = styled.button`
@@ -99,15 +120,27 @@ const Download = styled.button`
     width: 20px;
     height: 20px;
     float: left;
-    margin: 0 20px 0 0;
-  }
-  span {
-    font-weight: 500;
+    margin: 0;
+
+    @media ${Device.laptopM} {
+      margin: 0 20px 0 0;
+    }
   }
 
   &[disabled] {
     opacity: 0.5;
     pointer-events: none;
+  }
+`;
+const DownloadButtonText = styled.span`
+  display: none;
+
+  @media ${Device.laptopM} {
+    display: inline-block;
+  }
+
+  span {
+    font-weight: 500;
   }
 `;
 
@@ -127,12 +160,16 @@ const Create = () => {
         </Half>
         <Half>
           <DownloadTitle>Download your passphrase file</DownloadTitle>
-          <DownloadText>This is very important!</DownloadText>
-          <Download onClick={downloadPassphrase} disabled={!isWalletCreated}>
-            <SvgDownload />
-            <span>Download</span> (.txt{' '}
-            {passphrase ? `${passphrase.length} bytes` : null})
-          </Download>
+          <DownloadWrap>
+            <DownloadText>This is very important!</DownloadText>
+            <Download onClick={downloadPassphrase} disabled={!isWalletCreated}>
+              <SvgDownload />
+              <DownloadButtonText>
+                <span>Download</span> (.txt{' '}
+                {passphrase ? `${passphrase.length} bytes` : null})
+              </DownloadButtonText>
+            </Download>
+          </DownloadWrap>
         </Half>
       </MainWrap>
     </Fragment>

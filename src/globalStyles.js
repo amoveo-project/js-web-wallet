@@ -1,17 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-import OCRAExtendedEot from 'shared/assets/fonts/OCRAExtended/OCRAExtended.eot';
-import OCRAExtendedWoff from 'shared/assets/fonts/OCRAExtended/OCRAExtended.woff';
-import OCRAExtendedWoff2 from 'shared/assets/fonts/OCRAExtended/OCRAExtended.woff2';
-
 const GlobalStyles = createGlobalStyle`
-  @font-face {
-    font-family: 'OCRAExtended';
-    src:  url('${OCRAExtendedEot}?#iefix') format('embedded-opentype'),
-          url('${OCRAExtendedWoff}') format('woff'),
-          url('${OCRAExtendedWoff2}') format('woff2');
-  }
-
   * {
     box-sizing: border-box;
     vertical-align: top;
@@ -58,6 +47,20 @@ const GlobalStyles = createGlobalStyle`
 
   [data-whatintent='mouse'] *:focus {
     outline: none;
+  }
+
+  @keyframes show {
+   0% {
+     opacity:0;
+     transform: translateX(50px);
+   }
+   80% {
+     transform: translateX(-5px);
+   }
+   100% {
+     opacity:1;
+     transform: translateX(0);
+   }
   }
 `;
 

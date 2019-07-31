@@ -1,4 +1,6 @@
 // Modules to control application life and create native browser window
+const url = require("url");
+
 const { app, BrowserWindow, shell, ipcMain, Menu } = require("electron");
 
 const path = require("path");
@@ -22,9 +24,11 @@ function createWindow() {
 
   // and load the index.html of the app.
   mainWindow.loadURL(
-    isDev
-      ? "http://localhost:3000"
-      : `file://${path.join(__dirname, "../build/index.html")}`
+    url.format({
+      pathname: path.join(__dirname, '../build/index.html'),
+      protocol: 'file:',
+      slashes: true,
+    }),
   );
 
   if (isDev) {
@@ -59,6 +63,11 @@ function createWindow() {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
+  });
+
+  mainWindow.webContents.on("new-window", function(e, url) {
+    e.preventDefault();
+    require("electron").shell.openExternal(url);
   });
 }
 

@@ -1,3 +1,6 @@
+// only needed because of https://github.com/LedgerHQ/ledgerjs/issues/332
+require("regenerator-runtime/runtime");
+
 const {
   addWallet,
   decryptWallet,
@@ -9,6 +12,8 @@ const {
   setLastId
 } = require("./walletHelpers");
 
+const NodeTransport = require('@ledgerhq/hw-transport-node-hid').default;
+
 window._isElectron = true;
 
 window._amoveoWallet = {
@@ -19,5 +24,6 @@ window._amoveoWallet = {
   getWallets,
   openWallet,
   removeWallet,
-  setLastId
+  setLastId,
+  NodeTransport,
 };

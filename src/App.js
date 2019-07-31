@@ -21,6 +21,8 @@ import Dashboard from './screens/Dashboard';
 import Exchange from './screens/Exchange';
 import Home from './screens/Home';
 import NotFound from './screens/NotFound';
+import Download from './screens/Download';
+import Faq from './screens/Faq';
 import Receive from './screens/Receive';
 import Restore from './screens/Restore';
 import Recent from './screens/Recent';
@@ -32,7 +34,7 @@ import AppContext from 'shared/contexts/AppContext';
 import ErrorModal from 'shared/components/ErrorModal';
 import LedgerModal from 'shared/components/LedgerModal';
 
-import Transport from '@ledgerhq/hw-transport-u2f';
+import Transport from './hw-transport';
 import Veo from 'hw-app-veo';
 
 import {
@@ -61,6 +63,7 @@ const App = () => {
   const [headerIdSync, setHeaderIdSync] = useState(0);
   const [headerIdTop, setHeaderIdTop] = useState(0);
   const [isWalletCreated, setIsWalletCreated] = useState(false);
+  const [isHardware, setIsHardware] = useState(false);
   const [keys, setKeys] = useState({ public: '' });
   const [passphrase, setPassphrase] = useState('');
   const [pendingTransactions, setPendingTransactions] = useState([]);
@@ -265,7 +268,7 @@ const App = () => {
 
   const enterLedger = async () => {
     const transport = await Transport.create();
-    transport.setDebugMode(true);
+    // transport.setDebugMode(true);
     const ledger = new Veo(transport);
     const ledgerKeys = new LedgerKeys(ledger);
 
@@ -288,7 +291,9 @@ const App = () => {
 
       setPassphrase('');
       setBalance(0);
-      setUnusedActions([DOWNLOAD_PASSPHRASE, DOWNLOAD_PRIVATE_KEY]);
+      setUnusedActions([]);
+
+      setIsHardware(true);
 
       setModal(null);
       routerHistory.navigate('/dashboard/');
@@ -302,12 +307,42 @@ const App = () => {
     }
   };
 
+  const verifyOwnAddress = async () => {
+    let isVerified = false;
+
+    if (!isHardware) {
+      isVerified = true;
+    }
+
+    try {
+      setModal(
+        <LedgerModal
+          text="Please check your ledger wallet"
+          onClick={() => setModal(null)}
+        />,
+      );
+
+      setTimeout(() => {
+        setModal(null);
+      }, 1500);
+
+      const address = await veo.wallet.keys.getVerifiedAddress();
+
+      isVerified = address ? true : false;
+    } catch (e) {
+      isVerified = false;
+    }
+
+    return isVerified;
+  };
+
   const appState = {
     balance,
     createWallet,
     headerId,
     headerIdSync,
     headerIdTop,
+    isHardware,
     isWalletCreated,
     keys,
     passphrase,
@@ -322,6 +357,7 @@ const App = () => {
     transactions,
     unusedActions,
     veo,
+    verifyOwnAddress,
     u2fSupport,
   };
 
@@ -351,6 +387,8 @@ const App = () => {
             <Receive path="/receive" />
             <Recent path="/recent" />
             <Exchange path="/exchange" />
+            <Download path="/download" />
+            <Faq path="/faq" />
 
             <Test path="/test" />
 

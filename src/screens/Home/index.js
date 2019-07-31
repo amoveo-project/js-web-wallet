@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 import Home from './components/Home';
 
@@ -60,6 +61,15 @@ const HomeContainer = ({ navigate, path }) => {
 
   return (
     <HomeContext.Provider value={homeState}>
+      <Helmet>
+        <title>
+          Amoveo Wallet for Windows | Mac OS | Linux | Web Wallet | VEO
+        </title>
+        <meta
+          name="description"
+          content="Send, store and receive VEO safely and securely | Download on the App Store and get it on Google Play!"
+        />
+      </Helmet>
       <Home />
     </HomeContext.Provider>
   );
